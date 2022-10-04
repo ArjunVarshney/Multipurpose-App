@@ -27,16 +27,19 @@ const LogoText = () => {
     },
   });
 
-  const LogoText = styled(Typography)`
-    padding: 0px 15px;
-    display: grid;
-    place-items: center;
-    color: ${primaryThemeColor};
-    font-weight: bold;
-    font-size: 15px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  `;
+  const LogoText = styled(Typography)({
+    padding: "0px 15px",
+    display: "grid",
+    placeItems: "center",
+    color: primaryThemeColor,
+    fontWeight: "bold",
+    fontSize: "15px",
+    letterSpacing: "2px",
+    textTransform: "uppercase",
+    ["@media (max-width:400px)"]: {
+      display: "none",
+    },
+  });
 
   return (
     <RowBox>

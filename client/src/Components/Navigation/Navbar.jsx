@@ -28,6 +28,9 @@ const Navbar = () => {
     justtifyContent: "center",
     boxShadow: "none",
     borderBottom: `1px solid ${secondaryBgColor}`,
+    ["@media (max-width:600px)"]: {
+      padding: "0",
+    },
   });
 
   const CustomToolbar = styled(Toolbar)({
@@ -45,23 +48,17 @@ const Navbar = () => {
     },
   });
 
-  const ButtonBox = styled(Box)({
-    ["@media (max-width:400px)"]: {
-      display: "none",
-    },
-  });
-
   return (
     <Navbar>
       <CustomToolbar>
         <LogoText />
-        <ButtonBox>
+        <Box>
           <NotImportant>
             <NavBtn text="About" variant="standard" />
             <LoginBtn />
           </NotImportant>
           <SignupBtn />
-        </ButtonBox>
+        </Box>
       </CustomToolbar>
     </Navbar>
   );
