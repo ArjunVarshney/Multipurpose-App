@@ -37,7 +37,7 @@ const LogoText = () => {
   return (
     <RowBox>
       <Logo />
-      <LogoText>Title</LogoText>
+      <LogoText>YourNorm</LogoText>
     </RowBox>
   );
 };

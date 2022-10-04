@@ -6,15 +6,18 @@ import { color } from "../../Context/ColorContext";
 
 //mui components
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material";
 
 //images
 import image from "../../Images/bannerImage.svg";
 
+//library component
+import SignupBtn from "../Library/widgets/SignupBtn";
+import LoginBtn from "../Library/widgets/LoginBtn";
+
 const Hero = () => {
-  const { primaryThemeColor, mainBgColor, primaryTextColor } = useContext(color);
+  const { mainBgColor, primaryTextColor, secondaryBgColor } = useContext(color);
 
   const SectionBox = styled(Box)({
     background: mainBgColor,
@@ -23,71 +26,78 @@ const Hero = () => {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    fontFamily: "Inter",
+    borderBottom: `1px solid ${secondaryBgColor}`,
   });
 
-  const RowBox = styled(Box)`
-    display: flex;
-    width: 70%;
-    margin: auto;
-    padding: 50px 0px;
-  `;
+  const RowBox = styled(Box)({
+    display: "flex",
+    justifyContent: "center",
+    width: "70%",
+    margin: "auto",
+    padding: "50px 0px",
+    ["@media (max-width: 840px)"]: {
+      width: "80%",
+    },
+  });
 
-  const ImgBox = styled(Box)`
-    display: grid;
-    place-items: center;
-    margin-left: 20px;
-  `;
-
-  const Img = styled(Box)({
-    width: "30vw",
+  const ImgBox = styled(Box)({
+    display: "grid",
+    placeItems: "center",
+    marginLeft: "20px",
+    "& > img": {
+      width: "30vw",
+      minWidth: "250px",
+    },
+    ["@media (max-width: 720px)"]: {
+      display: "none",
+    },
   });
 
   const TextBox = styled(Box)({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    "& > *": {
+      fontFamily: "Inter",
+      wordSpacing: "3px",
+      letterSpacing: "0.5px",
+    },
     "& > h3": {
       fontSize: "16px",
       fontWeight: "600",
       marginBottom: "10px",
-      fontFamily: "Inter",
+      lineHeight: "20px",
+      ["@media (max-width: 900px)"]: {
+        fontSize: "14px",
+      },
     },
     "& > h2": {
       fontSize: "30px",
       fontWeight: "700",
       marginBottom: "25px",
-      fontFamily: "Inter",
+      ["@media (max-width: 900px)"]: {
+        fontSize: "25px",
+      },
     },
     "& > p": {
       fontSize: "14px",
-      lineHeight: "16px",
       marginRight: "50px",
-      marginBottom: "20px",
-      fontFamily: "Inter",
       marginBottom: "50px",
-      wordSpacing: "3px",
-      letterSpacing: "0.5px",
+      textAlign: "justify",
+      lineHeight: "20px",
+      ["@media (max-width: 720px)"]: {
+        fontSize: "13px",
+        marginRight: "20px",
+        marginRight: "0",
+      },
     },
-  });
-
-  const SignupBtn = styled(Button)({
-    background: primaryThemeColor,
-    color: mainBgColor,
-    fontWeight: "bold",
-    padding: "7px 20px",
-    borderRadius: "10px",
-    fontFamily: "sohne",
-  });
-
-  const LoginBtn = styled(Button)({
-    color: primaryThemeColor,
-    fontWeight: "bold",
-    padding: "7px 20px",
-    borderRadius: "10px",
-    fontFamily: "sohne",
-    marginLeft: "30px",
-    padding: "7px 20px",
+    "& > div": {
+      display: "flex",
+      gap: "20px",
+      ["@media (max-width: 280px)"]: {
+        flexDirection: "column",
+      },
+    },
   });
 
   return (
@@ -105,12 +115,12 @@ const Hero = () => {
             dolore beatae. Quisquam mollitia beatae nihil?
           </Typography>
           <Box>
-            <SignupBtn>SIGNUP</SignupBtn>
-            <LoginBtn>LOGIN</LoginBtn>
+            <SignupBtn />
+            <LoginBtn />
           </Box>
         </TextBox>
         <ImgBox>
-          <Img component="img" src={image} alt="Banner Image"></Img>
+          <Box component="img" src={image} alt="Banner Image"></Box>
         </ImgBox>
       </RowBox>
     </SectionBox>

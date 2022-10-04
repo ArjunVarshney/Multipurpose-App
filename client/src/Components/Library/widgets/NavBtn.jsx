@@ -11,18 +11,21 @@ import { styled } from "@mui/material";
 const NavBtn = ({ text, variant }) => {
   const { primaryThemeColor } = useContext(color);
 
-  const CustomButton = styled(Button)`
-    font-family: sohne;
-    color: ${variant == "contained" ? "#fff" : primaryThemeColor};
-    background-color: ${variant == "contained" ? primaryThemeColor : "inherit"};
-    font-size: 13px;
-    border-radius: 10px;
-    box-shadow: none;
-    font-weight: bold;
-    margin-left: 10px;
-  `;
+  const CustomButton = styled(Button)({
+    fontFamily: "sohne",
+    color: variant == "contained" ? "#fff" : primaryThemeColor,
+    backgroundColor: variant == "contained" ? primaryThemeColor : "inherit",
+    fontSize: "13px",
+    borderRadius: "10px",
+    boxShadow: "none",
+    fontWeight: "bold",
+    marginLeft: "10px",
+    "&:hover": {
+      backgroundColor: variant == "contained" ? primaryThemeColor : "inherit",
+    },
+  });
 
-  return <CustomButton color="secondary" variant={variant}>{text}</CustomButton>;
+  return <CustomButton variant={variant}>{text}</CustomButton>;
 };
 
 export default NavBtn;
