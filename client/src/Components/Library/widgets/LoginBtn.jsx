@@ -17,6 +17,10 @@ const LoginBtn = () => {
     borderRadius: "10px",
     fontFamily: "sohne",
     padding: "7px 20px",
+    transition: "all 0.3s ease",
+    "&:hover": {
+      scale: "1.05",
+    },
   });
 
   return <LogBtn>Login</LogBtn>;

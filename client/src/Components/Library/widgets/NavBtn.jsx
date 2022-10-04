@@ -13,15 +13,15 @@ const NavBtn = ({ text, variant }) => {
 
   const CustomButton = styled(Button)({
     fontFamily: "sohne",
-    color: variant == "contained" ? "#fff" : primaryThemeColor,
-    backgroundColor: variant == "contained" ? primaryThemeColor : "inherit",
+    color:primaryThemeColor,
     fontSize: "13px",
     borderRadius: "10px",
     boxShadow: "none",
     fontWeight: "bold",
     marginLeft: "10px",
+    transition: "all 0.3s ease",
     "&:hover": {
-      backgroundColor: variant == "contained" ? primaryThemeColor : "inherit",
+      scale: "1.05",
     },
   });
 

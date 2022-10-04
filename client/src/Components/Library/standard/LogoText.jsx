@@ -15,13 +15,17 @@ import { styled } from "@mui/material";
 const LogoText = () => {
   const { secondaryBgColor, primaryThemeColor } = useContext(color);
 
-  const RowBox = styled(Box)`
-    display: flex;
-    padding:5px 10px;
-    background: ${secondaryBgColor};
-    border-radius: 10px;
-    cursor:pointer
-  `;
+  const RowBox = styled(Box)({
+    display: "flex",
+    padding: "5px 10px",
+    background: secondaryBgColor,
+    borderRadius: "10px",
+    cursor: "pointer",
+    transition: "all 0.3s ease",
+    "&:hover": {
+      scale: "1.02",
+    },
+  });
 
   const LogoText = styled(Typography)`
     padding: 0px 15px;

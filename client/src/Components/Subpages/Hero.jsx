@@ -1,9 +1,6 @@
 import React from "react";
 import { useContext } from "react";
 
-//context
-import { color } from "../../Context/ColorContext";
-
 //mui components
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -15,19 +12,9 @@ import image from "../../Images/bannerImage.svg";
 //library component
 import SignupBtn from "../Library/widgets/SignupBtn";
 import LoginBtn from "../Library/widgets/LoginBtn";
+import SectionBox from "../Library/encapsulation/SectionBox";
 
 const Hero = () => {
-  const { mainBgColor, primaryTextColor, secondaryBgColor } = useContext(color);
-
-  const SectionBox = styled(Box)({
-    background: mainBgColor,
-    color: primaryTextColor,
-    minHeight: "calc(100vh - 70px)",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    borderBottom: `1px solid ${secondaryBgColor}`,
-  });
 
   const RowBox = styled(Box)({
     display: "flex",
@@ -73,6 +60,7 @@ const Hero = () => {
     },
     "& > h2": {
       fontSize: "30px",
+      fontFamily: "Inter",
       fontWeight: "700",
       marginBottom: "25px",
       ["@media (max-width: 900px)"]: {
@@ -86,7 +74,6 @@ const Hero = () => {
       textAlign: "justify",
       lineHeight: "20px",
       ["@media (max-width: 720px)"]: {
-        fontSize: "13px",
         marginRight: "20px",
         marginRight: "0",
       },
