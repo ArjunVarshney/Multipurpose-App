@@ -6,26 +6,24 @@ import { color } from "../../../Context/ColorContext";
 
 //mui components
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const CategoryCard = ({ image, alt, title, description }) => {
-  const {
-    primaryThemeColor,
-    textWhite,
-    linkColor,
-    secondaryBgColor,
-  } = useContext(color);
+  const { primaryThemeColor, textWhite, linkColor, secondaryBgColor } =
+    useContext(color);
 
   const CardBox = styled(Box)({
     minWidth: "200px",
     maxWidth: "250px",
     minHeight: "300px",
+    height: "100%",
     borderRadius: "10px",
+    display: "flex",
+    flexDirection: "column",
     backgroundColor: primaryThemeColor,
     boxShadow: `0 0 5px 1px ${secondaryBgColor}`,
-    transition:"all 0.3s ease",
+    transition: "all 0.3s ease",
     "&:hover": {
       scale: "1.05",
     },
@@ -37,11 +35,11 @@ const CategoryCard = ({ image, alt, title, description }) => {
     overflow: "hidden",
     borderTopLeftRadius: "10px",
     borderTopRightRadius: "10px",
-    padding:"1px",
-    paddingBottom:"0",
+    padding: "1px",
+    paddingBottom: "0",
     "& > img": {
       width: "100%",
-      borderRadius:"10px 10px 0 0"
+      borderRadius: "10px 10px 0 0",
     },
   });
 
@@ -51,6 +49,7 @@ const CategoryCard = ({ image, alt, title, description }) => {
     padding: "10px 20px",
     color: textWhite,
     fontFamily: "Inter",
+    height: "57%",
     ["@media (max-width: 1050px)"]: {
       padding: "10px 15px",
     },
@@ -68,12 +67,12 @@ const CategoryCard = ({ image, alt, title, description }) => {
 
   const DesBox = styled(Box)({
     margin: "0",
-    marginBottom: "10px",
     fontFamily: "Inter",
     fontSize: "12px",
     marginBottom: "20px",
     fontWeight: "400",
     lineHeight: "16px",
+    height: "100%",
     ["@media (max-width: 1050px)"]: {
       marginBottom: "10px",
     },

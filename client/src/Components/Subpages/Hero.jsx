@@ -1,5 +1,4 @@
 import React from "react";
-import { useContext } from "react";
 
 //mui components
 import Box from "@mui/material/Box";
@@ -15,7 +14,6 @@ import LoginBtn from "../Library/widgets/LoginBtn";
 import SectionBox from "../Library/encapsulation/SectionBox";
 
 const Hero = () => {
-
   const RowBox = styled(Box)({
     display: "flex",
     justifyContent: "center",
@@ -74,7 +72,6 @@ const Hero = () => {
       textAlign: "justify",
       lineHeight: "20px",
       ["@media (max-width: 720px)"]: {
-        marginRight: "20px",
         marginRight: "0",
       },
     },

@@ -9,7 +9,7 @@ import { Button } from "@mui/material";
 import { styled } from "@mui/material";
 
 const SignupBtn = () => {
-  const { primaryThemeColor, mainBgColor, textWhite } = useContext(color);
+  const { primaryThemeColor, textWhite } = useContext(color);
 
   const SignBtn = styled(Button)({
     background: primaryThemeColor,
