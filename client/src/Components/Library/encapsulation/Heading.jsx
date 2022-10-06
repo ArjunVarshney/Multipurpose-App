@@ -4,7 +4,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material";
 
-const Heading = ({ text }) => {
+const Heading = ({ children }) => {
   const HeadBox = styled(Box)({
     width: "100%",
     textAlign: "center",
@@ -14,7 +14,7 @@ const Heading = ({ text }) => {
     margin: "75px 0",
   });
 
-  return <HeadBox component="h2">{text}</HeadBox>;
+  return <HeadBox component="h2">{children}</HeadBox>;
 };
 
 export default Heading;
