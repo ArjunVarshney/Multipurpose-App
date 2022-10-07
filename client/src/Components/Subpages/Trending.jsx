@@ -62,7 +62,7 @@ const Trending = () => {
         <Box mt={10}></Box>
         <Grid container spacing={4}>
           {postTitle.map((title, index) => {
-            const username = "Arjun";
+            const username = "Arjun Varshney";
             const image = "https://source.unsplash.com/random/?user";
             return (
               <Grid item xs={12} md={6} key={index}>

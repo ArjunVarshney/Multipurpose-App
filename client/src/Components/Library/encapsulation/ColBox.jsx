@@ -14,6 +14,9 @@ const ColBox = ({ children }) => {
     margin: "auto",
     paddingTop: "50px",
     paddingBottom: "150px",
+    ["@media (max-width: 650px)"]: {
+      width:"85%"
+    },
   });
 
   return <ColBox>{children}</ColBox>;

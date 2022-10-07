@@ -10,8 +10,7 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material";
 
 const User = ({ name, image }) => {
-  const { secondaryBgColor, primaryTextColor, primaryThemeColor } =
-    useContext(color);
+  const { secondaryBgColor, primaryThemeColor } = useContext(color);
 
   const UserBox = styled(Box)({
     display: "flex",
@@ -22,15 +21,18 @@ const User = ({ name, image }) => {
     borderRadius: "50px",
     maxHeight: "40px",
     boxShadow: `0 0 1px 0.1px ${primaryThemeColor}`,
-    cursor:"pointer"
+    cursor: "pointer",
+    width: "max-content",
   });
 
   const ImageBox = styled(Box)({
     height: "30px",
+    width: "30px",
+    overflow: "hidden",
+    borderRadius: "50%",
     "& > img": {
       borderRadius: "50px",
-      width: "30px",
-      height: "30px",
+      height: "100%",
       marginRight: "10px",
       boxShadow: `0 0 1px 0.1px ${primaryThemeColor}`,
     },

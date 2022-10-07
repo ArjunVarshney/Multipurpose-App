@@ -13,8 +13,8 @@ const NavBtn = ({ text, variant }) => {
 
   const CustomButton = styled(Button)({
     fontFamily: "sohne",
-    color:primaryThemeColor,
-    fontSize: "13px",
+    color: primaryThemeColor,
+    fontSize: "14px",
     borderRadius: "10px",
     boxShadow: "none",
     fontWeight: "bold",
