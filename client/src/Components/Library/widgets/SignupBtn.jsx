@@ -1,5 +1,6 @@
 import React from "react";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 //context
 import { color } from "../../../Context/ColorContext";
@@ -9,6 +10,8 @@ import { Button } from "@mui/material";
 import { styled } from "@mui/material";
 
 const SignupBtn = () => {
+  const navigate = useNavigate();
+
   const { primaryThemeColor, textWhite } = useContext(color);
 
   const SignBtn = styled(Button)({
@@ -26,7 +29,15 @@ const SignupBtn = () => {
     },
   });
 
-  return <SignBtn>Signup</SignBtn>;
+  return (
+    <SignBtn
+      onClick={() => {
+        navigate("/signup");
+      }}
+    >
+      Signup
+    </SignBtn>
+  );
 };
 
 export default SignupBtn;

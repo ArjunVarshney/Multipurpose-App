@@ -7,6 +7,7 @@ import AppName from "../Library/standard/AppName";
 import ColBox from "../Library/encapsulation/ColBox";
 import Post from "../Library/widgets/Post";
 import OutlineBtn from "../Library/widgets/OutlineBtn";
+import Go from "../Library/encapsulation/Go";
 
 //mui components
 import Grid from "@mui/material/Grid";
@@ -34,7 +35,9 @@ const AllPosts = () => {
           </Grid>
         </Grid>
         <Box mt={10}></Box>
-        <OutlineBtn>Load More</OutlineBtn>
+        <Go to="/blog">
+          <OutlineBtn>Load More</OutlineBtn>
+        </Go>
       </ColBox>
     </SectionBox>
   );

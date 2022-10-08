@@ -1,5 +1,5 @@
-import { useContext } from "react";
 import React from "react";
+import { useContext } from "react";
 
 //context
 import { color } from "../../../Context/ColorContext";
@@ -7,8 +7,9 @@ import { color } from "../../../Context/ColorContext";
 //mui components
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material";
+import Go from "../encapsulation/Go";
 
-const NavBtn = ({ text, variant }) => {
+const NavBtn = ({ text, variant, link }) => {
   const { primaryThemeColor } = useContext(color);
 
   const CustomButton = styled(Button)({
@@ -20,12 +21,17 @@ const NavBtn = ({ text, variant }) => {
     fontWeight: "bold",
     marginLeft: "10px",
     transition: "all 0.3s ease",
+    textDecoration: "none",
     "&:hover": {
       scale: "1.05",
     },
   });
 
-  return <CustomButton variant={variant}>{text}</CustomButton>;
+  return (
+    <Go to={link}>
+      <CustomButton variant={variant}>{text}</CustomButton>
+    </Go>
+  );
 };
 
 export default NavBtn;

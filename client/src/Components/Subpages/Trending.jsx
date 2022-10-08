@@ -7,6 +7,7 @@ import AppName from "../Library/standard/AppName";
 import ColBox from "../Library/encapsulation/ColBox";
 import OutlineBtn from "../Library/widgets/OutlineBtn";
 import PopularPost from "../Library/widgets/PopularPost";
+import Go from "../Library/encapsulation/Go";
 
 //mui components
 import Box from "@mui/material/Box";
@@ -56,7 +57,11 @@ const Trending = () => {
         </Heading>
         <Row>
           {tags.map((tag, index) => {
-            return <OutlineBtn key={index}>{tag}</OutlineBtn>;
+            return (
+              <Go to={`/blog?search=${tag.toLowerCase()}`}>
+                <OutlineBtn key={index}>{tag}</OutlineBtn>
+              </Go>
+            );
           })}
         </Row>
         <Box mt={10}></Box>
@@ -77,7 +82,9 @@ const Trending = () => {
           })}
         </Grid>
         <Box mt={10}></Box>
-        <OutlineBtn>All Posts</OutlineBtn>
+        <Go to="/blog">
+          <OutlineBtn>All Posts</OutlineBtn>
+        </Go>
       </ColBox>
     </SectionBox>
   );

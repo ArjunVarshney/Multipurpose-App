@@ -1,4 +1,5 @@
 import React from "react";
+import { Route, Routes } from "react-router-dom";
 
 //importing components
 import Navbar from "./Components/Navigation/Navbar";
@@ -17,7 +18,9 @@ const App = () => {
       <ColorContext>
         <Navbar />
         <Box mt="70px"></Box>
-        <Home />
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
         <Footer />
       </ColorContext>
     </Box>

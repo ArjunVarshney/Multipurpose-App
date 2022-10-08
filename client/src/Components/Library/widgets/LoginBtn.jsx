@@ -1,5 +1,6 @@
 import React from "react";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 //context
 import { color } from "../../../Context/ColorContext";
@@ -9,6 +10,8 @@ import { Button } from "@mui/material";
 import { styled } from "@mui/material";
 
 const LoginBtn = () => {
+  const navigate = useNavigate();
+
   const { primaryThemeColor } = useContext(color);
 
   const LogBtn = styled(Button)({
@@ -23,7 +26,15 @@ const LoginBtn = () => {
     },
   });
 
-  return <LogBtn>Login</LogBtn>;
+  return (
+    <LogBtn
+      onClick={() => {
+        navigate("/login");
+      }}
+    >
+      Login
+    </LogBtn>
+  );
 };
 
 export default LoginBtn;

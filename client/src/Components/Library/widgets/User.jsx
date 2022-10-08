@@ -33,6 +33,8 @@ const User = ({ name, image }) => {
     "& > img": {
       borderRadius: "50px",
       height: "100%",
+      width: "100%",
+      objectFit: "cover",
       marginRight: "10px",
       boxShadow: `0 0 1px 0.1px ${primaryThemeColor}`,
     },

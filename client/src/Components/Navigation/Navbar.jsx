@@ -54,7 +54,7 @@ const Navbar = () => {
         <LogoText />
         <Box>
           <NotImportant>
-            <NavBtn text="About" variant="standard" />
+            <NavBtn text="About" variant="standard" link="/about"/>
             <LoginBtn />
           </NotImportant>
           <SignupBtn />

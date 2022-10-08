@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 //resources
 import image from "../../../Images/logo.svg";
@@ -12,6 +13,8 @@ import { styled } from "@mui/material";
 import { useContext } from "react";
 
 const Logo = () => {
+  const navigate = useNavigate();
+
   const { secondaryBgColor } = useContext(color);
 
   const Image = styled(Box)`
@@ -22,7 +25,16 @@ const Logo = () => {
     border-radius: 10px;
   `;
 
-  return <Image component="img" alt="The house from the offer." src={image} />;
+  return (
+    <Image
+      component="img"
+      alt="The house from the offer."
+      src={image}
+      onClick={() => {
+        navigate("/");
+      }}
+    />
+  );
 };
 
 export default Logo;

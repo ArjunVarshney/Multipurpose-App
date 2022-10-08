@@ -10,6 +10,7 @@ import { categories } from "../../Constants/Categories";
 //Library components
 import ColBox from "../Library/encapsulation/ColBox";
 import AppName from "../Library/standard/LogoText";
+import Go from "../Library/encapsulation/Go";
 
 //mui components
 import Box from "@mui/material/Box";
@@ -17,7 +18,6 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material";
 import CopyrightIcon from "@mui/icons-material/Copyright";
-import { display, fontSize, width } from "@mui/system";
 
 const Footer = () => {
   const { mainBgColor, primaryTextColor, secondaryBgColor, primaryThemeColor } =
@@ -105,12 +105,16 @@ const Footer = () => {
         <Divider />
         <RowBox>
           <Box key={0}>
-            <BottomBtn>Home</BottomBtn>
+            <Go to="/">
+              <BottomBtn>Home</BottomBtn>
+            </Go>
           </Box>
           {categories.map((category, index) => {
             return (
               <Box key={index + 1}>
-                <BottomBtn>{category.title}</BottomBtn>
+                <Go to={category.link}>
+                  <BottomBtn>{category.title}</BottomBtn>
+                </Go>
               </Box>
             );
           })}
@@ -120,8 +124,12 @@ const Footer = () => {
             <CopyrightIcon /> 2022 YOUR NORM Lucknow India
           </CopyrightText>
           <RowBox style={{ justifyContent: "unset", padding: "0", gap: "5px" }}>
-            <Typography>Terms & Conditions |</Typography>
-            <Typography>Privacy policy</Typography>
+            <Go to="/policy">
+              <Typography>Terms & Conditions |</Typography>
+            </Go>
+            <Go to="/policy">
+              <Typography>Privacy policy</Typography>
+            </Go>
           </RowBox>
         </CopyrightBox>
       </ColBox>

@@ -1,5 +1,6 @@
 import React from "react";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 //library components
 import Logo from "./Logo";
@@ -13,6 +14,8 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material";
 
 const LogoText = () => {
+  const navigate = useNavigate();
+
   const { secondaryBgColor, primaryThemeColor } = useContext(color);
 
   const RowBox = styled(Box)({
@@ -42,7 +45,11 @@ const LogoText = () => {
   });
 
   return (
-    <RowBox>
+    <RowBox
+      onClick={() => {
+        navigate("/");
+      }}
+    >
       <Logo />
       <LogoText>YourNorm</LogoText>
     </RowBox>

@@ -6,6 +6,7 @@ import CategoryCard from "../Library/widgets/CategoryCard";
 import SectionBox from "../Library/encapsulation/SectionBox";
 import AppName from "../Library/standard/AppName";
 import ColBox from "../Library/encapsulation/ColBox";
+import Go from "../Library/encapsulation/Go";
 
 //import Category Data
 import { categories } from "../../Constants/Categories";
@@ -18,6 +19,9 @@ const Discover = () => {
   const Item = styled(Grid)({
     display: "grid",
     placeItems: "center",
+    "& > a": {
+      height: "100%",
+    },
   });
 
   return (
@@ -30,12 +34,14 @@ const Discover = () => {
           {categories.map((category, index) => {
             return (
               <Item item lg={4} md={4} sm={6} xs={12} key={index}>
-                <CategoryCard
-                  image={category.image}
-                  alt={category.imgAlt}
-                  title={category.title}
-                  description={category.description}
-                />
+                <Go to={category.link}>
+                  <CategoryCard
+                    image={category.image}
+                    alt={category.imgAlt}
+                    title={category.title}
+                    description={category.description}
+                  />
+                </Go>
               </Item>
             );
           })}
