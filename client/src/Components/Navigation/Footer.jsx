@@ -100,7 +100,9 @@ const Footer = () => {
       <ColBox>
         <RowBox>
           <AppName />
-          <ContactBtn>Contact Us</ContactBtn>
+          <Go to="/contact">
+            <ContactBtn>Contact Us</ContactBtn>
+          </Go>
         </RowBox>
         <Divider />
         <RowBox>

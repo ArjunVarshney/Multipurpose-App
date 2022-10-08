@@ -3,8 +3,9 @@ import { Route, Routes } from "react-router-dom";
 
 //importing components
 import Navbar from "./Components/Navigation/Navbar";
-import Home from "./Components/Pages/Home";
 import Footer from "./Components/Navigation/Footer";
+import Home from "./Components/Pages/Home";
+import Blog from "./Components/Pages/Blog";
 
 //context
 import ColorContext from "./Context/ColorContext";
@@ -20,6 +21,7 @@ const App = () => {
         <Box mt="70px"></Box>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<Blog />} />
         </Routes>
         <Footer />
       </ColorContext>

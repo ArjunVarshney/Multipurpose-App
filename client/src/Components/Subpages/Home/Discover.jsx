@@ -1,15 +1,15 @@
 import React from "react";
 
 //library components
-import Heading from "../Library/encapsulation/Heading";
-import CategoryCard from "../Library/widgets/CategoryCard";
-import SectionBox from "../Library/encapsulation/SectionBox";
-import AppName from "../Library/standard/AppName";
-import ColBox from "../Library/encapsulation/ColBox";
-import Go from "../Library/encapsulation/Go";
+import Heading from "../../Library/encapsulation/Heading";
+import CategoryCard from "../../Library/widgets/CategoryCard";
+import SectionBox from "../../Library/encapsulation/SectionBox";
+import AppName from "../../Library/standard/AppName";
+import ColBox from "../../Library/encapsulation/ColBox";
+import Go from "../../Library/encapsulation/Go";
 
 //import Category Data
-import { categories } from "../../Constants/Categories";
+import { categories } from "../../../Constants/Categories";
 
 //mui components
 import Grid from "@mui/material/Grid";

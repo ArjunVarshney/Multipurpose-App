@@ -6,12 +6,12 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material";
 
 //images
-import image from "../../Images/bannerImage.svg";
+import image from "../../../Images/PageBanner/HomePageBanner.svg";
 
 //library component
-import SignupBtn from "../Library/widgets/SignupBtn";
-import LoginBtn from "../Library/widgets/LoginBtn";
-import SectionBox from "../Library/encapsulation/SectionBox";
+import SignupBtn from "../../Library/widgets/SignupBtn";
+import LoginBtn from "../../Library/widgets/LoginBtn";
+import SectionBox from "../../Library/encapsulation/SectionBox";
 
 const Hero = () => {
   const RowBox = styled(Box)({

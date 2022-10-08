@@ -1,13 +1,13 @@
 import React from "react";
 
 //Library components
-import SectionBox from "../Library/encapsulation/SectionBox";
-import Heading from "../Library/encapsulation/Heading";
-import AppName from "../Library/standard/AppName";
-import ColBox from "../Library/encapsulation/ColBox";
-import Post from "../Library/widgets/Post";
-import OutlineBtn from "../Library/widgets/OutlineBtn";
-import Go from "../Library/encapsulation/Go";
+import SectionBox from "../../Library/encapsulation/SectionBox";
+import Heading from "../../Library/encapsulation/Heading";
+import AppName from "../../Library/standard/AppName";
+import ColBox from "../../Library/encapsulation/ColBox";
+import Post from "../../Library/widgets/Post";
+import OutlineBtn from "../../Library/widgets/OutlineBtn";
+import Go from "../../Library/encapsulation/Go";
 
 //mui components
 import Grid from "@mui/material/Grid";
