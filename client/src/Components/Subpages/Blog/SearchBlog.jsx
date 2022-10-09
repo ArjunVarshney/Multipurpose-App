@@ -1,7 +1,6 @@
 import React from "react";
 
 //Libraray components
-import ColBox from "../../Library/encapsulation/ColBox";
 import Go from "../../Library/encapsulation/Go";
 import SearchBar from "../../Library/widgets/SearchBar";
 import OutlineBtn from "../../Library/widgets/OutlineBtn";

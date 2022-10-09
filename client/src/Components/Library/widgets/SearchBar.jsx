@@ -37,7 +37,7 @@ const SearchBar = () => {
   });
 
   return (
-    <Box style={{ width: "100%" }}>
+    <Box style={{ width: "100%", marginTop: "50px" }}>
       <Form component="form" onSubmit={searchBlogs}>
         <SearchField
           id="search"

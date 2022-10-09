@@ -18,7 +18,8 @@ const Blog = () => {
   const RowBox = styled(Box)({
     display: "flex",
     flexDirection: "row",
-    marginTop: "50px",
+    width:"100%",
+    gap:"40px"
   });
   return (
     <>
