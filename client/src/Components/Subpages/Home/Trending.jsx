@@ -58,8 +58,8 @@ const Trending = () => {
         <Row>
           {tags.map((tag, index) => {
             return (
-              <Go to={`/blog?search=${tag.toLowerCase()}`}>
-                <OutlineBtn key={index}>{tag}</OutlineBtn>
+              <Go to={`/blog?search=${tag.toLowerCase()}`} key={index}>
+                <OutlineBtn>{tag}</OutlineBtn>
               </Go>
             );
           })}
