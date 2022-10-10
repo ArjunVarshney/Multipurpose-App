@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+
+  app:
+    container_name: your-norm
+    image: your-norm
+    build: ./client
+    ports:
+      - "3000:3000"
+
+  server:
+    container_name: backend
+    image: backend
+    build: ./server
+    ports:
+     - "8000:8000"

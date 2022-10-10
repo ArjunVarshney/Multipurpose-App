@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+
+  app:
+    volumes:
+      - ./client:/app:ro
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    command: npm start
+
+  server:
+    volumes:
+      - ./server:/app:ro
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=8000
+    command: npm run dev

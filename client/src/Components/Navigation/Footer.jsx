@@ -52,7 +52,6 @@ const Footer = () => {
   const ContactBtn = styled(Button)({
     fontWeight: "bold",
     fontSize: "18px",
-    fontWeight: "bold",
     color: primaryTextColor,
   });
 

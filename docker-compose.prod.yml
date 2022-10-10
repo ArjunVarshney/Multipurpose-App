@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+
+  app:
+    environment:
+      - NODE_ENV=production
+    command: npm start
+
+  server:
+    environment:
+      - NODE_ENV=production
+    command: node index.js
