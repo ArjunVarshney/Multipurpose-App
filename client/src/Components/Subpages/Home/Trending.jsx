@@ -71,12 +71,16 @@ const Trending = () => {
             const image = "https://source.unsplash.com/random/?user";
             return (
               <Grid item xs={12} md={6} key={index}>
-                <PopularPost
-                  title={title}
-                  rank={index + 1}
-                  username={username}
-                  image={image}
-                />
+                <Go
+                  to={`/blog/${title.replaceAll(" ", "-").replaceAll(",", "")}`}
+                >
+                  <PopularPost
+                    title={title}
+                    rank={index + 1}
+                    username={username}
+                    image={image}
+                  />
+                </Go>
               </Grid>
             );
           })}

@@ -22,16 +22,24 @@ const AllPosts = () => {
         </Heading>
         <Grid container spacing={5}>
           <Grid item xs={12} lg={12}>
-            <Post />
+            <Go to="/blog/this-is-a-post">
+              <Post />
+            </Go>
           </Grid>
           <Grid item xs={12} lg={12}>
-            <Post />
+            <Go to="/blog/this-is-a-post">
+              <Post />
+            </Go>
           </Grid>
           <Grid item xs={12} lg={12}>
-            <Post />
+            <Go to="/blog/this-is-a-post">
+              <Post />
+            </Go>
           </Grid>
           <Grid item xs={12} lg={12}>
-            <Post />
+            <Go to="/blog/this-is-a-post">
+              <Post />
+            </Go>
           </Grid>
         </Grid>
         <Box mt={10}></Box>

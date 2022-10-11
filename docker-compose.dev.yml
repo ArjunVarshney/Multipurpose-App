@@ -35,6 +35,8 @@ services:
   database:
     container_name: database
     image: mongo
+    ports:
+      - "27017:27017"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=arjun
       - MONGO_INITDB_ROOT_PASSWORD=password

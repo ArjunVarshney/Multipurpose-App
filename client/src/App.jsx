@@ -6,6 +6,7 @@ import Navbar from "./Components/Navigation/Navbar";
 import Footer from "./Components/Navigation/Footer";
 import Home from "./Components/Pages/Home";
 import Blog from "./Components/Pages/Blog";
+import Post from "./Components/Pages/Post";
 
 //context
 import ColorContext from "./Context/ColorContext";
@@ -15,17 +16,16 @@ import Box from "@mui/material/Box";
 
 const App = () => {
   return (
-    <Box>
-      <ColorContext>
-        <Navbar />
-        <Box mt="70px"></Box>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/blog" element={<Blog />} />
-        </Routes>
-        <Footer />
-      </ColorContext>
-    </Box>
+    <ColorContext>
+      <Navbar />
+      <Box mt="70px"></Box>
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/blog" element={<Blog />} />
+        <Route exact path="/blog/:title" element={<Post />} />
+      </Routes>
+      <Footer />
+    </ColorContext>
   );
 };
 

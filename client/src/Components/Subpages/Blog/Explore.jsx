@@ -63,16 +63,24 @@ const Explore = () => {
       </HeaderBox>
       <Grid container spacing={5} style={{ marginBottom: "100px" }}>
         <Grid item xs={12} lg={12}>
-          <ExplorePost />
+          <Go to="/blog/this-is-a-post">
+            <ExplorePost />
+          </Go>
         </Grid>
         <Grid item xs={12} lg={12}>
-          <ExplorePost />
+          <Go to="/blog/this-is-a-post">
+            <ExplorePost />
+          </Go>
         </Grid>
         <Grid item xs={12} lg={12}>
-          <ExplorePost />
+          <Go to="/blog/this-is-a-post">
+            <ExplorePost />
+          </Go>
         </Grid>
         <Grid item xs={12} lg={12}>
-          <ExplorePost />
+          <Go to="/blog/this-is-a-post">
+            <ExplorePost />
+          </Go>
         </Grid>
       </Grid>
       <OutlineBtn>Load more</OutlineBtn>
