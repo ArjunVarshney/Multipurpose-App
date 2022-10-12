@@ -48,7 +48,6 @@ const userSchema = mongoose.Schema({
       date: { type: Date, default: Date.now },
     },
   ],
-  create_polls: [{ poll_id: String }],
 });
 
 const User = mongoose.model("User", userSchema);

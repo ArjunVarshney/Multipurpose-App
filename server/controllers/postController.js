@@ -47,6 +47,37 @@ export const getPost = async (req, res) => {
   }
 };
 
+// get paginated posts
+export const getPaginatedPost = async (req, res) => {
+  const page = parseInt(req.params["page"]);
+  const postPerPage = 10;
+  try {
+    const post = await Post.find()
+      .skip(page * postPerPage)
+      .limit(postPerPage)
+      .select({
+        polls: 0,
+        score: 0,
+        content: 0,
+      });
+    if (!post) {
+      res.status(400).json({
+        success: false,
+        reason: "The Post does not exists in the database",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      data: post,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      reason: error,
+    });
+  }
+};
+
 // get trending posts
 export const getTrendingPost = async (req, res) => {
   try {

@@ -84,7 +84,7 @@ const ExplorePost = (props) => {
     boxSizing: "border-box",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     padding: "10px 0",
     gap: "5px",
     height: "80%",

@@ -19,7 +19,7 @@ const AllPosts = () => {
 
   const getData = async () => {
     try {
-      const posts = await API.getAllPost();
+      const posts = await API.getPaginatedPost();
       const postData = posts.data;
       if (postData.success) {
         setBlogs(postData.data);

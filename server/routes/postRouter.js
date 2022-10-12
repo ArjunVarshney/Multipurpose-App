@@ -5,15 +5,17 @@ import {
   getAllPost,
   getPost,
   getTrendingPost,
+  getPaginatedPost,
   updatePost,
 } from "../controllers/postController.js";
 
 const postRouter = express.Router();
 
 // for testing
-postRouter.get("/", getAllPost);
+postRouter.get("/",getAllPost)
 
 //crud operations
+postRouter.get("/getPage/:page", getPaginatedPost);
 postRouter.post("/create", createPost);
 postRouter.get("/trending", getTrendingPost);
 postRouter.get("/get/:url", getPost);

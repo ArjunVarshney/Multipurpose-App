@@ -8,7 +8,7 @@ import { color } from "../../../Context/ColorContext";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material";
 
-const OutlineBtn = ({ children }) => {
+const OutlineBtn = ({ children, variant }) => {
   const { primaryThemeColor } = useContext(color);
 
   const Btn = styled(Button)({
@@ -20,7 +20,7 @@ const OutlineBtn = ({ children }) => {
     padding:"10px 25px",
   });
 
-  return <Btn>{children}</Btn>;
+  return <Btn variant={variant}>{children}</Btn>;
 };
 
 export default OutlineBtn;

@@ -16,6 +16,8 @@ import OutlineBtn from "../../Library/widgets/OutlineBtn";
 import Go from "../../Library/encapsulation/Go";
 
 const Explore = () => {
+  const [page, setPage] = useState(0);
+
   const { primaryThemeColor, textWhite } = useContext(color);
 
   const ExploreBox = styled(Box)({
@@ -53,24 +55,28 @@ const Explore = () => {
       },
     },
   });
-  
+
   const [blogs, setBlogs] = useState([]);
+  const [disable, setDisable] = useState("");
 
   const getData = async () => {
     try {
-      const posts = await API.getAllPost();
+      const posts = await API.getPaginatedPost("", `blog/getPage/${page}`);
+      setPage(page + 1);
       const postData = posts.data;
       if (postData.success) {
-        setBlogs(postData.data);
+        setBlogs([...blogs, ...postData.data]);
+        if (postData.data.length < 10) {
+          setDisable("disabled");
+        }
       } else {
         console.log("post does not exists");
       }
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error);
     }
   };
 
-  
   const readTime = (content) => {
     const p = document.createElement("p");
     p.append(content);
@@ -89,9 +95,6 @@ const Explore = () => {
     <ExploreBox>
       <HeaderBox>
         <Heading>Explore</Heading>
-        <Go to="/blog/create">
-          <OutlineBtn>Create</OutlineBtn>
-        </Go>
       </HeaderBox>
       <Grid container spacing={5} style={{ marginBottom: "100px" }}>
         {blogs.map((blog, index) => {
@@ -113,7 +116,9 @@ const Explore = () => {
           );
         })}
       </Grid>
-      <OutlineBtn>Load more</OutlineBtn>
+      <Box onClick={() => getData()}>
+        <OutlineBtn variant={disable}>Load more</OutlineBtn>
+      </Box>
     </ExploreBox>
   );
 };

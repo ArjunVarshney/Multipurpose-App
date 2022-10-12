@@ -11,6 +11,10 @@ export const SERVICE_URLS = {
     method: "GET",
     url: "blog/trending",
   },
+  getPaginatedPost: {
+    method: "GET",
+    url: "blog/getPage/0",
+  },
   getUsername: {
     method: "GET",
   },
