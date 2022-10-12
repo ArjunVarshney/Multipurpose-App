@@ -27,8 +27,8 @@ export const createPost = async (req, res) => {
 // get a single post
 export const getPost = async (req, res) => {
   try {
-    const id = req.params["id"];
-    const post = await Post.findById(id);
+    const url = req.params["url"];
+    const post = await Post.findOne({ url });
     if (!post) {
       res.status(400).json({
         success: false,
@@ -45,6 +45,23 @@ export const getPost = async (req, res) => {
       reason: error,
     });
   }
+};
+
+// get trending posts
+export const getTrendingPost = async (req, res) => {
+  try {
+    const trendingPosts = await Post.find().sort({ score: -1 }).limit(10);
+    if (!trendingPosts) {
+      res.status(400).json({
+        success: false,
+        reason: "The posts do not exist in the database",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      data: trendingPosts,
+    });
+  } catch (error) {}
 };
 
 // updata a single post

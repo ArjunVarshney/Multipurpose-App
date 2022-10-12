@@ -12,7 +12,7 @@ import { color } from "../../../Context/ColorContext";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material";
 
-const PopularPost = ({title, rank, username, image}) => {
+const PopularPost = ({ title, rank, user }) => {
   const { secondaryBgColor } = useContext(color);
 
   const PostBox = styled(Box)({
@@ -21,9 +21,9 @@ const PopularPost = ({title, rank, username, image}) => {
     padding: "30px",
     cursor: "pointer",
     transition: "all 0.3s ease",
-    display:"flex",
-    flexDirection:"column",
-    justifyContent:"center",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
     "&:hover": {
       scale: "1.02",
     },
@@ -52,7 +52,7 @@ const PopularPost = ({title, rank, username, image}) => {
       </Title>
       <UserBox>
         By
-        <User name={username} image={image} />
+        <User user={user} />
       </UserBox>
     </PostBox>
   );

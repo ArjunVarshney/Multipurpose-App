@@ -15,7 +15,7 @@ import DislikeCount from "./DislikeCount";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material";
 
-const ExplorePost = () => {
+const ExplorePost = (props) => {
   const { secondaryBgColor } = useContext(color);
 
   const PostBox = styled(Box)({
@@ -110,30 +110,28 @@ const ExplorePost = () => {
     margin: "10px 0px",
   });
 
+  const date = props.date.split("T")[0];
+
   return (
     <PostBox>
-      <User
-        name="Arjun Varshney"
-        image="https://source.unsplash.com/random/?user"
-      />
+      <User user={props.user} />
       <DetailBox>
         <ImageBox />
-        <Box>
+        <Box style={{ width: "100%" }}>
           <TextBox>
-            <TitleBox>
-              What is docker, How to use it, How it works, Basic Docker Commands
-              title title title title title tit
-            </TitleBox>
+            <TitleBox>{props.title}</TitleBox>
           </TextBox>
-          <DateBox>Oct 3 | 5m read</DateBox>
+          <DateBox>
+            {date} | {props.read}m read
+          </DateBox>
         </Box>
       </DetailBox>
       <WidgetBox>
-        <PrimaryTag text="Development" />
+        {props.tags.length > 0 ? <PrimaryTag text={props.tags[0]} /> : <Box />}
         <CountBox>
-          <CommentCount comments={2} />
-          <LikeCount likes={25} />
-          <DislikeCount dislikes={15} />
+          <CommentCount comments={props.comments} />
+          <LikeCount likes={props.likes} />
+          <DislikeCount dislikes={props.dislikes} />
         </CountBox>
       </WidgetBox>
     </PostBox>

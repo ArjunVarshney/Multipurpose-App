@@ -1,5 +1,7 @@
 import React from "react";
 import { useContext } from "react";
+import { useEffect, useState } from "react";
+import { API } from "../../../Services/api.js";
 
 //context
 import { color } from "../../../Context/ColorContext";
@@ -9,8 +11,26 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material";
 
-const User = ({ name, image }) => {
+const User = ({ user }) => {
+  const [username, setUsername] = useState("Unknown");
+  const [image, setImage] = useState(
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+  );
+
   const { secondaryBgColor, primaryThemeColor } = useContext(color);
+
+  const getUser = async (id) => {
+    const response = await API.getUsername("", `/user/get/${id}`);
+    const data = await response.data;
+    if (data.success) {
+      setUsername(data.data.username);
+      setImage(data.data.image_url);
+    }
+  };
+
+  useEffect(() => {
+    getUser(user);
+  }, []);
 
   const UserBox = styled(Box)({
     display: "flex",
@@ -50,10 +70,10 @@ const User = ({ name, image }) => {
   return (
     <UserBox>
       <ImageBox>
-        <Box component="img" src={image} alt={`${name}'s image`} />
+        <Box component="img" src={image} alt={`${username}'s image`} />
       </ImageBox>
       <NameBox>
-        <Typography>{name}</Typography>
+        <Typography>{username}</Typography>
       </NameBox>
     </UserBox>
   );

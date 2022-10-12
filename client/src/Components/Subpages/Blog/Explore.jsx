@@ -1,4 +1,5 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { API } from "../../../Services/api";
 
 //mui components
 import Box from "@mui/material/Box";
@@ -52,6 +53,37 @@ const Explore = () => {
       },
     },
   });
+  
+  const [blogs, setBlogs] = useState([]);
+
+  const getData = async () => {
+    try {
+      const posts = await API.getAllPost();
+      const postData = posts.data;
+      if (postData.success) {
+        setBlogs(postData.data);
+      } else {
+        console.log("post does not exists");
+      }
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
+  
+  const readTime = (content) => {
+    const p = document.createElement("p");
+    p.append(content);
+    const text = p.innerText;
+    const wpm = 225;
+    const words = text.trim().split(/\s+/).length;
+    const time = Math.ceil(words / wpm);
+    return time;
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <ExploreBox>
@@ -62,26 +94,24 @@ const Explore = () => {
         </Go>
       </HeaderBox>
       <Grid container spacing={5} style={{ marginBottom: "100px" }}>
-        <Grid item xs={12} lg={12}>
-          <Go to="/blog/this-is-a-post">
-            <ExplorePost />
-          </Go>
-        </Grid>
-        <Grid item xs={12} lg={12}>
-          <Go to="/blog/this-is-a-post">
-            <ExplorePost />
-          </Go>
-        </Grid>
-        <Grid item xs={12} lg={12}>
-          <Go to="/blog/this-is-a-post">
-            <ExplorePost />
-          </Go>
-        </Grid>
-        <Grid item xs={12} lg={12}>
-          <Go to="/blog/this-is-a-post">
-            <ExplorePost />
-          </Go>
-        </Grid>
+        {blogs.map((blog, index) => {
+          return (
+            <Grid item xs={12} lg={12} key={index}>
+              <Go to={`/blog/${blog.url}`}>
+                <ExplorePost
+                  title={blog.title}
+                  date={blog.updatedAt || blog.createdAt}
+                  read={readTime(blog.content)}
+                  likes={blog.likes}
+                  dislikes={blog.dislikes}
+                  comments={blog.comments.length}
+                  user={blog.created_by}
+                  tags={blog.tags}
+                />
+              </Go>
+            </Grid>
+          );
+        })}
       </Grid>
       <OutlineBtn>Load more</OutlineBtn>
     </ExploreBox>

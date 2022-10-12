@@ -1,4 +1,6 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import { API } from "../../../Services/api";
 
 //library components
 import Heading from "../../Library/encapsulation/Heading";
@@ -15,6 +17,8 @@ import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material";
 
 const Trending = () => {
+  const [trending, setTrending] = useState([]);
+
   const tags = [
     "Nutrition",
     "Exercise",
@@ -28,19 +32,6 @@ const Trending = () => {
     "Skill",
   ];
 
-  const postTitle = [
-    "How to web scraping in java script",
-    "Calisthenics vs Weights",
-    "How will meditation change your life",
-    "How to use and enable WSL in Windows",
-    "What is docker, How to use it, How it works, Basic Docker Commands",
-    "What is tendonoitis",
-    "How is Whey protein different from Plant protien",
-    "Hidden HTML tags that can make your life easy",
-    "Why eggs whites do not foam when yolk is present in it",
-    "How to prevent burnouts",
-  ];
-
   const Row = styled(Box)({
     display: "flex",
     flexDirection: "row",
@@ -48,6 +39,24 @@ const Trending = () => {
     justifyContent: "center",
     gap: "10px",
   });
+
+  const getData = async () => {
+    try {
+      const posts = await API.getTrendingPost();
+      const postData = posts.data;
+      if (postData.success) {
+        setTrending(postData.data);
+      } else {
+        console.log("post does not exists");
+      }
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <SectionBox>
@@ -66,19 +75,14 @@ const Trending = () => {
         </Row>
         <Box mt={10}></Box>
         <Grid container spacing={4}>
-          {postTitle.map((title, index) => {
-            const username = "Arjun Varshney";
-            const image = "https://source.unsplash.com/random/?user";
+          {trending.map((post, index) => {
             return (
               <Grid item xs={12} md={6} key={index}>
-                <Go
-                  to={`/blog/${title.replaceAll(" ", "-").replaceAll(",", "")}`}
-                >
+                <Go to={`/blog/${post.url}`}>
                   <PopularPost
-                    title={title}
+                    title={post.title}
                     rank={index + 1}
-                    username={username}
-                    image={image}
+                    user={post.created_by}
                   />
                 </Go>
               </Grid>

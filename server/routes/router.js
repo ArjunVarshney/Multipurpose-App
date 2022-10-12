@@ -8,6 +8,6 @@ const router = express.Router();
 router.use("/user", userRouter);
 
 //crud from post database
-router.use("/post", postRouter);
+router.use("/blog", postRouter);
 
 export default router;

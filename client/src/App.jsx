@@ -13,6 +13,7 @@ import ColorContext from "./Context/ColorContext";
 
 //from mui libraries
 import Box from "@mui/material/Box";
+import Create from "./Components/Pages/Create";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/blog" element={<Blog />} />
+        <Route exact path="/blog/create" element={<Create />} />
         <Route exact path="/blog/:title" element={<Post />} />
       </Routes>
       <Footer />

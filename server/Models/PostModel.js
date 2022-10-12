@@ -46,7 +46,7 @@ const postSchema = mongoose.Schema(
         },
       },
     ],
-    tags: [{ tagName: String }],
+    tags: [String],
     polls: [{ poll_id: String }],
     score: {
       type: Number,
