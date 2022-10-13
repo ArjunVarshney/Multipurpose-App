@@ -4,7 +4,6 @@ import React from "react";
 import Hero from "../Subpages/Home/Hero";
 import Discover from "../Subpages/Home/Discover";
 import Trending from "../Subpages/Home/Trending";
-import AllPosts from "../Subpages/Home/AllPosts";
 
 const Home = () => {
   return (
@@ -12,7 +11,6 @@ const Home = () => {
       <Hero />
       <Discover />
       <Trending />
-      <AllPosts />
     </>
   );
 };

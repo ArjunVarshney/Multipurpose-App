@@ -17,20 +17,8 @@ import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material";
 
 const Trending = () => {
+  const [trendingTags, setTrendingTags] = useState([]);
   const [trending, setTrending] = useState([]);
-
-  const tags = [
-    "Nutrition",
-    "Exercise",
-    "Productivity",
-    "Coding",
-    "Relationship",
-    "Sports",
-    "Docker",
-    "DevOps",
-    "Development",
-    "Skill",
-  ];
 
   const Row = styled(Box)({
     display: "flex",
@@ -47,15 +35,26 @@ const Trending = () => {
       if (postData.success) {
         setTrending(postData.data);
       } else {
-        console.log("post does not exists");
+        getData();
       }
     } catch (error) {
       console.log(error.response.data);
     }
   };
 
+  const getTrendingTags = async () => {
+    const response = await API.topTags();
+    const data = response.data;
+    if (data.success) {
+      setTrendingTags(data.data);
+    } else {
+      getTrendingTags();
+    }
+  };
+
   useEffect(() => {
     getData();
+    getTrendingTags();
   }, []);
 
   return (
@@ -65,10 +64,10 @@ const Trending = () => {
           Trending on <AppName />
         </Heading>
         <Row>
-          {tags.map((tag, index) => {
+          {trendingTags.map((tag, index) => {
             return (
-              <Go to={`/blog?search=${tag.toLowerCase()}`} key={index}>
-                <OutlineBtn>{tag}</OutlineBtn>
+              <Go to={`/blog?search=${tag.tag_name.toLowerCase()}`} key={index}>
+                <OutlineBtn>{tag.tag_name}</OutlineBtn>
               </Go>
             );
           })}

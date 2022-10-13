@@ -10,4 +10,5 @@ router.use("/user", userRouter);
 //crud from post database
 router.use("/blog", postRouter);
 
+
 export default router;

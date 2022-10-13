@@ -1,4 +1,5 @@
 import Post from "../Models/PostModel.js";
+import { autoSaveTags } from "./tagControllers.js";
 
 //create a post
 export const createPost = async (req, res) => {
@@ -16,6 +17,7 @@ export const createPost = async (req, res) => {
       success: true,
       data: savedPost,
     });
+    autoSaveTags(savedPost);
   } catch (error) {
     res.status(400).json({
       success: false,
@@ -58,7 +60,6 @@ export const getPaginatedPost = async (req, res) => {
       .select({
         polls: 0,
         score: 0,
-        content: 0,
       });
     if (!post) {
       res.status(400).json({

@@ -18,4 +18,12 @@ export const SERVICE_URLS = {
   getUsername: {
     method: "GET",
   },
+  getAllTags: {
+    method: "GET",
+    url: "/blog/tag",
+  },
+  topTags: {
+    method: "GET",
+    url: "/blog/tag/trendingTags",
+  },
 };

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { API } from "../../../Services/api.js";
 
 //mui components
 import Box from "@mui/material/Box";
@@ -8,20 +9,10 @@ import { styled } from "@mui/material";
 import Heading from "../../Library/encapsulation/Heading";
 import Go from "../../Library/encapsulation/Go";
 import PrimaryTag from "../../Library/widgets/PrimaryTag";
+import { useState } from "react";
 
 const AllTags = () => {
-  const tags = [
-    "Nutrition",
-    "Exercise",
-    "Productivity",
-    "Coding",
-    "Relationship",
-    "Sports",
-    "Docker",
-    "DevOps",
-    "Development",
-    "Skill",
-  ];
+  const [tags, setTags] = useState([]);
 
   const TagBox = styled(Box)({
     display: "flex",
@@ -54,14 +45,25 @@ const AllTags = () => {
     },
   });
 
+  useEffect(() => {
+    const getTags = async () => {
+      const response = await API.getAllTags();
+      const data = response.data;
+      if (data.success) {
+        setTags(data.data);
+      }
+    };
+    getTags();
+  }, []);
+
   return (
     <TagBox>
       <Heading>Tags</Heading>
       <Row>
         {tags.map((tag, index) => {
           return (
-            <Go to={`/blog?search=${tag.toLowerCase()}`} key={index}>
-              <PrimaryTag text={tag} />
+            <Go to={`/blog?search=${tag.tag_name.toLowerCase()}`} key={index}>
+              <PrimaryTag text={tag.tag_name} />
             </Go>
           );
         })}
