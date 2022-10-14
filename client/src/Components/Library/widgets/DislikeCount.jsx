@@ -20,6 +20,7 @@ const DislikeCount = ({ dislikes }) => {
     gap: "8px",
     padding: "8px 15px",
     borderRadius: "10px",
+    width:"max-content",
     "& > p": {
       ["@media (max-width: 450px)"]: {
         fontSize: "14px",

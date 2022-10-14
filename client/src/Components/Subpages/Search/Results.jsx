@@ -13,7 +13,7 @@ import { color } from "../../../Context/ColorContext";
 
 //library component
 import Heading from "../../Library/encapsulation/Heading";
-import ExplorePost from "../../Library/widgets/ExplorePost";
+import PostCard from "../../Library/widgets/PostCard";
 import OutlineBtn from "../../Library/widgets/OutlineBtn";
 import Go from "../../Library/encapsulation/Go";
 
@@ -129,7 +129,7 @@ const Results = () => {
           return (
             <Grid item xs={12} lg={12} key={index}>
               <Go to={`/blog/${blog.url}`}>
-                <ExplorePost
+                <PostCard
                   title={blog.title}
                   date={blog.updatedAt || blog.createdAt}
                   read={readTime(blog.content)}
@@ -138,6 +138,8 @@ const Results = () => {
                   comments={blog.comments.length}
                   user={blog.created_by}
                   tags={blog.tags}
+                  image={blog.image_url}
+                  subject={blog.subject}
                 />
               </Go>
             </Grid>

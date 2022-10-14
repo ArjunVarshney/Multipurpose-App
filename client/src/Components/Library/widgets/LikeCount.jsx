@@ -21,6 +21,7 @@ const LikeCount = ({ likes }) => {
     padding: "8px 15px",
     borderRadius: "10px",
     fontSize: "14px",
+    width: "max-content",
     "& > p": {
       ["@media (max-width: 450px)"]: {
         fontSize: "14px",
