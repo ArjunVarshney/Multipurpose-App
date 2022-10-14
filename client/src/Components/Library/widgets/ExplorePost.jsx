@@ -76,7 +76,7 @@ const ExplorePost = (props) => {
     borderRadius: "10px",
     ["@media (max-width: 1000px)"]: {
       width: "100%",
-      height: "200px",
+      height: "300px",
     },
   });
 
@@ -110,7 +110,29 @@ const ExplorePost = (props) => {
     margin: "10px 0px",
   });
 
-  const date = props.date.split("T")[0];
+  const getDayBefore = (strDate) => {
+    const curr = new Date();
+    const date = new Date(strDate);
+    const oneDay = 1000 * 60 * 60 * 24;
+    const days = Math.floor((curr - date) / oneDay);
+    let timeAgo = "";
+    if (days > 730) {
+      timeAgo = Math.floor(days / 365).toString() + " years ago";
+    } else if (days > 365) {
+      timeAgo = Math.floor(days / 365).toString() + " year ago";
+    } else if (days > 60) {
+      timeAgo = Math.floor(days / 30).toString() + " months ago";
+    } else if (days > 30) {
+      timeAgo = Math.floor(days / 30).toString() + " month ago";
+    } else if (days > 1) {
+      timeAgo = days.toString() + " days ago";
+    } else if (days > 0) {
+      timeAgo = days.toString() + " day ago";
+    } else {
+      timeAgo = "Today";
+    }
+    return timeAgo;
+  };
 
   return (
     <PostBox>
@@ -122,7 +144,7 @@ const ExplorePost = (props) => {
             <TitleBox>{props.title}</TitleBox>
           </TextBox>
           <DateBox>
-            {date} | {props.read}m read
+            {getDayBefore(props.date)} | {props.read}m read
           </DateBox>
         </Box>
       </DetailBox>

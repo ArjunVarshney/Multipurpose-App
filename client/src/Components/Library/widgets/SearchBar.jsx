@@ -1,5 +1,6 @@
 import React from "react";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 //context
 import { color } from "../../../Context/ColorContext";
@@ -12,9 +13,11 @@ import SearchIcon from "@mui/icons-material/Search";
 
 const SearchBar = () => {
   const { secondaryBgColor, primaryTextColor } = useContext(color);
+  const navigate = useNavigate();
 
   const searchBlogs = (e) => {
     e.preventDefault();
+    navigate("/blog/search");
   };
 
   const Form = styled(Box)({
@@ -37,7 +40,7 @@ const SearchBar = () => {
   });
 
   return (
-    <Box style={{ width: "100%", marginTop: "50px" }}>
+    <Box style={{ width: "100%", margin: "50px 0" }}>
       <Form component="form" onSubmit={searchBlogs}>
         <SearchField
           id="search"

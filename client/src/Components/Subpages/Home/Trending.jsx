@@ -10,23 +10,14 @@ import ColBox from "../../Library/encapsulation/ColBox";
 import OutlineBtn from "../../Library/widgets/OutlineBtn";
 import PopularPost from "../../Library/widgets/PopularPost";
 import Go from "../../Library/encapsulation/Go";
+import PopularTags from "../../Library/widgets/PopularTags";
 
 //mui components
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material";
 
 const Trending = () => {
-  const [trendingTags, setTrendingTags] = useState([]);
   const [trending, setTrending] = useState([]);
-
-  const Row = styled(Box)({
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    gap: "10px",
-  });
 
   const getData = async () => {
     try {
@@ -42,19 +33,8 @@ const Trending = () => {
     }
   };
 
-  const getTrendingTags = async () => {
-    const response = await API.topTags();
-    const data = response.data;
-    if (data.success) {
-      setTrendingTags(data.data);
-    } else {
-      getTrendingTags();
-    }
-  };
-
   useEffect(() => {
     getData();
-    getTrendingTags();
   }, []);
 
   return (
@@ -63,15 +43,7 @@ const Trending = () => {
         <Heading>
           Trending on <AppName />
         </Heading>
-        <Row>
-          {trendingTags.map((tag, index) => {
-            return (
-              <Go to={`/blog?search=${tag.tag_name.toLowerCase()}`} key={index}>
-                <OutlineBtn>{tag.tag_name}</OutlineBtn>
-              </Go>
-            );
-          })}
-        </Row>
+        <PopularTags />
         <Box mt={10}></Box>
         <Grid container spacing={4}>
           {trending.map((post, index) => {
