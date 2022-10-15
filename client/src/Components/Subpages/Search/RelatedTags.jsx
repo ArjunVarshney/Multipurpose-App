@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { API } from "../../../Services/api.js";
 
 //mui components
@@ -12,7 +13,23 @@ import PrimaryTag from "../../Library/widgets/PrimaryTag";
 import { useState } from "react";
 
 const RelatedTags = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    const getSearchedPostTags = async () => {
+      let url = `blog/search?q=${searchParams.get("q")}&onlytags=true`;
+      if (searchParams.get("tag")) {
+        url = `blog/tag/${searchParams.get("tag")}/posts?onlytags=true`;
+      }
+      const response = await API.searchPost("", url);
+      const data = await response.data;
+      if (data.success) {
+        setTags(data.data);
+      }
+    };
+    getSearchedPostTags();
+  }, [searchParams]);
 
   const TagBox = styled(Box)({
     display: "flex",
@@ -45,28 +62,14 @@ const RelatedTags = () => {
     },
   });
 
-  useEffect(() => {
-    const getTags = async () => {
-      const response = await API.getAllTags();
-      const data = response.data;
-      if (data.success) {
-        setTags(data.data);
-      }
-    };
-    getTags();
-  }, []);
-
   return (
     <TagBox>
       <Heading>Related</Heading>
       <Row>
         {tags.map((tag, index) => {
           return (
-            <Go
-              to={`/blog/search?tag=${tag.tag_name.toLowerCase()}`}
-              key={index}
-            >
-              <PrimaryTag text={tag.tag_name} />
+            <Go to={`/blog/search?tag=${tag.toLowerCase()}`} key={index}>
+              <PrimaryTag text={tag} />
             </Go>
           );
         })}

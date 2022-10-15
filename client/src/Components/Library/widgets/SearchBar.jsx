@@ -17,7 +17,8 @@ const SearchBar = () => {
 
   const searchBlogs = (e) => {
     e.preventDefault();
-    navigate("/blog/search");
+    const data = new FormData(e.currentTarget);
+    navigate(`/blog/search?q=${data.get("search")}`);
   };
 
   const Form = styled(Box)({

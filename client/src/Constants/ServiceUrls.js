@@ -11,6 +11,10 @@ export const SERVICE_URLS = {
     method: "GET",
     url: "blog/trending",
   },
+  searchPost: {
+    method: "GET",
+    url: "blog/search?q=",
+  },
   getPaginatedPost: {
     method: "GET",
     url: "blog/getPage/0",
@@ -20,10 +24,10 @@ export const SERVICE_URLS = {
   },
   getAllTags: {
     method: "GET",
-    url: "/blog/tag",
+    url: "blog/tag",
   },
   topTags: {
     method: "GET",
-    url: "/blog/tag/trendingTags",
+    url: "blog/tag/trendingTags",
   },
 };

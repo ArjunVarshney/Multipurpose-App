@@ -1,4 +1,5 @@
 import Tag from "../Models/TagModel.js";
+import Post from "../Models/PostModel.js";
 
 export const getAllTags = async (req, res) => {
   try {
@@ -12,6 +13,48 @@ export const getAllTags = async (req, res) => {
     res.status(200).json({
       success: true,
       data: allTags,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      reason: error,
+    });
+  }
+};
+
+export const getTaggedPosts = async (req, res) => {
+  try {
+    const tag = req.params["tag"];
+    const onlytags = req.query.onlytags;
+    const sort = req.query.sort;
+    let tag_name = tag.charAt(0).toUpperCase() + tag.substring(1).toLowerCase();
+    const tagPostIds = (await Tag.findOne({ tag_name }).select({ posts: 1 }))
+      .posts;
+    if (!tagPostIds) {
+      res.status(200).json({
+        success: true,
+        data: [],
+      });
+    }
+    let taggedPosts = [];
+    let allRelatedTags = [];
+    for (let i = 0; i < tagPostIds.length; i++) {
+      let post = await Post.findById(tagPostIds[i]);
+      if (post) {
+        taggedPosts.push(post);
+        allRelatedTags = [...new Set([...allRelatedTags, ...post.tags])];
+      }
+    }
+    if (sort == "latest") {
+      taggedPosts = taggedPosts.reverse();
+    } else {
+      taggedPosts.sort((a, b) =>
+        a.score > b.score ? 1 : b.score > a.score ? -1 : 0
+      );
+    }
+    res.status(200).json({
+      success: true,
+      data: onlytags == "true" ? allRelatedTags : taggedPosts,
     });
   } catch (error) {
     res.status(400).json({

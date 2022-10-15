@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import { API } from "../../../Services/api";
+import { useSearchParams } from "react-router-dom";
+import { API } from "../../../Services/api.js";
 
 //mui components
 import Box from "@mui/material/Box";
@@ -14,14 +15,31 @@ import { color } from "../../../Context/ColorContext";
 //library component
 import Heading from "../../Library/encapsulation/Heading";
 import PostCard from "../../Library/widgets/PostCard";
-import OutlineBtn from "../../Library/widgets/OutlineBtn";
 import Go from "../../Library/encapsulation/Go";
 
 const Results = () => {
-  const [value, setValue] = useState(0);
-  const [page, setPage] = useState(0);
+  let [searchParams, setSearchParams] = useSearchParams();
+  const [sort, setSort] = useState(0);
   const [blogs, setBlogs] = useState([]);
-  const [disable, setDisable] = useState("");
+
+  useEffect(() => {
+    const getSearchedpost = async () => {
+      let url = `blog/search?q=${searchParams.get("q")}&sort=${
+        sort == 0 ? "popular" : "latest"
+      }`;
+      if (searchParams.get("tag")) {
+        url = `blog/tag/${searchParams.get("tag")}/posts?sort=${
+          sort == 0 ? "popular" : "latest"
+        }`;
+      }
+      const response = await API.searchPost("", url);
+      const data = await response.data;
+      if (data.success) {
+        setBlogs(data.data);
+      }
+    };
+    getSearchedpost();
+  }, [searchParams, sort]);
 
   const { primaryThemeColor, textWhite, secondaryBgColor } = useContext(color);
 
@@ -80,25 +98,7 @@ const Results = () => {
   });
 
   const tabChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const getData = async () => {
-    try {
-      const posts = await API.getPaginatedPost("", `blog/getPage/${page}`);
-      setPage(page + 1);
-      const postData = posts.data;
-      if (postData.success) {
-        setBlogs([...blogs, ...postData.data]);
-        if (postData.data.length < 10) {
-          setDisable("disabled");
-        }
-      } else {
-        console.log("post does not exists");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    setSort(newValue);
   };
 
   const readTime = (content) => {
@@ -111,44 +111,43 @@ const Results = () => {
     return time;
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
-
   return (
     <ExploreBox>
       <HeaderBox>
         <Heading>Search Results</Heading>
-        <CustomTabs value={value} onChange={tabChange} selectionFollowsFocus>
+        <CustomTabs value={sort} onChange={tabChange} selectionFollowsFocus>
           <CustomTab label="Popular" />
           <CustomTab label="Latest" />
         </CustomTabs>
       </HeaderBox>
       <Grid container spacing={5} style={{ marginBottom: "100px" }}>
-        {blogs.map((blog, index) => {
-          return (
-            <Grid item xs={12} lg={12} key={index}>
-              <Go to={`/blog/${blog.url}`}>
-                <PostCard
-                  title={blog.title}
-                  date={blog.updatedAt || blog.createdAt}
-                  read={readTime(blog.content)}
-                  likes={blog.likes}
-                  dislikes={blog.dislikes}
-                  comments={blog.comments.length}
-                  user={blog.created_by}
-                  tags={blog.tags}
-                  image={blog.image_url}
-                  subject={blog.subject}
-                />
-              </Go>
-            </Grid>
-          );
-        })}
+        {blogs.length == 0 ? (
+          <Grid item xs={12} lg={12} style={{ fontFamily: "Inter" }}>
+            No Post found
+          </Grid>
+        ) : (
+          blogs.map((blog, index) => {
+            return (
+              <Grid item xs={12} lg={12} key={index}>
+                <Go to={`/blog/${blog.url}`}>
+                  <PostCard
+                    title={blog.title}
+                    date={blog.updatedAt || blog.createdAt}
+                    read={readTime(blog.content)}
+                    likes={blog.likes}
+                    dislikes={blog.dislikes}
+                    comments={blog.comments.length}
+                    user={blog.created_by}
+                    tags={blog.tags}
+                    image={blog.image_url}
+                    subject={blog.subject}
+                  />
+                </Go>
+              </Grid>
+            );
+          })
+        )}
       </Grid>
-      <Box onClick={() => getData()}>
-        <OutlineBtn variant={disable}>Load more</OutlineBtn>
-      </Box>
     </ExploreBox>
   );
 };

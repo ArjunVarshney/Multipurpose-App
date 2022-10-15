@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 
 //Libraray components
 import SectionBox from "../Library/encapsulation/SectionBox";
@@ -15,6 +16,7 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material";
 
 const Search = () => {
+
   const RowBox = styled(Box)({
     display: "flex",
     flexDirection: "row",

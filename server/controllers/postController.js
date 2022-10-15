@@ -26,6 +26,51 @@ export const createPost = async (req, res) => {
   }
 };
 
+//search a post in database
+export const searchPost = async (req, res) => {
+  try {
+    const searchQuery = req.query.q;
+    const sort = req.query.sort;
+    const onlytags = req.query.onlytags;
+    let sortedPosts = [];
+    if (sort == "latest") {
+      sortedPosts = await Post.find().sort({ updatedAt: -1 });
+    } else {
+      sortedPosts = await Post.find().sort({ score: -1 });
+    }
+    const reg = new RegExp(searchQuery, "i");
+    const posts = sortedPosts.filter(
+      (post) =>
+        reg.test(post.title) ||
+        reg.test(post.subject) ||
+        reg.test(post.tags) ||
+        reg.test(post.url) ||
+        reg.test(post.content)
+    );
+    let tags = [];
+    if (onlytags == "true") {
+      posts.forEach((post) => {
+        tags = [...new Set([...tags, ...post.tags])];
+      });
+    }
+    if (!posts) {
+      res.status(400).json({
+        success: false,
+        reason: "No such post found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      data: onlytags == "true" ? tags : posts,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      reason: error,
+    });
+  }
+};
+
 // get a single post
 export const getPost = async (req, res) => {
   try {
@@ -55,6 +100,7 @@ export const getPaginatedPost = async (req, res) => {
   const postPerPage = 10;
   try {
     const post = await Post.find()
+      .sort({ updatedAt: -1 })
       .skip(page * postPerPage)
       .limit(postPerPage)
       .select({
