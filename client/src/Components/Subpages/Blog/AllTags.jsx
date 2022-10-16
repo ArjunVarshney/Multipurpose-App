@@ -62,7 +62,7 @@ const AllTags = () => {
       <Row>
         {tags.map((tag, index) => {
           return (
-            <Go to={`/blog?search=${tag.tag_name.toLowerCase()}`} key={index}>
+            <Go to={`/blog/search?q=${tag.tag_name.toLowerCase()}`} key={index}>
               <PrimaryTag text={tag.tag_name} />
             </Go>
           );

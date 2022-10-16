@@ -20,7 +20,8 @@ const DislikeCount = ({ dislikes }) => {
     gap: "8px",
     padding: "8px 15px",
     borderRadius: "10px",
-    width:"max-content",
+    width: "max-content",
+    cursor: "pointer",
     "& > p": {
       ["@media (max-width: 450px)"]: {
         fontSize: "14px",
@@ -37,7 +38,11 @@ const DislikeCount = ({ dislikes }) => {
 
   return (
     <CountBox>
-      <Typography>{dislikes}</Typography>
+      {dislikes > -1 ? (
+        <Typography style={{ fontFamily: "Inter" }}>{dislikes}</Typography>
+      ) : (
+        ""
+      )}
       <Icon />
     </CountBox>
   );

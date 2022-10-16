@@ -21,6 +21,7 @@ const CommentCount = ({ comments }) => {
     padding: "8px 15px",
     borderRadius: "10px",
     width: "max-content",
+    cursor: "pointer",
     "& > p": {
       ["@media (max-width: 450px)"]: {
         fontSize: "14px",
@@ -37,7 +38,11 @@ const CommentCount = ({ comments }) => {
 
   return (
     <CountBox>
-      <Typography>{comments}</Typography>
+      {comments > -1 ? (
+        <Typography style={{ fontFamily: "Inter" }}>{comments}</Typography>
+      ) : (
+        ""
+      )}
       <Icon />
     </CountBox>
   );

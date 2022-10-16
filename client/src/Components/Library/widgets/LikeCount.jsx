@@ -6,6 +6,7 @@ import { color } from "../../../Context/ColorContext";
 
 //mui components
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -22,6 +23,7 @@ const LikeCount = ({ likes }) => {
     borderRadius: "10px",
     fontSize: "14px",
     width: "max-content",
+    cursor:"pointer",
     "& > p": {
       ["@media (max-width: 450px)"]: {
         fontSize: "14px",
@@ -38,7 +40,11 @@ const LikeCount = ({ likes }) => {
 
   return (
     <CountBox>
-      <Typography>{likes}</Typography>
+      {likes > -1 ? (
+        <Typography style={{ fontFamily: "Inter" }}>{likes}</Typography>
+      ) : (
+        ""
+      )}
       <Icon />
     </CountBox>
   );

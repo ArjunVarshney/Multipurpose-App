@@ -22,6 +22,10 @@ export const SERVICE_URLS = {
   getUsername: {
     method: "GET",
   },
+  getUser: {
+    method: "GET",
+    url: "user/get/6345524eb7cf13e03f889c88",
+  },
   getAllTags: {
     method: "GET",
     url: "blog/tag",
