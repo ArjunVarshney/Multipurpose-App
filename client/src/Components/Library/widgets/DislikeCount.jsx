@@ -8,7 +8,7 @@ import { color } from "../../../Context/ColorContext";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import ThumbDownRoundedIcon from "@mui/icons-material/ThumbDownRounded";
 
 const DislikeCount = ({ dislikes }) => {
   const { secondaryBgColor } = useContext(color);
@@ -27,9 +27,16 @@ const DislikeCount = ({ dislikes }) => {
         fontSize: "14px",
       },
     },
+    transition: "all 0.3s ease",
+    "&:hover": {
+      scale: "1.05",
+    },
+    "&:active": {
+      scale: "1",
+    },
   });
 
-  const Icon = styled(ThumbDownIcon)({
+  const Icon = styled(ThumbDownRoundedIcon)({
     fontSize: "20px",
     ["@media (max-width: 450px)"]: {
       fontSize: "18px",

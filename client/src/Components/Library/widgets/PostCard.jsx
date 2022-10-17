@@ -1,4 +1,8 @@
 import React from "react";
+import { useContext } from "react";
+
+// context
+import { color } from "../../../Context/ColorContext";
 
 //library components
 import User from "./User";
@@ -14,8 +18,11 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material";
 
 const PostCard = (props) => {
+  const { secondaryBgColor, textWhite } = useContext(color);
+
   const PostBox = styled(Box)({
-    boxShadow: "0 0 3px 0 ",
+    boxShadow: `0 0 3px 0 ${secondaryBgColor}`,
+    background: textWhite,
     width: "100%",
     margin: "auto",
     borderRadius: "10px",

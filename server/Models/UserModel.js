@@ -39,15 +39,9 @@ const userSchema = mongoose.Schema({
     default:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
   },
-  saved: [{ id: String }],
-  liked: [{ id: String }],
-  comments: [
-    {
-      comment: String,
-      blog_id: String,
-      date: { type: Date, default: Date.now },
-    },
-  ],
+  saved: [String],
+  liked: [String],
+  comments: [String],
 });
 
 const User = mongoose.model("User", userSchema);

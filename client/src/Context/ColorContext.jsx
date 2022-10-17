@@ -8,7 +8,7 @@ const ColorContext = ({ children }) => {
   const [secondaryBgColor, setSecondaryBgColor] = useState("#D9C5FF");
   const [primaryThemeColor, setPrimaryThemeColor] = useState("#6821FF");
   const [primaryTextColor, setPrimaryTextColor] = useState("#000000");
-  const [textWhite, setTextWhite] = useState("#F4F4F4");
+  const [textWhite, setTextWhite] = useState("#FFF");
   const [linkColor, setLinkColor] = useState("#55DBCB");
   return (
     <color.Provider

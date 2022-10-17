@@ -6,10 +6,9 @@ import { color } from "../../../Context/ColorContext";
 
 //mui components
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbUpRoundedIcon from "@mui/icons-material/ThumbUpRounded";
 
 const LikeCount = ({ likes }) => {
   const { secondaryBgColor } = useContext(color);
@@ -23,15 +22,22 @@ const LikeCount = ({ likes }) => {
     borderRadius: "10px",
     fontSize: "14px",
     width: "max-content",
-    cursor:"pointer",
+    cursor: "pointer",
     "& > p": {
       ["@media (max-width: 450px)"]: {
         fontSize: "14px",
       },
     },
+    transition: "all 0.3s ease",
+    "&:hover": {
+      scale: "1.05",
+    },
+    "&:active": {
+      scale: "1",
+    },
   });
 
-  const Icon = styled(ThumbUpIcon)({
+  const Icon = styled(ThumbUpRoundedIcon)({
     fontSize: "20px",
     ["@media (max-width: 450px)"]: {
       fontSize: "18px",

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { API } from "../../Services/api";
 
 // context
@@ -24,16 +23,12 @@ import Go from "../Library/encapsulation/Go";
 import LikeCount from "../Library/widgets/LikeCount";
 import DislikeCount from "../Library/widgets/DislikeCount";
 import CommentCount from "../Library/widgets/CommentCount";
+import CommentInput from "../Library/widgets/CommentInput";
+import CommentBox from "../Library/widgets/CommentBox";
 
 const Post = () => {
-  const navigate = useNavigate();
-  const {
-    primaryThemeColor,
-    primaryTextColor,
-    secondaryBgColor,
-    mainBgColor,
-    textWhite,
-  } = useContext(color);
+  const { primaryThemeColor, primaryTextColor, secondaryBgColor, textWhite } =
+    useContext(color);
   const [creator, setCreator] = useState({});
   const [post, setPost] = useState({});
 
@@ -157,8 +152,13 @@ const Post = () => {
     wordSpacing: "5px",
     textAlign: "center",
     borderRadius: "10px",
+    transition: "all 0.3s ease",
     "&:hover": {
       background: secondaryBgColor,
+      scale: "1.05",
+    },
+    "&:active": {
+      scale: "1",
     },
   });
 
@@ -172,9 +172,9 @@ const Post = () => {
     left: "0",
     padding: "25px 7px",
     transform: "translate(0,-50%)",
-    border: `1px solid ${secondaryBgColor}`,
     borderRadius: "0 10px 10px 0",
-    background: mainBgColor,
+    background: textWhite,
+    boxShadow: `0 0 3px 0 ${secondaryBgColor}`,
     zIndex: "1",
     ["@media (max-width: 650px)"]: {
       flexDirection: "row",
@@ -283,7 +283,6 @@ const Post = () => {
                 display: "flex",
                 flexDirection: "column",
                 gap: "15px",
-                marginBottom: "40px",
               }}
             >
               <Typography
@@ -322,6 +321,8 @@ const Post = () => {
             width: "100%",
             display: "flex",
             flexWrap: "wrap",
+            marginBottom: "50px",
+            marginTop: "100px",
             justifyContent: "space-between",
           }}
         >
@@ -354,6 +355,29 @@ const Post = () => {
         </Box>
 
         {/* For comments */}
+        <Box style={{ width: "100%", marginBottom: "25px" }}>
+          <CommentInput />
+        </Box>
+        <Box style={{ width: "100%" }}>
+          <CommentBox
+            comment="table source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of essor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through"
+            user="634567b480b352ae6271bb97"
+            date="2022-10-11T12:55:16.899Z"
+            likes={32}
+          />
+          <CommentBox
+            comment="table source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of essor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through"
+            user="634567b480b352ae6271bb97"
+            date="2022-10-11T12:55:16.899Z"
+            likes={32}
+          />
+          <CommentBox
+            comment="table source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of essor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through"
+            user="634567b480b352ae6271bb97"
+            date="2022-10-11T12:55:16.899Z"
+            likes={32}
+          />
+        </Box>
         {/* Make the comment component separately */}
       </ColBox>
     </SectionBox>

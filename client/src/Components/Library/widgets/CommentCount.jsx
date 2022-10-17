@@ -8,7 +8,7 @@ import { color } from "../../../Context/ColorContext";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material";
-import CommentIcon from "@mui/icons-material/Comment";
+import ModeCommentRoundedIcon from "@mui/icons-material/ModeCommentRounded";
 
 const CommentCount = ({ comments }) => {
   const { secondaryBgColor } = useContext(color);
@@ -27,9 +27,16 @@ const CommentCount = ({ comments }) => {
         fontSize: "14px",
       },
     },
+    transition: "all 0.3s ease",
+    "&:hover": {
+      scale: "1.05",
+    },
+    "&:active": {
+      scale: "1",
+    },
   });
 
-  const Icon = styled(CommentIcon)({
+  const Icon = styled(ModeCommentRoundedIcon)({
     fontSize: "20px",
     ["@media (max-width: 450px)"]: {
       fontSize: "18px",
