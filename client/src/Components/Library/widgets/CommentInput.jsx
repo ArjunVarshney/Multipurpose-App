@@ -3,25 +3,49 @@ import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import { useContext } from "react";
 import { useCallback } from "react";
+import { API } from "../../../Services/api.js";
 
 //context
 import { color } from "../../../Context/ColorContext";
+import { account } from "../../../Context/UserContext";
 
 //mui components
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-const CommentInput = () => {
+const CommentInput = ({ post, refresh }) => {
   const { primaryThemeColor, textWhite, mainBgColor, secondaryBgColor } =
     useContext(color);
+  const { user } = useContext(account);
+  let textBox = {};
+  const navigate = useNavigate();
+
+  const saveComment = async (e) => {
+    e.preventDefault();
+    if (!user._id) navigate("/signin");
+    const comment = textBox.root.innerHTML;
+    const post_id = post;
+    const user_id = user._id;
+    const response = await API.makeComment({
+      blog_id: post_id,
+      created_by: user_id,
+      comment,
+    });
+    if (!response) return;
+    const data = await response.data;
+    if (data.success) {
+      refresh();
+    }
+  };
 
   const wrapperRef = useCallback((wrapper) => {
     if (!wrapper) return;
     wrapper.innerHTML = "";
     const editor = document.createElement("div");
     wrapper.append(editor);
-    const textBox = new Quill(editor, {
+    textBox = new Quill(editor, {
       theme: "snow",
       modules: {
         toolbar: [
@@ -64,7 +88,7 @@ const CommentInput = () => {
       borderRadius: "10px",
       background: mainBgColor,
     },
-    "& > .ql-container": {
+    "& > .ql-container.ql-snow": {
       border: "none",
     },
     "& > .ql-container > .ql-editor": {
@@ -79,9 +103,9 @@ const CommentInput = () => {
   });
 
   return (
-    <CommentBox>
+    <CommentBox component="form" onSubmit={saveComment}>
       <Editor id="editor" ref={wrapperRef} />
-      <RespondBtn>Respond</RespondBtn>
+      <RespondBtn type="submit">Respond</RespondBtn>
     </CommentBox>
   );
 };

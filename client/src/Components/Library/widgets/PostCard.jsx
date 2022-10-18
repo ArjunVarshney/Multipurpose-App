@@ -94,6 +94,7 @@ const PostCard = (props) => {
     display: "flex",
     justifyContent: "flex-end",
     gap: "7px",
+    pointerEvents:"none",
     ["@media (max-width:520px)"]: {
       width: "100%",
     },

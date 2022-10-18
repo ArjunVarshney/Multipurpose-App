@@ -34,4 +34,12 @@ export const SERVICE_URLS = {
     method: "GET",
     url: "blog/tag/trendingTags",
   },
+  makeComment: {
+    method: "POST",
+    url: "blog/comment/post",
+  },
+  getComment:{
+    method: "GET",
+    url:"blog/comment/get/"
+  }
 };

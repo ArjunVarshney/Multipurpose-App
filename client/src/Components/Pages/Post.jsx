@@ -356,29 +356,15 @@ const Post = () => {
 
         {/* For comments */}
         <Box style={{ width: "100%", marginBottom: "25px" }}>
-          <CommentInput />
+          <CommentInput post={post._id} refresh={getData} />
         </Box>
+
         <Box style={{ width: "100%" }}>
-          <CommentBox
-            comment="table source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of essor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through"
-            user="634567b480b352ae6271bb97"
-            date="2022-10-11T12:55:16.899Z"
-            likes={32}
-          />
-          <CommentBox
-            comment="table source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of essor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through"
-            user="634567b480b352ae6271bb97"
-            date="2022-10-11T12:55:16.899Z"
-            likes={32}
-          />
-          <CommentBox
-            comment="table source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of essor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through"
-            user="634567b480b352ae6271bb97"
-            date="2022-10-11T12:55:16.899Z"
-            likes={32}
-          />
+          {post.comments &&
+            [...post.comments].reverse().map((comment, index) => {
+              return <CommentBox comment_id={comment} key={index} />;
+            })}
         </Box>
-        {/* Make the comment component separately */}
       </ColBox>
     </SectionBox>
   );

@@ -20,6 +20,7 @@ const User = ({ user }) => {
   const { secondaryBgColor, primaryThemeColor } = useContext(color);
 
   const getUser = async (id) => {
+    if (!id) return;
     const response = await API.getUsername("", `/user/get/${id}`);
     const data = await response.data;
     if (data.success) {

@@ -11,23 +11,26 @@ import Search from "./Components/Pages/Search";
 
 //context
 import ColorContext from "./Context/ColorContext";
+import UserContext from "./Context/UserContext";
 
 //from mui libraries
 import Box from "@mui/material/Box";
 
 const App = () => {
   return (
-    <ColorContext>
-      <Navbar />
-      <Box mt="70px"></Box>
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="/blog" element={<Blog />} />
-        <Route exact path="/blog/search" element={<Search />} />
-        <Route exact path="/blog/:title" element={<Post />} />
-      </Routes>
-      <Footer />
-    </ColorContext>
+    <UserContext>
+      <ColorContext>
+        <Navbar />
+        <Box mt="70px"></Box>
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+          <Route exact path="/blog" element={<Blog />} />
+          <Route exact path="/blog/search" element={<Search />} />
+          <Route exact path="/blog/:title" element={<Post />} />
+        </Routes>
+        <Footer />
+      </ColorContext>
+    </UserContext>
   );
 };
 

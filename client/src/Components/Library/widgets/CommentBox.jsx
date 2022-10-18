@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
+import { API } from "../../../Services/api.js";
 
 // context
 import { color } from "../../../Context/ColorContext";
@@ -13,7 +14,26 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ThumbUpRoundedIcon from "@mui/icons-material/ThumbUpRounded";
 
-const CommentBox = ({ user, comment, likes, date }) => {
+const CommentBox = ({ comment_id }) => {
+  const [comment, setComment] = useState({});
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await API.getComment(
+          "",
+          `blog/comment/get/${comment_id}`
+        );
+        if (response.data.success) {
+          setComment(response.data.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+  }, []);
+
   const getDayBefore = (strDate) => {
     const curr = new Date();
     const date = new Date(strDate);
@@ -57,19 +77,22 @@ const CommentBox = ({ user, comment, likes, date }) => {
           justifyContent: "space-between",
         }}
       >
-        <User user={user} />
-        <Typography style={{ opacity: "0.7" }}>{getDayBefore(date)}</Typography>
-      </Box>
-      <Box style={{ padding: "10px 5px 5px 5px" }}>
-        <Typography
-          style={{
-            fontFamily: "Inter",
-            lineHeight: "24px",
-            wordSpacing: "3px",
-          }}
-        >
-          {comment}
+        {comment.created_by && <User user={comment.created_by} />}
+        <Typography style={{ opacity: "0.7" }}>
+          {comment.updatedAt && getDayBefore(comment.updatedAt)}
         </Typography>
+      </Box>
+      <Box style={{ padding: "0 5px" }}>
+        {comment.comment && (
+          <Typography
+            style={{
+              fontFamily: "Inter",
+              lineHeight: "24px",
+              wordSpacing: "3px",
+            }}
+            dangerouslySetInnerHTML={{ __html: comment.comment }}
+          ></Typography>
+        )}
       </Box>
       <Box
         style={{
@@ -91,7 +114,9 @@ const CommentBox = ({ user, comment, likes, date }) => {
             gap: "5px",
           }}
         >
-          <Typography style={{ fontSize: "12px" }}>{likes}</Typography>
+          <Typography style={{ fontSize: "12px" }}>
+            {comment.likes && comment.likes}
+          </Typography>
           <ThumbUpRoundedIcon fontSize="sm" />
         </Button>
       </Box>

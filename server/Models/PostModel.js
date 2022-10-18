@@ -50,16 +50,7 @@ sapiente officiis modi at sunt excepturi expedita sint? Sed quibusda`,
       required: true,
       default: 0,
     },
-    comments: [
-      {
-        comment: String,
-        user_id: String,
-        date: {
-          type: Date,
-          default: Date.now,
-        },
-      },
-    ],
+    comments: [String],
     tags: [String],
     polls: [{ poll_id: String }],
     score: {

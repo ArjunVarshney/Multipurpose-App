@@ -1,4 +1,6 @@
 import express from "express";
+import commentRouter from "./commentRouter.js";
+import tagRouter from "./tagRouter.js";
 import {
   createPost,
   deletePost,
@@ -9,7 +11,6 @@ import {
   searchPost,
   updatePost,
 } from "../controllers/postController.js";
-import tagRouter from "./tagRouter.js";
 
 const postRouter = express.Router();
 
@@ -27,5 +28,8 @@ postRouter.delete("/delete/:id", deletePost);
 
 // for tags
 postRouter.use("/tag", tagRouter);
+
+// for comments
+postRouter.use("/comment", commentRouter);
 
 export default postRouter;
