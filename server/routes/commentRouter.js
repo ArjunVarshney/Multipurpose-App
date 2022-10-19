@@ -4,6 +4,7 @@ import {
   postComment,
   getSingleComment,
   likeComment,
+  getBlogComments,
 } from "../controllers/commentController.js";
 
 const commentRouter = express.Router();
@@ -13,6 +14,7 @@ commentRouter.get("/", getAllComments);
 
 // crud with comments
 commentRouter.post("/post", postComment);
+commentRouter.get("/blogcomment/:blogid", getBlogComments);
 commentRouter.get("/get/:id", getSingleComment);
 commentRouter.post("/like/:commentid", likeComment);
 

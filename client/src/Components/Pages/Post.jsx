@@ -33,6 +33,7 @@ const Post = () => {
   const { user } = useContext(account);
   const [creator, setCreator] = useState({});
   const [post, setPost] = useState({});
+  const [comments, setComments] = useState([]);
 
   const getData = async () => {
     try {
@@ -58,11 +59,28 @@ const Post = () => {
       if (user.success) {
         setCreator(user.data);
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getComments = async () => {
+    try {
+      if (!post._id) return;
+      const url = `blog/comment/blogcomment/${post._id}`;
+      const response = await API.getBlogComments("", url);
+      const blogComments = await response.data;
+      if (blogComments.success) {
+        setComments(blogComments.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     getCreator();
+    getComments();
   }, [post]);
 
   useEffect(() => {
@@ -402,9 +420,15 @@ const Post = () => {
         </Box>
 
         <Box style={{ width: "100%" }}>
-          {post.comments &&
-            [...post.comments].reverse().map((comment, index) => {
-              return <CommentBox comment_id={comment} key={index} />;
+          {comments &&
+            [...comments].reverse().map((comment, index) => {
+              return (
+                <CommentBox
+                  comment={comment}
+                  refresh={getComments}
+                  key={index}
+                />
+              );
             })}
         </Box>
       </ColBox>

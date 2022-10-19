@@ -4,6 +4,7 @@ import User from "../Models/UserModel.js";
 export const like = async (req, res) => {
   const body = req.body;
   const id = req.params["postid"];
+  let updatedPost = {};
   if (!id || !body) {
     res.status(400).json({
       success: false,
@@ -17,29 +18,42 @@ export const like = async (req, res) => {
         success: false,
         reason: "Post not found in the database",
       });
-    const likeArr = [...post.likes];
-    const dislikeArr = [...post.dislikes];
 
-    if (!likeArr.includes(body.user_id)) {
+    if (
+      !post.likes.includes(body.user_id) &&
+      !post.dislikes.includes(body.user_id)
+    ) {
+      updatedPost = await Post.findByIdAndUpdate(id, {
+        $push: { likes: body.user_id },
+      });
       await User.findByIdAndUpdate(body.user_id, { $push: { liked: id } });
+    } else if (
+      !post.likes.includes(body.user_id) &&
+      post.dislikes.includes(body.user_id)
+    ) {
+      updatedPost = await Post.findByIdAndUpdate(id, {
+        $push: { likes: body.user_id },
+        $pull: { dislikes: body.user_id },
+      });
+      await User.findByIdAndUpdate(body.user_id, {
+        $push: { liked: id },
+      });
+    } else {
+      updatedPost = await Post.findByIdAndUpdate(id, {
+        $pull: { likes: body.user_id },
+      });
+      await User.findByIdAndUpdate(body.user_id, { $pull: { liked: id } });
     }
 
-    likeArr.splice(likeArr.indexOf(body.user_id), 1);
-    dislikeArr.splice(dislikeArr.indexOf(body.user_id), 1);
-    likeArr.push(body.user_id);
-
-    const updatedPost = await Post.findByIdAndUpdate(post._id, {
-      likes: likeArr,
-      dislikes: dislikeArr,
-    });
     res.status(200).json({
       success: true,
       data: updatedPost,
     });
   } catch (err) {
+    console.log(err);
     res.status(400).json({
-      success: true,
-      reason: "Some error occurred",
+      success: false,
+      reason: err,
     });
   }
 };
@@ -47,6 +61,7 @@ export const like = async (req, res) => {
 export const dislike = async (req, res) => {
   const body = req.body;
   const id = req.params["postid"];
+  let updatedPost = {};
   if (!id || !body) {
     res.status(400).json({
       success: false,
@@ -60,29 +75,36 @@ export const dislike = async (req, res) => {
         success: false,
         reason: "Post not found in the database",
       });
-    const likeArr = [...post.likes];
-    const dislikeArr = [...post.dislikes];
 
-    if (likeArr.includes(body.user_id)) {
+    if (
+      !post.dislikes.includes(body.user_id) &&
+      !post.likes.includes(body.user_id)
+    ) {
+      updatedPost = await Post.findByIdAndUpdate(id, {
+        $push: { dislikes: body.user_id },
+      });
+    } else if (
+      !post.dislikes.includes(body.user_id) &&
+      post.likes.includes(body.user_id)
+    ) {
+      updatedPost = await Post.findByIdAndUpdate(id, {
+        $push: { dislikes: body.user_id },
+        $pull: { likes: body.user_id },
+      });
       await User.findByIdAndUpdate(body.user_id, { $pull: { liked: id } });
+    } else {
+      updatedPost = await Post.findByIdAndUpdate(id, {
+        $pull: { dislikes: body.user_id },
+      });
     }
-
-    likeArr.splice(likeArr.indexOf(body.user_id), 1);
-    dislikeArr.splice(dislikeArr.indexOf(body.user_id), 1);
-    dislikeArr.push(body.user_id);
-
-    const updatedPost = await Post.findByIdAndUpdate(post._id, {
-      likes: likeArr,
-      dislikes: dislikeArr,
-    });
     res.status(200).json({
       success: true,
       data: updatedPost,
     });
   } catch (err) {
     res.status(400).json({
-      success: true,
-      reason: "Some error occurred",
+      success: false,
+      reason: err,
     });
   }
 };

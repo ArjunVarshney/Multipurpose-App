@@ -42,6 +42,10 @@ export const SERVICE_URLS = {
     method: "GET",
     url: "blog/comment/get/",
   },
+  getBlogComments: {
+    method: "GET",
+    url: "blog/comment/blogcomment/:id",
+  },
   likePost: {
     method: "POST",
     url: "blog/like/:id",

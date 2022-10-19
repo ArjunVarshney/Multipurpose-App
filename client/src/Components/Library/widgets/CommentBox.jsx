@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useContext } from "react";
 import { API } from "../../../Services/api.js";
 
@@ -15,37 +15,18 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ThumbUpRoundedIcon from "@mui/icons-material/ThumbUpRounded";
 
-const CommentBox = ({ comment_id }) => {
+const CommentBox = ({ comment, refresh }) => {
   const { textWhite, secondaryBgColor, primaryTextColor, primaryThemeColor } =
     useContext(color);
-  const [comment, setComment] = useState({});
   const { user } = useContext(account);
-
-  const getData = async () => {
-    try {
-      const response = await API.getComment(
-        "",
-        `blog/comment/get/${comment_id}`
-      );
-      if (response.data.success) {
-        setComment(response.data.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   const updateCommentLikes = async () => {
     const response = await API.likeComment(
       { user_id: user._id },
-      `blog/comment/like/${comment_id}`
+      `blog/comment/like/${comment._id}`
     );
     if (response.data.success) {
-      getData();
+      refresh();
     }
   };
 

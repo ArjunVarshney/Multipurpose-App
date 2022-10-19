@@ -80,6 +80,34 @@ export const getSingleComment = async (req, res) => {
   }
 };
 
+export const getBlogComments = async (req, res) => {
+  try {
+    const blog_id = req.params["blogid"];
+    if (!blog_id) {
+      res.status(400).json({
+        success: false,
+        reason: "No blog found",
+      });
+    }
+    const comments = await Comment.find({ blog_id }).sort({ likes: 1 });
+    if (comments) {
+      res.status(200).json({
+        success: true,
+        data: comments,
+      });
+    }
+    res.status(400).json({
+      success: false,
+      reason: "No Comment found",
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      reason: error,
+    });
+  }
+};
+
 export const likeComment = async (req, res) => {
   try {
     const comment_id = req.params["commentid"];
@@ -97,9 +125,14 @@ export const likeComment = async (req, res) => {
         reason: "Comment was not found in the database",
       });
     }
+
     if (!comment.likes.includes(user_id)) {
       comment = await Comment.findByIdAndUpdate(comment_id, {
         $push: { likes: user_id },
+      });
+    } else {
+      comment = await Comment.findByIdAndUpdate(comment_id, {
+        $pull: { likes: user_id },
       });
     }
 
