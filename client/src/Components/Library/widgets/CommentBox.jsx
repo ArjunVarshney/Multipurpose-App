@@ -4,6 +4,7 @@ import { API } from "../../../Services/api.js";
 
 // context
 import { color } from "../../../Context/ColorContext";
+import { account } from "../../../Context/UserContext";
 
 // library components
 import User from "./User";
@@ -15,24 +16,38 @@ import Button from "@mui/material/Button";
 import ThumbUpRoundedIcon from "@mui/icons-material/ThumbUpRounded";
 
 const CommentBox = ({ comment_id }) => {
+  const { textWhite, secondaryBgColor, primaryTextColor, primaryThemeColor } =
+    useContext(color);
   const [comment, setComment] = useState({});
+  const { user } = useContext(account);
+
+  const getData = async () => {
+    try {
+      const response = await API.getComment(
+        "",
+        `blog/comment/get/${comment_id}`
+      );
+      if (response.data.success) {
+        setComment(response.data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await API.getComment(
-          "",
-          `blog/comment/get/${comment_id}`
-        );
-        if (response.data.success) {
-          setComment(response.data.data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
     getData();
   }, []);
+
+  const updateCommentLikes = async () => {
+    const response = await API.likeComment(
+      { user_id: user._id },
+      `blog/comment/like/${comment_id}`
+    );
+    if (response.data.success) {
+      getData();
+    }
+  };
 
   const getDayBefore = (strDate) => {
     const curr = new Date();
@@ -58,7 +73,6 @@ const CommentBox = ({ comment_id }) => {
     return timeAgo;
   };
 
-  const { textWhite, secondaryBgColor, primaryTextColor } = useContext(color);
   return (
     <Box
       style={{
@@ -104,6 +118,7 @@ const CommentBox = ({ comment_id }) => {
         }}
       >
         <Button
+          onClick={updateCommentLikes}
           style={{
             display: "flex",
             background: secondaryBgColor,
@@ -115,9 +130,18 @@ const CommentBox = ({ comment_id }) => {
           }}
         >
           <Typography style={{ fontSize: "12px" }}>
-            {comment.likes && comment.likes}
+            {comment.likes && comment.likes.length}
           </Typography>
-          <ThumbUpRoundedIcon fontSize="sm" />
+          {comment.likes && (
+            <ThumbUpRoundedIcon
+              fontSize="sm"
+              style={{
+                color: comment.likes.includes(user._id)
+                  ? primaryThemeColor
+                  : primaryTextColor,
+              }}
+            />
+          )}
         </Button>
       </Box>
     </Box>

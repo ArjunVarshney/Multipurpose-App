@@ -38,8 +38,20 @@ export const SERVICE_URLS = {
     method: "POST",
     url: "blog/comment/post",
   },
-  getComment:{
+  getComment: {
     method: "GET",
-    url:"blog/comment/get/"
-  }
+    url: "blog/comment/get/",
+  },
+  likePost: {
+    method: "POST",
+    url: "blog/like/:id",
+  },
+  dislikePost: {
+    method: "POST",
+    url: "blog/dislike/:id",
+  },
+  likeComment: {
+    method: "POST",
+    url: "blog/comment/like/:id",
+  },
 };

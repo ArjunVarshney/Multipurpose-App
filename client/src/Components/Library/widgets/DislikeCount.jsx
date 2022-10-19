@@ -10,8 +10,10 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material";
 import ThumbDownRoundedIcon from "@mui/icons-material/ThumbDownRounded";
 
-const DislikeCount = ({ dislikes }) => {
-  const { secondaryBgColor } = useContext(color);
+const DislikeCount = ({ dislikes, isChecked }) => {
+  const { secondaryBgColor, primaryTextColor, primaryThemeColor } =
+    useContext(color);
+
   const CountBox = styled(Box)({
     background: secondaryBgColor,
     display: "flex",
@@ -38,6 +40,7 @@ const DislikeCount = ({ dislikes }) => {
 
   const Icon = styled(ThumbDownRoundedIcon)({
     fontSize: "20px",
+    color: isChecked ? primaryThemeColor : primaryTextColor,
     ["@media (max-width: 450px)"]: {
       fontSize: "18px",
     },

@@ -8,7 +8,9 @@ import {
 
 const tagRouter = express.Router();
 
+//for testing
 tagRouter.get("/", getAllTags);
+
 tagRouter.get("/trendingtags", getTrendingTags);
 tagRouter.get("/:tag", getTagData);
 tagRouter.get("/:tag/posts", getTaggedPosts);

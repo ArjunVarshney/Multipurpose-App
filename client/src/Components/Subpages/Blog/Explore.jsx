@@ -105,8 +105,8 @@ const Explore = () => {
                   title={blog.title}
                   date={blog.updatedAt || blog.createdAt}
                   read={readTime(blog.content)}
-                  likes={blog.likes}
-                  dislikes={blog.dislikes}
+                  likes={blog.likes.length}
+                  dislikes={blog.dislikes.length}
                   comments={blog.comments.length}
                   user={blog.created_by}
                   tags={blog.tags}

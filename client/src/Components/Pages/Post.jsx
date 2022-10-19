@@ -5,6 +5,7 @@ import { API } from "../../Services/api";
 
 // context
 import { color } from "../../Context/ColorContext";
+import { account } from "../../Context/UserContext";
 
 //mui components
 import Box from "@mui/material/Box";
@@ -29,6 +30,7 @@ import CommentBox from "../Library/widgets/CommentBox";
 const Post = () => {
   const { primaryThemeColor, primaryTextColor, secondaryBgColor, textWhite } =
     useContext(color);
+  const { user } = useContext(account);
   const [creator, setCreator] = useState({});
   const [post, setPost] = useState({});
 
@@ -99,6 +101,28 @@ const Post = () => {
       timeAgo = "Today";
     }
     return timeAgo;
+  };
+
+  const updateLikes = async () => {
+    const response = await API.likePost(
+      { user_id: user._id },
+      `/blog/like/${post._id}`
+    );
+    const data = await response.data;
+    if (data.success) {
+      getData();
+    }
+  };
+
+  const updateDislikes = async () => {
+    const response = await API.dislikePost(
+      { user_id: user._id },
+      `/blog/dislike/${post._id}`
+    );
+    const data = await response.data;
+    if (data.success) {
+      getData();
+    }
   };
 
   const ImageBox = styled(Box)({
@@ -308,9 +332,15 @@ const Post = () => {
         <LikeBox>
           {post.comments && (
             <>
-              <LikeCount />
-              <DislikeCount />
-              <CommentCount />
+              <Box onClick={updateLikes}>
+                <LikeCount isChecked={post.likes.includes(user._id)} />
+              </Box>
+              <Box onClick={updateDislikes}>
+                <DislikeCount isChecked={post.dislikes.includes(user._id)} />
+              </Box>
+              <Box>
+                <CommentCount />
+              </Box>
             </>
           )}
         </LikeBox>
@@ -346,9 +376,21 @@ const Post = () => {
           >
             {post.comments && (
               <>
-                <CommentCount comments={post.comments.length} />
-                <LikeCount likes={post.likes} />
-                <DislikeCount dislikes={post.dislikes} />
+                <Box>
+                  <CommentCount comments={post.comments.length} />
+                </Box>
+                <Box onClick={updateLikes}>
+                  <LikeCount
+                    likes={post.likes.length}
+                    isChecked={post.likes.includes(user._id)}
+                  />
+                </Box>
+                <Box onClick={updateDislikes}>
+                  <DislikeCount
+                    dislikes={post.dislikes.length}
+                    isChecked={post.dislikes.includes(user._id)}
+                  />
+                </Box>
               </>
             )}
           </Box>

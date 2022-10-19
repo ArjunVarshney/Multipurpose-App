@@ -79,3 +79,38 @@ export const getSingleComment = async (req, res) => {
     });
   }
 };
+
+export const likeComment = async (req, res) => {
+  try {
+    const comment_id = req.params["commentid"];
+    const user_id = req.body.user_id;
+    if (!comment_id && !user_id) {
+      res.status(400).json({
+        success: false,
+        reason: "Please send complete information",
+      });
+    }
+    let comment = await Comment.findById(comment_id);
+    if (!comment) {
+      res.status(400).json({
+        success: false,
+        reason: "Comment was not found in the database",
+      });
+    }
+    if (!comment.likes.includes(user_id)) {
+      comment = await Comment.findByIdAndUpdate(comment_id, {
+        $push: { likes: user_id },
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: comment,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      reason: error,
+    });
+  }
+};
