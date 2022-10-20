@@ -66,6 +66,9 @@ const CommentInput = ({ post, refresh }) => {
     borderRadius: "10px",
     background: textWhite,
     boxShadow: `0 0 5px 0 ${secondaryBgColor}`,
+    ["@media (max-width: 560px)"]: {
+      borderRadius: "10px 10px 0 0",
+    },
   });
 
   const RespondBtn = styled(Button)({
@@ -78,6 +81,12 @@ const CommentInput = ({ post, refresh }) => {
     background: primaryThemeColor,
     "&:hover": {
       background: primaryThemeColor,
+    },
+    ["@media (max-width: 560px)"]: {
+      top: "100%",
+      left: "0",
+      right: "0",
+      borderRadius: "0 0 10px 10px",
     },
   });
 
@@ -93,8 +102,11 @@ const CommentInput = ({ post, refresh }) => {
     },
     "& > .ql-container > .ql-editor": {
       padding: "10px 5px 5px 5px",
-      height: "fit-content",
+      height: "max-content",
       fontSize: "16px",
+      ["@media (max-width: 560px)"]: {
+        minHeight: "100px",
+      },
     },
     "& > .ql-container > .ql-editor::before": {
       left: "5px",

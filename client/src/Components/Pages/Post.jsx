@@ -71,7 +71,13 @@ const Post = () => {
       const response = await API.getBlogComments("", url);
       const blogComments = await response.data;
       if (blogComments.success) {
-        setComments(blogComments.data);
+        let commentData = blogComments.data;
+        for (let i = 0; i < commentData.length; i++) {
+          if (commentData[i].created_by == user._id) {
+            commentData.push(commentData.splice(i, 1)[0]);
+          }
+        }
+        setComments(commentData);
       }
     } catch (error) {
       console.log(error);
@@ -149,6 +155,10 @@ const Post = () => {
     height: "100px",
     borderRadius: "50%",
     boxShadow: "0 0 3px 0",
+    ["@media (max-width: 350px)"]: {
+      height: "70px",
+      width: "70px",
+    },
   });
 
   const UserBox = styled(Box)({
@@ -158,6 +168,14 @@ const Post = () => {
     justifyContent: "center",
     width: "100%",
     height: "max-content",
+    ["@media (max-width: 500px)"]: {
+      scale: "0.8",
+    },
+    ["@media (max-width: 420px)"]: {
+      "& > div:nth-of-type(3)": {
+        display: "none",
+      },
+    },
   });
 
   const UserText = styled(Box)({
@@ -168,6 +186,12 @@ const Post = () => {
     gap: "8px",
     flexDirection: "column",
     justifyContent: "space-between",
+    ["@media (max-width: 400px)"]: {
+      padding: "10px 20px",
+    },
+    ["@media (max-width: 350px)"]: {
+      padding: "5px 15px",
+    },
   });
 
   const HeadBox = styled(Box)({
@@ -176,6 +200,23 @@ const Post = () => {
     gap: "50px",
     justifyContent: "space-between",
     width: "100%",
+    ["@media (max-width: 600px)"]: {
+      flexDirection: "column-reverse",
+      alignItems: "flex-start",
+      gap: "0px",
+      "& > div": {
+        marginTop: "20px",
+      },
+      "& > div > h2": {
+        marginTop: "0px !important",
+        ["@media (max-width: 450px)"]: {
+          fontSize: "25px",
+        },
+        ["@media (max-width: 380px)"]: {
+          fontSize: "20px",
+        },
+      },
+    },
   });
 
   const TitleBox = styled(Box)({
@@ -229,6 +270,20 @@ const Post = () => {
     },
   });
 
+  const WidgetBox = styled(Box)({
+    width: "100%",
+    display: "flex",
+    flexWrap: "wrap",
+    marginBottom: "50px",
+    marginTop: "50px",
+    justifyContent: "space-between",
+    alignItems: "center",
+    ["@media (max-width: 500px)"]: {
+      flexDirection: "column",
+      gap: "20px",
+    },
+  });
+
   return (
     <SectionBox>
       <ColBox>
@@ -244,7 +299,14 @@ const Post = () => {
                 {creator.username}
               </Typography>
 
-              <Typography style={{ opacity: "0.7" }}>
+              <Typography
+                style={{
+                  opacity: "0.7",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "...",
+                }}
+              >
                 {creator.small_intro}
               </Typography>
             </Box>
@@ -364,16 +426,7 @@ const Post = () => {
         </LikeBox>
 
         {/* For Bottom widgets */}
-        <Box
-          style={{
-            width: "100%",
-            display: "flex",
-            flexWrap: "wrap",
-            marginBottom: "50px",
-            marginTop: "100px",
-            justifyContent: "space-between",
-          }}
-        >
+        <WidgetBox>
           <Button
             style={{
               padding: "10px 20px",
@@ -412,7 +465,7 @@ const Post = () => {
               </>
             )}
           </Box>
-        </Box>
+        </WidgetBox>
 
         {/* For comments */}
         <Box style={{ width: "100%", marginBottom: "25px" }}>

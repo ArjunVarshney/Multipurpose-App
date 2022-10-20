@@ -94,7 +94,7 @@ const PostCard = (props) => {
     display: "flex",
     justifyContent: "flex-end",
     gap: "7px",
-    pointerEvents:"none",
+    pointerEvents: "none",
     ["@media (max-width:520px)"]: {
       width: "100%",
     },
@@ -149,8 +149,8 @@ const PostCard = (props) => {
           )}
           <CountBox>
             <CommentCount comments={props.comments} />
-            <LikeCount likes={props.likes} />
-            <DislikeCount dislikes={props.dislikes} />
+            <LikeCount likes={props.likes.length} />
+            <DislikeCount dislikes={props.dislikes.length} />
           </CountBox>
         </WidgetBox>
       </DetailBox>
