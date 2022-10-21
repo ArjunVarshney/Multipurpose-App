@@ -27,7 +27,7 @@ import CommentCount from "../Library/widgets/CommentCount";
 import CommentInput from "../Library/widgets/CommentInput";
 import CommentBox from "../Library/widgets/CommentBox";
 
-const Post = () => {
+const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
   const { primaryThemeColor, primaryTextColor, secondaryBgColor, textWhite } =
     useContext(color);
   const { user } = useContext(account);
@@ -231,7 +231,7 @@ const Post = () => {
     fontWeight: "bold",
     background: secondaryBgColor,
     fontSize: "16px",
-    padding: "10px 20px 10px 7px",
+    padding: "5px 20px 5px 5px",
     wordSpacing: "5px",
     textAlign: "center",
     borderRadius: "10px",
@@ -352,15 +352,25 @@ const Post = () => {
               minWidth: "110px",
             }}
           >
-            <PlayButton>
-              <PlayArrowRoundedIcon style={{ fontSize: "40px" }} />
-              Play
-            </PlayButton>
+            {"speechSynthesis" in window ? (
+              <PlayButton
+                onClick={() => {
+                  setCurrentBlog(post);
+                  setClosePlayer(false);
+                }}
+                disabled={!isPlayerClosed}
+              >
+                <PlayArrowRoundedIcon style={{ fontSize: "40px" }} />
+                Play
+              </PlayButton>
+            ) : (
+              ""
+            )}
           </Box>
         </HeadBox>
 
         <Box style={{ marginBottom: "25px" }}>
-          <Box style={{ marginBottom: "15px" }}>
+          <Box>
             <Box
               component="img"
               src={post.image_url}
@@ -373,9 +383,8 @@ const Post = () => {
           </Box>
           <Typography
             style={{ fontSize: "18px", lineHeight: "30px", wordSpacing: "3px" }}
-          >
-            {post.content}
-          </Typography>
+            dangerouslySetInnerHTML={{ __html: post.content }}
+          />
         </Box>
 
         {/* for Tags */}

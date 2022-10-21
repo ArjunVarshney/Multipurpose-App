@@ -68,6 +68,7 @@ const CommentInput = ({ post, refresh }) => {
     boxShadow: `0 0 5px 0 ${secondaryBgColor}`,
     ["@media (max-width: 560px)"]: {
       borderRadius: "10px 10px 0 0",
+      marginBottom:"50px"
     },
   });
 
