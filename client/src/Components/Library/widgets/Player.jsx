@@ -20,6 +20,7 @@ import Typography from "@mui/material/Typography";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import PauseIcon from "@mui/icons-material/Pause";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Slider from "@mui/material/Slider";
 import { styled } from "@mui/material";
 import { useEffect } from "react";
@@ -42,6 +43,7 @@ const Player = ({ close, setClose, currentBlog }) => {
   const [char, setChar] = useState(0);
   const [prevChar, setPrevChar] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [control, openControl] = useState(false);
   const [username, setUsername] = useState("Unknown");
   const { primaryThemeColor, secondaryBgColor, primaryTextColor, textWhite } =
     useContext(color);
@@ -115,11 +117,18 @@ const Player = ({ close, setClose, currentBlog }) => {
     bottom: "0",
     right: "0",
     background: textWhite,
-    zIndex: "1",
+    zIndex: "2",
+    ["@media (max-width:650px)"]: {
+      width: "100%",
+      height: control ? "120px" : "70px",
+      margin: "0",
+      borderRadius: "0",
+    },
   });
 
   const ProgressBar = styled(Slider)({
     color: primaryThemeColor,
+    width: window.innerWidth < 400 ? "90%" : "100%",
   });
 
   const ImageBox = styled(Box)({
@@ -147,20 +156,62 @@ const Player = ({ close, setClose, currentBlog }) => {
           setClose(true);
         }}
       />
+      <KeyboardArrowUpIcon
+        style={{
+          fontSize: "18px",
+          float: "right",
+          margin: "7px",
+          position: "absolute",
+          right: "20px",
+          transform: control ? "rotate(180deg)" : "",
+          display: window.innerWidth < 400 ? "unset" : "none",
+        }}
+        onClick={() => {
+          openControl(!control);
+        }}
+      />
       {/* For images */}
-      <Box style={{ width: "30%", height: "100%", overflow: "hidden" }}>
+      <Box
+        style={{
+          width: "43%",
+          height: "100%",
+          overflow: "hidden",
+          display: window.innerWidth < 650 ? "none" : "unset",
+        }}
+      >
         <ImageBox />
       </Box>
 
       {/* For other than images */}
-      <Box style={{ width: "70%" }}>
+      <Box
+        style={{
+          width: "100%",
+          display: window.innerWidth < 650 ? "flex" : "unset",
+          flexDirection: window.innerWidth < 400 ? "column" : "row",
+        }}
+      >
         {/* For title and username */}
-        <Box style={{ padding: "10px 10px" }}>
+        <Box
+          style={{
+            padding:
+              window.innerWidth < 650
+                ? window.innerWidth < 400
+                  ? "10px 5px 0 5px"
+                  : "10px 0 10px 10px"
+                : "10px",
+            width:
+              window.innerWidth < 650
+                ? window.innerWidth < 400
+                  ? "100%"
+                  : "30%"
+                : "unset",
+          }}
+        >
           {/* For title */}
           <Typography
             variant="h5"
             style={{
-              fontSize: "16px",
+              fontSize: window.innerWidth ? "14px" : "16px",
               fontWeight: "bold",
               fontFamily: "Inter",
               width: "90%",
@@ -172,15 +223,31 @@ const Player = ({ close, setClose, currentBlog }) => {
             {currentBlog.title}
           </Typography>
           {/* For username */}
-          <Typography>{username}</Typography>
+          <Typography
+            style={{
+              display: window.innerWidth < 400 ? "none" : "unset",
+            }}
+          >
+            {username}
+          </Typography>
         </Box>
 
         {/* For player */}
-        <Box style={{ padding: "0 15px 0 10px" }}>
+        <Box
+          style={{
+            padding:
+              window.innerWidth < 650 ? "12px 25px 10px 0" : "0 15px 0 10px",
+            width: window.innerWidth < 650 ? "100%" : "unset",
+            display: window.innerWidth < 400 ? "flex" : "block",
+            flexDirection: "column-reverse",
+          }}
+        >
           <Box
             style={{
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: `${
+                window.innerWidth < 650 ? "space-around" : "space-between"
+              }`,
               height: "18px",
               alignItems: "flex-start",
               marginBottom: "5px",
@@ -247,13 +314,12 @@ const Player = ({ close, setClose, currentBlog }) => {
             </Typography>
           </Box>
           {/* For proress */}
-          <Box>
+          <Box style={{ display: "grid", placeItems: "center" }}>
             <ProgressBar
               aria-label="time-indicator"
               size="small"
               value={progress}
               onChange={(_, value) => {
-                // setProgress(value);
                 cancelSpeech();
                 setPrevChar(Math.floor((value / 100) * content.length));
                 startPlaying(
