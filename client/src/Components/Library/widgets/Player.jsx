@@ -56,8 +56,8 @@ const Player = ({ close, setClose, currentBlog }) => {
   };
 
   speech.addEventListener("boundary", (e) => {
-    if (content) {
-      setProgress(((char + 25) / content.length) * 100);
+    if (content && play) {
+      setProgress((char / content.length) * 100);
       setChar(prevChar + e.charIndex);
     }
   });
@@ -80,9 +80,13 @@ const Player = ({ close, setClose, currentBlog }) => {
 
   useEffect(() => {
     if (play && !close) {
-      startPlaying(content, rate, speaker.voiceURI ? speaker : voices[0]);
+      startPlaying(
+        content,
+        rate,
+        speaker.voiceURI ? speaker : voices[0],
+        prevChar
+      );
     } else if (!play & !close) {
-      setPrevChar(char);
       if (speechSynthesis.speaking) pauseSpeech();
       else cancelSpeech();
     } else if (close) {
@@ -249,14 +253,11 @@ const Player = ({ close, setClose, currentBlog }) => {
               size="small"
               value={progress}
               onChange={(_, value) => {
-                setProgress(value);
+                // setProgress(value);
                 cancelSpeech();
-                setPrevChar(Math.floor((value / 100) * content.length) - 5);
-                setChar(0);
+                setPrevChar(Math.floor((value / 100) * content.length));
                 startPlaying(
-                  content.substring(
-                    Math.floor((value / 100) * content.length) - 5
-                  )
+                  content.substring(Math.floor((value / 100) * content.length))
                 );
                 setPlay(true);
                 updateSpeech(rate, speaker);

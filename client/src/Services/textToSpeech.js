@@ -15,7 +15,7 @@ export const getVoices = () => {
   return voices;
 };
 
-export const startPlaying = (text, rate, voice) => {
+export const startPlaying = (text, rate, voice, startIndex) => {
   if (speechSynthesis.paused && speechSynthesis.speaking) {
     return speechSynthesis.resume();
   }
@@ -24,7 +24,7 @@ export const startPlaying = (text, rate, voice) => {
 
   speech.volume = 1;
   speech.voice = voice;
-  speech.text = text;
+  speech.text = startIndex ? text.substring(startIndex) : text;
   speech.rate = rate || 1;
   speechSynthesis.speak(speech);
 };
