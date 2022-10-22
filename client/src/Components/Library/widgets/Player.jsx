@@ -57,17 +57,17 @@ const Player = ({ close, setClose, currentBlog }) => {
 
   speech.addEventListener("boundary", (e) => {
     if (content) {
-      setProgress((char / content.length) * 100);
+      setProgress(((char + 25) / content.length) * 100);
       setChar(prevChar + e.charIndex);
     }
   });
 
   speech.addEventListener("end", () => {
-    cancelSpeech();
-    setPlay(!play);
+    setProgress(0);
     setPrevChar(0);
     setChar(0);
-    setProgress(0);
+    setPlay(false);
+    cancelSpeech();
   });
 
   useEffect(() => {
@@ -80,12 +80,11 @@ const Player = ({ close, setClose, currentBlog }) => {
 
   useEffect(() => {
     if (play && !close) {
-      startPlaying(content);
-      setSpeaker(voices[0]);
-      setRate(1);
+      startPlaying(content, rate, speaker.voiceURI ? speaker : voices[0]);
     } else if (!play & !close) {
       setPrevChar(char);
-      pauseSpeech();
+      if (speechSynthesis.speaking) pauseSpeech();
+      else cancelSpeech();
     } else if (close) {
       setPrevChar(0);
       setChar(0);
@@ -252,7 +251,7 @@ const Player = ({ close, setClose, currentBlog }) => {
               onChange={(_, value) => {
                 setProgress(value);
                 cancelSpeech();
-                setPrevChar(Math.floor((value / 100) * content.length));
+                setPrevChar(Math.floor((value / 100) * content.length) - 5);
                 setChar(0);
                 startPlaying(
                   content.substring(Math.floor((value / 100) * content.length))

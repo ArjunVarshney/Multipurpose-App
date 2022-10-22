@@ -39,7 +39,7 @@ export const pauseSpeech = () => {
 };
 
 export const cancelSpeech = () => {
-  if (speechSynthesis.paused) speechSynthesis.resume();
+  speechSynthesis.resume();
   speechSynthesis.cancel();
 };
 
