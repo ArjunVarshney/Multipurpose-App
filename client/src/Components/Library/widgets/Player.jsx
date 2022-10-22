@@ -106,7 +106,7 @@ const Player = ({ close, setClose, currentBlog }) => {
     boxShadow: `0 0 3px 0 ${secondaryBgColor}`,
     borderRadius: "10px",
     margin: "0 5px 5px 0",
-    minWidth: "400px",
+    width: "400px",
     position: "fixed",
     bottom: "0",
     right: "0",
@@ -254,7 +254,9 @@ const Player = ({ close, setClose, currentBlog }) => {
                 setPrevChar(Math.floor((value / 100) * content.length) - 5);
                 setChar(0);
                 startPlaying(
-                  content.substring(Math.floor((value / 100) * content.length))
+                  content.substring(
+                    Math.floor((value / 100) * content.length) - 5
+                  )
                 );
                 setPlay(true);
                 updateSpeech(rate, speaker);
