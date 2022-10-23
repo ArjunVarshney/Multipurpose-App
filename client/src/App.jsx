@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 
@@ -21,6 +21,21 @@ import Box from "@mui/material/Box";
 const App = () => {
   const [closePlayer, setClosePlayer] = useState(true);
   const [currentBlog, setCurrentBlog] = useState({});
+
+  useEffect(() => {
+    const handleCredentialResponse = (response) => {
+      console.log("Encoded JWT ID token: " + response.credential);
+    };
+    /* global google */
+    google.accounts.id.initialize({
+      client_id:
+        "601421942488-s1d3qka9gba17h79aru7p8fqmaafjfou.apps.googleusercontent.com",
+      callback: handleCredentialResponse,
+    });
+
+    google.accounts.id.prompt();
+  }, []);
+
   return (
     <UserContext>
       <ColorContext>

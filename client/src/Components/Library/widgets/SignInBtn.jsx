@@ -9,7 +9,7 @@ import { color } from "../../../Context/ColorContext";
 import { Button } from "@mui/material";
 import { styled } from "@mui/material";
 
-const SignupBtn = () => {
+const SignInBtn = () => {
   const navigate = useNavigate();
 
   const { primaryThemeColor, textWhite } = useContext(color);
@@ -32,12 +32,12 @@ const SignupBtn = () => {
   return (
     <SignBtn
       onClick={() => {
-        navigate("/signup");
+        navigate("/signin");
       }}
     >
-      Signup
+      Sign in
     </SignBtn>
   );
 };
 
-export default SignupBtn;
+export default SignInBtn;

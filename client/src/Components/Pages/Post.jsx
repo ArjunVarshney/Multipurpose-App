@@ -427,9 +427,6 @@ const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
               <Box onClick={updateDislikes}>
                 <DislikeCount isChecked={post.dislikes.includes(user._id)} />
               </Box>
-              <Box>
-                <CommentCount />
-              </Box>
             </>
           )}
         </LikeBox>

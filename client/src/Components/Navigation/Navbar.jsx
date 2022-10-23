@@ -4,8 +4,7 @@ import { useContext } from "react";
 //from library
 import LogoText from "../Library/standard/LogoText";
 import NavBtn from "../Library/widgets/NavBtn";
-import SignupBtn from "../Library/widgets/SignupBtn";
-import LoginBtn from "../Library/widgets/LoginBtn";
+import SignInBtn from "../Library/widgets/SignInBtn";
 
 //context
 import { color } from "../../Context/ColorContext";
@@ -54,10 +53,9 @@ const Navbar = () => {
         <LogoText />
         <Box>
           <NotImportant>
-            <NavBtn text="About" variant="standard" link="/about"/>
-            <LoginBtn />
+            <NavBtn text="About" variant="standard" link="/about" />
           </NotImportant>
-          <SignupBtn />
+          <SignInBtn />
         </Box>
       </CustomToolbar>
     </Navbar>

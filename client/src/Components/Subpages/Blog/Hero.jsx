@@ -9,8 +9,7 @@ import { styled } from "@mui/material";
 import image from "../../../Images/PageBanner/BlogPageBanner.svg";
 
 //library component
-import SignupBtn from "../../Library/widgets/SignupBtn";
-import LoginBtn from "../../Library/widgets/LoginBtn";
+import SignInBtn from "../../Library/widgets/SignInBtn";
 import SectionBox from "../../Library/encapsulation/SectionBox";
 
 const Hero = () => {
@@ -87,8 +86,7 @@ const Hero = () => {
             rerum quo laudantium modi architecto accusamus asperiores
           </Typography>
           <Box>
-            <SignupBtn />
-            <LoginBtn />
+            <SignInBtn />
           </Box>
         </TextBox>
         <ImgBox>

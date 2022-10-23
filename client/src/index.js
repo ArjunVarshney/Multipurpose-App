@@ -4,16 +4,14 @@ import ReactDOM from "react-dom/client";
 
 //pages
 import App from "./App";
-import Login from "./Components/Pages/Login";
-import Signup from "./Components/Pages/Signup";
+import Signin from "./Components/Pages/Signin";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
         <Route path="/*" element={<App />} />
       </Routes>
     </BrowserRouter>

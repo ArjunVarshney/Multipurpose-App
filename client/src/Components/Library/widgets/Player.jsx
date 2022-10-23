@@ -214,7 +214,7 @@ const Player = ({ close, setClose, currentBlog }) => {
               fontSize: window.innerWidth ? "14px" : "16px",
               fontWeight: "bold",
               fontFamily: "Inter",
-              width: "90%",
+              width: "80%",
               whiteSpace: "nowrap",
               overflow: "hidden",
               textOverflow: "ellipsis",

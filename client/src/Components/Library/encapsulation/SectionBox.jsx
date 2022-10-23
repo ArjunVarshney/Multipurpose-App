@@ -17,7 +17,7 @@ const SectionBox = ({ children }) => {
     minHeight: "calc(100vh - 70px)",
     display: "flex",
     alignItems: "center",
-    justifyContent:"center",
+    justifyContent: "center",
     borderBottom: `1px solid ${secondaryBgColor}`,
   });
 
