@@ -4,7 +4,7 @@ import User from "../Models/UserModel.js";
 export const createUser = async (req, res) => {
   try {
     const userData = req.userData;
-    const isUserPresent = await User.findOne(userData);
+    const isUserPresent = await User.findOne({ email: userData.email });
     if (isUserPresent) {
       res.status(200).json({
         success: true,
@@ -26,7 +26,6 @@ export const createUser = async (req, res) => {
       success: true,
       data: fullData,
     });
-    
   } catch (err) {
     console.log(err);
     res.status(400).json({

@@ -2,12 +2,10 @@ import React from "react";
 import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { API } from "../../../Services/api.js";
+import { useNavigate } from "react-router-dom";
 
 //context
 import { color } from "../../../Context/ColorContext";
-
-// Libraray Components
-import Go from "../encapsulation/Go";
 
 //mui components
 import Box from "@mui/material/Box";
@@ -15,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material";
 
 const User = ({ user }) => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("Unknown");
   const [image, setImage] = useState(
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
@@ -85,16 +84,18 @@ const User = ({ user }) => {
   });
 
   return (
-    <Go to={`/user/${username}`}>
-      <UserBox>
-        <ImageBox>
-          <Box component="img" src={image} alt={`${username}'s image`} />
-        </ImageBox>
-        <NameBox>
-          <Typography>{username}</Typography>
-        </NameBox>
-      </UserBox>
-    </Go>
+    <UserBox
+      onClick={() => {
+        navigate(`/user/${username}`);
+      }}
+    >
+      <ImageBox>
+        <Box component="img" src={image} alt={`${username}'s image`} />
+      </ImageBox>
+      <NameBox>
+        <Typography>{username}</Typography>
+      </NameBox>
+    </UserBox>
   );
 };
 

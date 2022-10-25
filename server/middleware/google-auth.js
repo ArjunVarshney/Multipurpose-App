@@ -31,7 +31,6 @@ export const verify_google_user = async (req, res, next) => {
     });
   }
   const payload = result.getPayload();
-  console.log(payload);
   const requiredData = {
     name: payload.name,
     email: payload.email,
