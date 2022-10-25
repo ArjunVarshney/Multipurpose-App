@@ -5,14 +5,20 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material";
 
+// context
+import { account } from "../../../Context/UserContext";
+
 //images
 import image from "../../../Images/PageBanner/BlogPageBanner.svg";
 
 //library component
 import SignInBtn from "../../Library/widgets/SignInBtn";
 import SectionBox from "../../Library/encapsulation/SectionBox";
+import { useContext } from "react";
 
 const Hero = () => {
+  const { user } = useContext(account);
+
   const RowBox = styled(Box)({
     display: "flex",
     justifyContent: "center",
@@ -85,9 +91,7 @@ const Hero = () => {
             officia fugiat similique tempore labore omnis. Nam aut commodi alias
             rerum quo laudantium modi architecto accusamus asperiores
           </Typography>
-          <Box>
-            <SignInBtn />
-          </Box>
+          <Box>{!user._id && <SignInBtn />}</Box>
         </TextBox>
         <ImgBox>
           <Box component="img" src={image} alt="Banner Image"></Box>

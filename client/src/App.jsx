@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import { API } from "./Services/api.js";
 
 //importing components
 import Navbar from "./Components/Navigation/Navbar";
@@ -13,58 +14,65 @@ import Player from "./Components/Library/widgets/Player";
 
 //context
 import ColorContext from "./Context/ColorContext";
-import UserContext from "./Context/UserContext";
+import { account } from "./Context/UserContext";
 
 //from mui libraries
 import Box from "@mui/material/Box";
 
 const App = () => {
+  const { user, setUser } = useContext(account);
   const [closePlayer, setClosePlayer] = useState(true);
   const [currentBlog, setCurrentBlog] = useState({});
 
   useEffect(() => {
-    const handleCredentialResponse = (response) => {
-      console.log("Encoded JWT ID token: " + response.credential);
+    const handleCredentialResponse = async (response) => {
+      const res = await API.signinUserWithGoogle({
+        token: response.credential,
+      });
+      const data = await res.data;
+      if (data.success) {
+        setUser(data.data);
+      }
     };
-    /* global google */
-    google.accounts.id.initialize({
-      client_id:
-        "601421942488-s1d3qka9gba17h79aru7p8fqmaafjfou.apps.googleusercontent.com",
-      callback: handleCredentialResponse,
-    });
+    if (!user.name && !user.email) {
+      /* global google */
+      google.accounts.id.initialize({
+        client_id:
+          "601421942488-s1d3qka9gba17h79aru7p8fqmaafjfou.apps.googleusercontent.com",
+        callback: handleCredentialResponse,
+      });
 
-    google.accounts.id.prompt();
+      google.accounts.id.prompt();
+    }
   }, []);
 
   return (
-    <UserContext>
-      <ColorContext>
-        <Navbar />
-        <Player
-          close={closePlayer}
-          setClose={setClosePlayer}
-          currentBlog={currentBlog}
+    <ColorContext>
+      <Navbar />
+      <Player
+        close={closePlayer}
+        setClose={setClosePlayer}
+        currentBlog={currentBlog}
+      />
+      <Box mt="70px"></Box>
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/blog" element={<Blog />} />
+        <Route exact path="/blog/search" element={<Search />} />
+        <Route
+          exact
+          path="/blog/:title"
+          element={
+            <Post
+              setClosePlayer={setClosePlayer}
+              isPlayerClosed={closePlayer}
+              setCurrentBlog={setCurrentBlog}
+            />
+          }
         />
-        <Box mt="70px"></Box>
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/blog" element={<Blog />} />
-          <Route exact path="/blog/search" element={<Search />} />
-          <Route
-            exact
-            path="/blog/:title"
-            element={
-              <Post
-                setClosePlayer={setClosePlayer}
-                isPlayerClosed={closePlayer}
-                setCurrentBlog={setCurrentBlog}
-              />
-            }
-          />
-        </Routes>
-        <Footer />
-      </ColorContext>
-    </UserContext>
+      </Routes>
+      <Footer />
+    </ColorContext>
   );
 };
 

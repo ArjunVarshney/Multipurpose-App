@@ -3,18 +3,30 @@ import User from "../Models/UserModel.js";
 // create a new user
 export const createUser = async (req, res) => {
   try {
-    const newUser = new User(req.body);
+    const userData = req.userData;
+    const isUserPresent = await User.findOne(userData);
+    if (isUserPresent) {
+      res.status(200).json({
+        success: true,
+        data: isUserPresent,
+      });
+      return;
+    }
+    const newUser = new User(userData);
     const fullData = await newUser.save();
+
     if (!fullData) {
       res.status(400).json({
         success: false,
         data: "Cannot track Signin status",
       });
     }
+
     res.status(200).json({
       success: true,
       data: fullData,
     });
+    
   } catch (err) {
     console.log(err);
     res.status(400).json({

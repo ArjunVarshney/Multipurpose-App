@@ -6,6 +6,9 @@ import { API } from "../../../Services/api.js";
 //context
 import { color } from "../../../Context/ColorContext";
 
+// Libraray Components
+import Go from "../encapsulation/Go";
+
 //mui components
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -17,7 +20,8 @@ const User = ({ user }) => {
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
   );
 
-  const { secondaryBgColor, primaryThemeColor } = useContext(color);
+  const { secondaryBgColor, primaryThemeColor, primaryTextColor } =
+    useContext(color);
 
   const getUser = async (id) => {
     if (!id) return;
@@ -44,6 +48,11 @@ const User = ({ user }) => {
     boxShadow: `0 0 1px 0.1px ${primaryThemeColor}`,
     cursor: "pointer",
     width: "max-content",
+    maxWidth: "150px",
+    overflow: "hidden",
+    ["@media (max-width:500px)"]: {
+      padding: "10px",
+    },
   });
 
   const ImageBox = styled(Box)({
@@ -65,18 +74,27 @@ const User = ({ user }) => {
     "& > p": {
       fontWeight: "bold",
       margin: "0 10px",
+      color: primaryTextColor,
+      maxWidth: "100px",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      ["@media (max-width:500px)"]: {
+        display: "none",
+      },
     },
   });
 
   return (
-    <UserBox>
-      <ImageBox>
-        <Box component="img" src={image} alt={`${username}'s image`} />
-      </ImageBox>
-      <NameBox>
-        <Typography>{username}</Typography>
-      </NameBox>
-    </UserBox>
+    <Go to={`/user/${username}`}>
+      <UserBox>
+        <ImageBox>
+          <Box component="img" src={image} alt={`${username}'s image`} />
+        </ImageBox>
+        <NameBox>
+          <Typography>{username}</Typography>
+        </NameBox>
+      </UserBox>
+    </Go>
   );
 };
 

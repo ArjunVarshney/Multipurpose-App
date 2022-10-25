@@ -1,4 +1,8 @@
 export const SERVICE_URLS = {
+  signinUserWithGoogle: {
+    method: "POST",
+    url: "user/create/google",
+  },
   getPost: {
     method: "GET",
     url: `blog/get/${window.location.pathname.split("/")[2]}`,

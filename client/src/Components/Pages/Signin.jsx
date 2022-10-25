@@ -1,15 +1,29 @@
 import React, { useEffect } from "react";
-import jwt_decode from "jwt-decode";
+import { API } from "../../Services/api.js";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { account } from "../../Context/UserContext";
 
 const Signin = () => {
+  const navigate = useNavigate();
+  const { setUser } = useContext(account);
+
   useEffect(() => {
-    const handleCredentialResponse = (response) => {
-      console.log(jwt_decode(response.credential));
+    const handleCredentialResponse = async (response) => {
+      const res = await API.signinUserWithGoogle({
+        token: response.credential,
+      });
+      const data = await res.data;
+      if (data.success) {
+        setUser(data.data);
+        navigate(-1);
+      }
     };
+
     /* global google */
     google.accounts.id.initialize({
-      client_id:
-        "601421942488-s1d3qka9gba17h79aru7p8fqmaafjfou.apps.googleusercontent.com",
+      client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
       callback: handleCredentialResponse,
     });
     google.accounts.id.renderButton(document.getElementById("signin-btn"), {

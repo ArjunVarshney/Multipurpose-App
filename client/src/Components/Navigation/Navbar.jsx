@@ -5,9 +5,11 @@ import { useContext } from "react";
 import LogoText from "../Library/standard/LogoText";
 import NavBtn from "../Library/widgets/NavBtn";
 import SignInBtn from "../Library/widgets/SignInBtn";
+import User from "../Library/widgets/User";
 
 //context
 import { color } from "../../Context/ColorContext";
+import { account } from "../../Context/UserContext";
 
 //mui components
 import AppBar from "@mui/material/AppBar";
@@ -16,6 +18,7 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material";
 
 const Navbar = () => {
+  const { user } = useContext(account);
   const { mainBgColor, secondaryBgColor } = useContext(color);
 
   const Navbar = styled(AppBar)({
@@ -42,6 +45,7 @@ const Navbar = () => {
   const NotImportant = styled(Box)({
     display: "inline-block",
     marginRight: "20px",
+    height: "max-content",
     ["@media (max-width:600px)"]: {
       display: "none",
     },
@@ -51,11 +55,11 @@ const Navbar = () => {
     <Navbar>
       <CustomToolbar>
         <LogoText />
-        <Box>
+        <Box style={{ display: "flex", alignItems: "center" }}>
           <NotImportant>
             <NavBtn text="About" variant="standard" link="/about" />
           </NotImportant>
-          <SignInBtn />
+          {!user._id ? <SignInBtn /> : <User user={user._id} />}
         </Box>
       </CustomToolbar>
     </Navbar>

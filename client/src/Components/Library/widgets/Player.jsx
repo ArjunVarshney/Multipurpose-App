@@ -173,10 +173,10 @@ const Player = ({ close, setClose, currentBlog }) => {
       {/* For images */}
       <Box
         style={{
-          width: "43%",
+          width: "30%",
           height: "100%",
           overflow: "hidden",
-          display: window.innerWidth < 650 ? "none" : "unset",
+          display: window.innerWidth < 650 ? "none" : "block",
         }}
       >
         <ImageBox />
@@ -185,8 +185,8 @@ const Player = ({ close, setClose, currentBlog }) => {
       {/* For other than images */}
       <Box
         style={{
-          width: "100%",
-          display: window.innerWidth < 650 ? "flex" : "unset",
+          width: window.innerWidth < 650 ? "100%" : "70%",
+          display: window.innerWidth < 650 ? "flex" : "block",
           flexDirection: window.innerWidth < 400 ? "column" : "row",
         }}
       >
