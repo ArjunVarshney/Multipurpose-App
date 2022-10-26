@@ -68,7 +68,42 @@ export const updateUser = async (req, res) => {
     if (!updateUser) {
       res.status(400).json({
         success: false,
-        data: "Updated post not found",
+        data: "Updated user not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      data: updatedUser,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      reason: error,
+    });
+  }
+};
+
+export const savePost = async (req, res) => {
+  try {
+    const id = req.params["id"];
+    const post_id = req.body.post_id;
+    if (!post_id || !id) {
+      res.status(400).json({
+        success: false,
+        reason: "User id or the post id is missing",
+      });
+    }
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { $addToSet: { saved: post_id } },
+      {
+        returnDocument: "after",
+      }
+    );
+    if (!updateUser) {
+      res.status(400).json({
+        success: false,
+        data: "Updated user not found",
       });
     }
     res.status(200).json({

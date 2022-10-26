@@ -56,14 +56,12 @@ const App = () => {
     };
 
     const promptForLogin = () => {
-      setTimeout(() => {
-        /* global google */
-        google.accounts.id.initialize({
-          client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-          callback: handleCredentialResponse,
-        });
-        google.accounts.id.prompt();
-      }, 5000);
+      /* global google */
+      google.accounts.id.initialize({
+        client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+        callback: handleCredentialResponse,
+      });
+      google.accounts.id.prompt();
     };
 
     const checkForPreviousToken = async () => {

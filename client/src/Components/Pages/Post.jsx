@@ -95,6 +95,28 @@ const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
     getData();
   }, []);
 
+  const savePost = async () => {
+    try {
+      if (user._id) {
+        if (user.saved.includes(post._id)) return;
+        const response = await API.saveForLater(
+          { post_id: post._id },
+          `user/save/${user._id}`
+        );
+        const data = response.data;
+        if (data.success) {
+          console.log(data.data);
+        } else {
+          console.log("some error occurred");
+        }
+      } else {
+        navigate("/signin");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const readTime = (content) => {
     const p = document.createElement("p");
     p.append(content);
@@ -453,6 +475,7 @@ const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
               background: secondaryBgColor,
               fontWeight: "bold",
             }}
+            onClick={savePost}
           >
             Save for later
           </Button>

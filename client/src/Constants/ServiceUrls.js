@@ -62,4 +62,8 @@ export const SERVICE_URLS = {
     method: "POST",
     url: "blog/comment/like/:id",
   },
+  saveForLater: {
+    method: "PATCH",
+    url: "user/save/:id",
+  },
 };
