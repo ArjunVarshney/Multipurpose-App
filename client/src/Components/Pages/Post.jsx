@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { API } from "../../Services/api";
 
 // context
@@ -30,6 +31,7 @@ import CommentBox from "../Library/widgets/CommentBox";
 const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
   const { primaryThemeColor, primaryTextColor, secondaryBgColor, textWhite } =
     useContext(color);
+  const navigate = useNavigate();
   const { user } = useContext(account);
   const [creator, setCreator] = useState({});
   const [post, setPost] = useState({});
@@ -168,6 +170,7 @@ const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
     justifyContent: "center",
     width: "100%",
     height: "max-content",
+    cursor: "pointer",
     ["@media (max-width: 500px)"]: {
       scale: "0.8",
     },
@@ -289,11 +292,19 @@ const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
       <ColBox>
         {/* For Creator details */}
         <UserBox>
-          <Box>
+          <Box
+            onClick={() => {
+              navigate(`/user/${creator.username}`);
+            }}
+          >
             <ImageBox />
           </Box>
 
-          <UserText>
+          <UserText
+            onClick={() => {
+              navigate(`/user/${creator.username}`);
+            }}
+          >
             <Box>
               <Typography style={{ fontSize: "20px" }}>
                 {creator.username}

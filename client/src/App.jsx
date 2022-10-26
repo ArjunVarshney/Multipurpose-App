@@ -10,6 +10,7 @@ import Home from "./Components/Pages/Home";
 import Blog from "./Components/Pages/Blog";
 import Post from "./Components/Pages/Post";
 import Search from "./Components/Pages/Search";
+import User from "./Components/Pages/User.jsx";
 import Player from "./Components/Library/widgets/Player";
 
 //context
@@ -92,6 +93,7 @@ const App = () => {
       <Box mt="70px"></Box>
       <Routes>
         <Route exact path="/" element={<Home />} />
+        <Route exact path="/user/:username" element={<User />} />
         <Route exact path="/blog" element={<Blog />} />
         <Route exact path="/blog/search" element={<Search />} />
         <Route
