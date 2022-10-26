@@ -32,17 +32,52 @@ const App = () => {
       const data = await res.data;
       if (data.success) {
         setUser(data.data);
+        localStorage.setItem("token", response.credential);
       }
     };
-    if (!user.name && !user.email) {
-      /* global google */
-      google.accounts.id.initialize({
-        client_id:
-          "601421942488-s1d3qka9gba17h79aru7p8fqmaafjfou.apps.googleusercontent.com",
-        callback: handleCredentialResponse,
-      });
 
-      google.accounts.id.prompt();
+    const autoLogin = async (token) => {
+      if (!token) return;
+      try {
+        const res = await API.signinUserWithGoogle({ token });
+        const data = await res.data;
+        if (data.success) {
+          setUser(data.data);
+          return true;
+        } else {
+          localStorage.setItem("token", "");
+          return false;
+        }
+      } catch (error) {
+        localStorage.setItem("token", "");
+        return false;
+      }
+    };
+
+    const promptForLogin = () => {
+      setTimeout(() => {
+        /* global google */
+        google.accounts.id.initialize({
+          client_id: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+          callback: handleCredentialResponse,
+        });
+        google.accounts.id.prompt();
+      }, 5000);
+    };
+
+    const checkForPreviousToken = async () => {
+      const prevToken = localStorage.getItem("token");
+
+      if (prevToken && prevToken !== "") {
+        const res = await autoLogin(prevToken);
+        if (res) return;
+      }
+
+      promptForLogin();
+    };
+
+    if (!user.name && !user.email) {
+      checkForPreviousToken();
     }
   }, []);
 

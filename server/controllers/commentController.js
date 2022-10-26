@@ -95,6 +95,7 @@ export const getBlogComments = async (req, res) => {
         success: true,
         data: comments,
       });
+      return;
     }
     res.status(400).json({
       success: false,
