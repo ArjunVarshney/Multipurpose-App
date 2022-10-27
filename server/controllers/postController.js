@@ -94,6 +94,32 @@ export const getPost = async (req, res) => {
   }
 };
 
+export const getPostById = async (req, res) => {
+  try {
+    const id = req.params["id"];
+    const post = await Post.findById(id).select({
+      title: 1,
+      created_by: 1,
+      url: 1,
+    });
+    if (!post) {
+      res.status(400).json({
+        success: false,
+        reason: "The Post does not exists in the database",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      data: post,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      reason: error,
+    });
+  }
+};
+
 // get paginated posts
 export const getPaginatedPost = async (req, res) => {
   const page = parseInt(req.params["page"]);

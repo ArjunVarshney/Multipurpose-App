@@ -316,7 +316,7 @@ const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
         <UserBox>
           <Box
             onClick={() => {
-              navigate(`/user/${creator.username}`);
+              navigate(`/user/${creator._id}`);
             }}
           >
             <ImageBox />
@@ -324,7 +324,7 @@ const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
 
           <UserText
             onClick={() => {
-              navigate(`/user/${creator.username}`);
+              navigate(`/user/${creator._id}`);
             }}
           >
             <Box>

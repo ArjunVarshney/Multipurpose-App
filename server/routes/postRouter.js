@@ -10,6 +10,7 @@ import {
   getPaginatedPost,
   searchPost,
   updatePost,
+  getPostById,
 } from "../controllers/postController.js";
 import { like, dislike } from "../controllers/likeController.js";
 
@@ -23,6 +24,7 @@ postRouter.get("/getPage/:page", getPaginatedPost);
 postRouter.post("/create", createPost);
 postRouter.get("/trending", getTrendingPost);
 postRouter.get("/get/:url", getPost);
+postRouter.get("/getbyid/:id", getPostById);
 postRouter.get("/search", searchPost);
 postRouter.put("/update/:id", updatePost);
 postRouter.delete("/delete/:id", deletePost);

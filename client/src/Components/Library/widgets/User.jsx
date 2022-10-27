@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { API } from "../../../Services/api.js";
@@ -18,6 +18,7 @@ const User = ({ user }) => {
   const [image, setImage] = useState(
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
   );
+  const [userId, setUserId] = useState("");
 
   const { secondaryBgColor, primaryThemeColor, primaryTextColor } =
     useContext(color);
@@ -27,6 +28,7 @@ const User = ({ user }) => {
     const response = await API.getUsername("", `/user/get/${id}`);
     const data = await response.data;
     if (data.success) {
+      setUserId(data.data._id);
       setUsername(data.data.username);
       setImage(data.data.image_url);
     }
@@ -86,7 +88,7 @@ const User = ({ user }) => {
   return (
     <UserBox
       onClick={() => {
-        navigate(`/user/${username}`);
+        navigate(`/user/${userId}`);
       }}
     >
       <ImageBox>

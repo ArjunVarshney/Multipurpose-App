@@ -7,6 +7,10 @@ export const SERVICE_URLS = {
     method: "GET",
     url: `blog/get/${window.location.pathname.split("/")[2]}`,
   },
+  getPostById: {
+    method: "GET",
+    url: `blog/getbyid/:id`,
+  },
   getAllPost: {
     method: "GET",
     url: "blog/",
@@ -28,7 +32,7 @@ export const SERVICE_URLS = {
   },
   getUser: {
     method: "GET",
-    url: "user/get/6345524eb7cf13e03f889c88",
+    url: "user/get/:id",
   },
   getAllTags: {
     method: "GET",
@@ -44,7 +48,7 @@ export const SERVICE_URLS = {
   },
   getComment: {
     method: "GET",
-    url: "blog/comment/get/",
+    url: "blog/comment/get/:id",
   },
   getBlogComments: {
     method: "GET",
