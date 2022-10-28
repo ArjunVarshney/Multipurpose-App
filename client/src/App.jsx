@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { API } from "./Services/api.js";
 
 //importing components
@@ -11,6 +12,7 @@ import Blog from "./Components/Pages/Blog";
 import Post from "./Components/Pages/Post";
 import Search from "./Components/Pages/Search";
 import UserData from "./Components/Pages/UserData";
+import EditUser from "./Components/Pages/EditUser.jsx";
 import Player from "./Components/Library/widgets/Player";
 
 //context
@@ -21,9 +23,15 @@ import { account } from "./Context/UserContext";
 import Box from "@mui/material/Box";
 
 const App = () => {
+  const { pathname } = useLocation();
   const { user, setUser } = useContext(account);
   const [closePlayer, setClosePlayer] = useState(true);
   const [currentBlog, setCurrentBlog] = useState({});
+
+  // scroll to top when ever new page is loaded
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   useEffect(() => {
     const handleCredentialResponse = async (response) => {
@@ -91,7 +99,8 @@ const App = () => {
       <Box mt="70px"></Box>
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/user/:username" element={<UserData />} />
+        <Route exact path="/user/:id" element={<UserData />} />
+        <Route exact path="/user/edit/:id" element={<EditUser />} />
         <Route exact path="/blog" element={<Blog />} />
         <Route exact path="/blog/search" element={<Search />} />
         <Route

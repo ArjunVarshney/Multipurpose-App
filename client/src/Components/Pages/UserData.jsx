@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { API } from "../../Services/api";
 
 // context
@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import DriveFileRenameOutlineRoundedIcon from "@mui/icons-material/DriveFileRenameOutlineRounded";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { styled } from "@mui/material";
 
 // LIbrary components
@@ -22,17 +23,26 @@ import Go from "../Library/encapsulation/Go";
 import User from "../Library/widgets/User";
 
 const UserData = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const {
-    primaryThemeColor,
     primaryTextColor,
     secondaryBgColor,
     textWhite,
     mainBgColor,
   } = useContext(color);
-  const [user, setUser] = useState({});
+  const { user, setUser } = useContext(account);
+  const [userInfo, setUserInfo] = useState({});
   const [likedPost, setLikedPost] = useState([]);
   const [savedPost, setSavedPost] = useState([]);
   const [comments, setComments] = useState([]);
+
+  const LogoutUser = () => {
+    setUser({});
+    localStorage.setItem("token", "");
+    navigate("/");
+    window.location.reload();
+  };
 
   const getUser = async () => {
     try {
@@ -42,7 +52,7 @@ const UserData = () => {
       const response = await API.getUser("", url);
       const data = await response.data;
       if (data.success) {
-        setUser(data.data);
+        setUserInfo(data.data);
       }
     } catch (error) {
       console.log(error);
@@ -52,6 +62,10 @@ const UserData = () => {
   useEffect(() => {
     getUser();
   }, []);
+
+  useEffect(() => {
+    getUser();
+  }, [pathname]);
 
   const getPost = async (id) => {
     try {
@@ -88,8 +102,11 @@ const UserData = () => {
   const getAllLikedPosts = async () => {
     try {
       let likeArr = [];
-      if (!user.liked || user.liked.length <= 0) return;
-      await user.liked.map(async (post_id) => {
+      if (!userInfo.liked || userInfo.liked.length <= 0) {
+        setLikedPost([]);
+        return;
+      }
+      await userInfo.liked.map(async (post_id) => {
         const post = await getPost(post_id);
         if (post.title) likeArr = [...new Set([...likeArr, post])];
         setLikedPost(likeArr);
@@ -103,8 +120,11 @@ const UserData = () => {
   const getAllSavedPosts = async () => {
     try {
       let saveArr = [];
-      if (!user.saved || user.saved.length <= 0) return;
-      await user.saved.map(async (post_id) => {
+      if (!userInfo.saved || userInfo.saved.length <= 0) {
+        setSavedPost([]);
+        return;
+      }
+      await userInfo.saved.map(async (post_id) => {
         const post = await getPost(post_id);
         if (post.title) saveArr = [...new Set([...saveArr, post])];
         setSavedPost(saveArr);
@@ -118,8 +138,11 @@ const UserData = () => {
   const getAllComments = async () => {
     try {
       let commentArr = [];
-      if (!user.saved || user.saved.length <= 0) return;
-      await user.comments.map(async (comment_id) => {
+      if (!userInfo.saved || userInfo.saved.length <= 0) {
+        setComments([]);
+        return;
+      }
+      await userInfo.comments.map(async (comment_id) => {
         const comment = await getComment(comment_id);
         if (!comment) return;
         const post = await getPost(comment.blog_id);
@@ -139,9 +162,9 @@ const UserData = () => {
     getAllLikedPosts();
     getAllSavedPosts();
     getAllComments();
-  }, [user]);
+  }, [userInfo]);
 
-  const EditButton = styled(Button)({
+  const FloatButton = styled(Button)({
     color: primaryTextColor,
     fontWeight: "bold",
     background: secondaryBgColor,
@@ -170,7 +193,7 @@ const UserData = () => {
     "& > div": {
       width: "100%",
       height: "100%",
-      background: `url(${user.image_url}) center/cover`,
+      background: `url(${userInfo.image_url}) center/cover`,
       borderRadius: "50%",
     },
   });
@@ -223,18 +246,44 @@ const UserData = () => {
     <SectionBox>
       <ColBox>
         {/* For edit icon */}
-        <Box
-          style={{
-            position: "absolute",
-            top: "100px",
-            left: "80%",
-          }}
-        >
-          <EditButton onClick={() => {}}>
-            <DriveFileRenameOutlineRoundedIcon style={{ fontSize: "30px" }} />
-            Edit
-          </EditButton>
-        </Box>
+        {user._id &&
+          userInfo._id &&
+          user.username == userInfo.username &&
+          user._id == userInfo._id && (
+            <>
+              <Box
+                style={{
+                  position: "absolute",
+                  top: "160px",
+                  right: "10%",
+                }}
+              >
+                <FloatButton
+                  onClick={() => {
+                    navigate(`/user/edit/${user._id}`);
+                  }}
+                >
+                  <DriveFileRenameOutlineRoundedIcon
+                    style={{ fontSize: "30px" }}
+                  />
+                  Edit
+                </FloatButton>
+              </Box>
+              {/* For edit icon */}
+              <Box
+                style={{
+                  position: "absolute",
+                  top: "100px",
+                  right: "10%",
+                }}
+              >
+                <FloatButton onClick={LogoutUser}>
+                  <LogoutIcon style={{ fontSize: "30px" }} />
+                  Sign out
+                </FloatButton>
+              </Box>
+            </>
+          )}
         {/* For image */}
         <ImageBox>
           <Box />
@@ -258,7 +307,7 @@ const UserData = () => {
               textAlign: "center",
             }}
           >
-            {user.username}
+            {userInfo.username}
           </Typography>
           {/* For real name and description */}
           <Typography
@@ -271,7 +320,7 @@ const UserData = () => {
               lineHeight: "25px",
             }}
           >
-            {user.name} - {user.small_intro}
+            {userInfo.name} - {userInfo.small_intro}
           </Typography>
           {/* For joined at */}
           <Typography
@@ -284,8 +333,8 @@ const UserData = () => {
             }}
           >
             Joined at:{" "}
-            {user.joined_at &&
-              user.joined_at.substring(0, user.joined_at.indexOf("T"))}
+            {userInfo.joined_at &&
+              userInfo.joined_at.substring(0, userInfo.joined_at.indexOf("T"))}
           </Typography>
         </Box>
 
@@ -294,35 +343,40 @@ const UserData = () => {
           {/* For heading */}
           <SectionHead>About</SectionHead>
           {/* For about inner */}
-          <Typography>{user.description}</Typography>
+          <Typography>{userInfo.description}</Typography>
         </Section>
 
         {/* For Saved Posts */}
-        {user.liked && user.liked.length > 0 && (
-          <Section>
-            {/* For heading */}
-            <SectionHead>Saved Posts</SectionHead>
-            {/* For Posts */}
-            <Box>
-              {savedPost.length > 0 &&
-                savedPost.map((post, index) => {
-                  return (
-                    <Go to={`/blog/${post.url}`} key={index}>
-                      <LikedPost>
-                        <Typography>{post.title}</Typography>
-                        <Box>
-                          <User user={post.created_by} />
-                        </Box>
-                      </LikedPost>
-                    </Go>
-                  );
-                })}
-            </Box>
-          </Section>
-        )}
+        {user._id &&
+          userInfo._id &&
+          user.username == userInfo.username &&
+          user._id == userInfo._id &&
+          userInfo.saved &&
+          userInfo.saved.length > 0 && (
+            <Section>
+              {/* For heading */}
+              <SectionHead>Saved Posts</SectionHead>
+              {/* For Posts */}
+              <Box>
+                {savedPost.length > 0 &&
+                  savedPost.map((post, index) => {
+                    return (
+                      <Go to={`/blog/${post.url}`} key={index}>
+                        <LikedPost>
+                          <Typography>{post.title}</Typography>
+                          <Box>
+                            <User user={post.created_by} />
+                          </Box>
+                        </LikedPost>
+                      </Go>
+                    );
+                  })}
+              </Box>
+            </Section>
+          )}
 
         {/* For the liked section */}
-        {user.liked && user.liked.length > 0 && (
+        {userInfo.liked && userInfo.liked.length > 0 && (
           <Section>
             {/* For heading */}
             <SectionHead>Liked Posts</SectionHead>
@@ -347,7 +401,7 @@ const UserData = () => {
 
         {/* For Commented Posts */}
 
-        {user.comments && comments.length > 0 && (
+        {userInfo.comments && comments.length > 0 && (
           <Section>
             {/* For heading */}
             <SectionHead>Responded on</SectionHead>
