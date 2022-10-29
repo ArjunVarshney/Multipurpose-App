@@ -25,12 +25,8 @@ import User from "../Library/widgets/User";
 const UserData = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const {
-    primaryTextColor,
-    secondaryBgColor,
-    textWhite,
-    mainBgColor,
-  } = useContext(color);
+  const { primaryTextColor, secondaryBgColor, textWhite, mainBgColor } =
+    useContext(color);
   const { user, setUser } = useContext(account);
   const [userInfo, setUserInfo] = useState({});
   const [likedPost, setLikedPost] = useState([]);
@@ -415,12 +411,15 @@ const UserData = () => {
                         __html: `${comment.comment.comment}`,
                       }}
                     ></Typography>
-                    <LikedPost style={{ background: mainBgColor }}>
-                      <Typography>{comment.post.title}</Typography>
-                      <Box>
-                        <User user={comment.post.created_by} />
-                      </Box>
-                    </LikedPost>
+
+                    <Go to={`/blog/${comment.post.url}`} key={index}>
+                      <LikedPost style={{ background: mainBgColor }}>
+                        <Typography>{comment.post.title}</Typography>
+                        <Box>
+                          <User user={comment.post.created_by} />
+                        </Box>
+                      </LikedPost>
+                    </Go>
                     <Typography style={{ width: "100%", textAlign: "right" }}>
                       {comments[0].comment.likes.length} likes
                     </Typography>
