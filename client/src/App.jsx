@@ -28,6 +28,10 @@ const App = () => {
   const [closePlayer, setClosePlayer] = useState(true);
   const [currentBlog, setCurrentBlog] = useState({});
 
+  useEffect(() => {
+    sessionStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
+
   // scroll to top when ever new page is loaded
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -42,6 +46,7 @@ const App = () => {
       if (data.success) {
         setUser(data.data);
         localStorage.setItem("token", response.credential);
+        sessionStorage.setItem("user", JSON.stringify(data.data));
       }
     };
 
@@ -52,6 +57,7 @@ const App = () => {
         const data = await res.data;
         if (data.success) {
           setUser(data.data);
+          sessionStorage.setItem("user", JSON.stringify(data.data));
           return true;
         } else {
           localStorage.setItem("token", "");

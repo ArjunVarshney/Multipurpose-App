@@ -70,4 +70,8 @@ export const SERVICE_URLS = {
     method: "PATCH",
     url: "user/save/:id",
   },
+  updateUser:{
+    method:"PUT",
+    url:"user/update/:id",
+  }
 };

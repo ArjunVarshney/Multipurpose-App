@@ -105,7 +105,7 @@ const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
         );
         const data = response.data;
         if (data.success) {
-          console.log(data.data);
+          console.log("saved");
         } else {
           console.log("some error occurred");
         }

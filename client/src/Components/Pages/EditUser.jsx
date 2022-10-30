@@ -35,6 +35,36 @@ const EditUser = () => {
   const [savedPost, setSavedPost] = useState([]);
   let textBox = {};
 
+  const updateUserData = async (e) => {
+    e.preventDefault();
+    try {
+      const username = document.getElementById("username").value;
+      const name = document.getElementById("tempName").value;
+      const small_intro = document.getElementById("smallIntro").value;
+      const saved = savedPost.map((post) => post._id);
+      const description = document.querySelector(
+        "#aboutEditor .ql-editor"
+      ).innerHTML;
+      const response = await API.updateUser(
+        {
+          username,
+          name,
+          small_intro,
+          description,
+          saved,
+        },
+        `user/update/${user._id}`
+      );
+      const data = await response.data;
+      if (!response || !data) return;
+      if (data.success) {
+        setUser(data.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getPost = async (id) => {
     try {
       const post = await API.getPostById("", `blog/getbyid/${id}`);
@@ -72,10 +102,6 @@ const EditUser = () => {
   useEffect(() => {
     getAllSavedPosts();
   }, [user]);
-
-  const updateAbout = (e) => {
-    e.preventDefault();
-  };
 
   const ImageBox = styled(Box)({
     height: "40vw",
@@ -134,12 +160,15 @@ const EditUser = () => {
           [{ color: [] }, { background: [] }],
           ["blockquote"],
           [{ list: "ordered" }, { list: "bullet" }],
-          [{ align: [] }],
-          [{ font: [] }],
         ],
       },
-      placeholder: "What are your thoughts?",
+      placeholder: "Tell something about yourself...",
     });
+    let sessionUser = sessionStorage.getItem("user");
+    textBox.root.innerHTML =
+      sessionUser && sessionUser != "" && sessionUser != "{}"
+        ? JSON.parse(sessionUser).description
+        : "";
   }, []);
 
   const AboutBox = styled(Box)({
@@ -150,29 +179,29 @@ const EditUser = () => {
     borderRadius: "10px",
     background: textWhite,
     boxShadow: `0 0 5px 0 ${secondaryBgColor}`,
-    ["@media (max-width: 1000px)"]: {
-      borderRadius: "10px 10px 0 0",
-      marginBottom: "50px",
-    },
   });
 
   const UpdateBtn = styled(Button)({
-    position: "absolute",
-    right: "10px",
-    top: "8px",
     borderRadius: "10px",
-    padding: "10px 20px",
+    padding: "10px 50px",
     color: textWhite,
     background: primaryThemeColor,
     "&:hover": {
       background: primaryThemeColor,
     },
-    ["@media (max-width: 1000px)"]: {
-      top: "100%",
-      left: "0",
-      right: "0",
-      borderRadius: "0 0 10px 10px",
-    },
+  });
+
+  const UpdateBox = styled(Box)({
+    background: textWhite,
+    padding: "10px 20px",
+    borderRadius: "10px 10px 0 0",
+    position: "fixed",
+    left: "50%",
+    bottom: "0",
+    transform: "translate(-50%,0)",
+    boxShadow: `0 0 3px 0 ${secondaryBgColor}`,
+    border: `1px solid ${secondaryBgColor}`,
+    zIndex: "1",
   });
 
   const Editor = styled(Box)({
@@ -211,6 +240,11 @@ const EditUser = () => {
   return (
     <SectionBox>
       <ColBox>
+        {/* update button */}
+        <UpdateBox>
+          <UpdateBtn onClick={updateUserData}>Update</UpdateBtn>
+        </UpdateBox>
+
         {/* For image */}
         <ImageBox>
           <Box />
@@ -240,7 +274,7 @@ const EditUser = () => {
               defaultValue={user.username}
               required
               fullWidth
-              id="email"
+              id="username"
               label="Username"
               name="username"
             />
@@ -263,7 +297,7 @@ const EditUser = () => {
               defaultValue={user.name}
               required
               fullWidth
-              id="name"
+              id="tempName"
               label="Name"
               name="name"
             />
@@ -302,9 +336,8 @@ const EditUser = () => {
           <SectionHead>About</SectionHead>
           {/* For about inner */}
           <Box>
-            <AboutBox component="form" onSubmit={updateAbout}>
+            <AboutBox>
               <Editor id="aboutEditor" ref={loadEditor} />
-              <UpdateBtn type="submit">Update</UpdateBtn>
             </AboutBox>
           </Box>
         </Section>
@@ -336,6 +369,11 @@ const EditUser = () => {
                           </Typography>
                         </Go>
                         <Button
+                          onClick={() => {
+                            setSavedPost(
+                              savedPost.filter((saved) => saved._id != post._id)
+                            );
+                          }}
                           style={{
                             color: primaryThemeColor,
                             width: "fit-content",

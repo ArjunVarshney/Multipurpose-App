@@ -207,6 +207,18 @@ const UserData = () => {
     marginBottom: "10px",
   });
 
+  const AboutText = styled(Typography)({
+    "& h1": {
+      fontSize: "24px",
+    },
+    "& h2": {
+      fontSize: "18px",
+    },
+    "& *": {
+      fontFamily: "Inter",
+    },
+  });
+
   const LikedPost = styled(Box)({
     display: "flex",
     alignItems: "center",
@@ -339,7 +351,11 @@ const UserData = () => {
           {/* For heading */}
           <SectionHead>About</SectionHead>
           {/* For about inner */}
-          <Typography>{userInfo.description}</Typography>
+          <AboutText
+            dangerouslySetInnerHTML={{
+              __html: userInfo.description,
+            }}
+          />
         </Section>
 
         {/* For Saved Posts */}
@@ -396,7 +412,6 @@ const UserData = () => {
         )}
 
         {/* For Commented Posts */}
-
         {userInfo.comments && comments.length > 0 && (
           <Section>
             {/* For heading */}
