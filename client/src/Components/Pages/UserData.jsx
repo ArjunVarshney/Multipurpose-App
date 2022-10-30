@@ -170,8 +170,9 @@ const UserData = () => {
     textAlign: "center",
     borderRadius: "10px",
     transition: "all 0.3s ease",
-    display: "flex",
-    gap: "3px",
+    ["@media (max-width: 500px)"]: {
+      scale: "0.7",
+    },
     "&:hover": {
       background: secondaryBgColor,
       scale: "1.05",
@@ -236,6 +237,12 @@ const UserData = () => {
     "& > div": {},
   });
 
+  const UserBox = styled(Box)({
+    ["@media (max-width: 450px)"]: {
+      display: "none",
+    },
+  });
+
   const ListedComment = styled(Box)({
     padding: "10px",
     border: `1px solid ${secondaryBgColor}`,
@@ -262,8 +269,8 @@ const UserData = () => {
               <Box
                 style={{
                   position: "absolute",
-                  top: "160px",
-                  right: "10%",
+                  top: window.innerWidth <= 500 ? "140px" : "160px",
+                  right: window.innerWidth <= 500 ? "0%" : "10%",
                 }}
               >
                 <FloatButton
@@ -282,7 +289,7 @@ const UserData = () => {
                 style={{
                   position: "absolute",
                   top: "100px",
-                  right: "10%",
+                  right: window.innerWidth <= 500 ? "0%" : "10%",
                 }}
               >
                 <FloatButton onClick={LogoutUser}>
@@ -309,7 +316,7 @@ const UserData = () => {
             variant="h5"
             style={{
               marginTop: "20px",
-              fontSize: "30px",
+              fontSize: window.innerWidth <= 500 ? "24px" : "30px",
               fontWeight: "bold",
               fontFamily: "Inter",
               textAlign: "center",
@@ -321,7 +328,7 @@ const UserData = () => {
           <Typography
             style={{
               marginTop: "10px",
-              fontSize: "24px",
+              fontSize: window.innerWidth <= 500 ? "20px" : "24px",
               fontFamily: "Inter",
               textAlign: "center",
               maxWidth: "70%",
@@ -334,7 +341,7 @@ const UserData = () => {
           <Typography
             style={{
               marginTop: "10px",
-              fontSize: "24px",
+              fontSize: window.innerWidth <= 500 ? "20px" : "24px",
               fontFamily: "Inter",
               textAlign: "center",
               maxWidth: "70%",
@@ -376,9 +383,9 @@ const UserData = () => {
                       <Go to={`/blog/${post.url}`} key={index}>
                         <LikedPost>
                           <Typography>{post.title}</Typography>
-                          <Box>
+                          <UserBox>
                             <User user={post.created_by} />
-                          </Box>
+                          </UserBox>
                         </LikedPost>
                       </Go>
                     );
@@ -400,9 +407,9 @@ const UserData = () => {
                     <Go to={`/blog/${post.url}`} key={index}>
                       <LikedPost>
                         <Typography>{post.title}</Typography>
-                        <Box>
+                        <UserBox>
                           <User user={post.created_by} />
-                        </Box>
+                        </UserBox>
                       </LikedPost>
                     </Go>
                   );
@@ -430,9 +437,9 @@ const UserData = () => {
                     <Go to={`/blog/${comment.post.url}`} key={index}>
                       <LikedPost style={{ background: mainBgColor }}>
                         <Typography>{comment.post.title}</Typography>
-                        <Box>
+                        <UserBox>
                           <User user={comment.post.created_by} />
-                        </Box>
+                        </UserBox>
                       </LikedPost>
                     </Go>
                     <Typography style={{ width: "100%", textAlign: "right" }}>
