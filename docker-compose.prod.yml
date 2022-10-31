@@ -7,6 +7,11 @@ services:
       - NODE_ENV=production
     command: npm start
 
+  admin-app:
+    environment:
+      - NODE_ENV=production
+    command: npm start
+
   server:
     build:
       context: ./server

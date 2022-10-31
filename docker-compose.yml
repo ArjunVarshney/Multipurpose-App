@@ -2,6 +2,13 @@ version: "3.9"
 
 services:
 
+  admin-app:
+    container_name: yn-admin
+    image: yn-admin
+    build: ./admin
+    ports:
+      - "3001:3000"
+
   app:
     container_name: your-norm
     image: your-norm

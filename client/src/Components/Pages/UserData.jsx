@@ -443,7 +443,7 @@ const UserData = () => {
                       </LikedPost>
                     </Go>
                     <Typography style={{ width: "100%", textAlign: "right" }}>
-                      {comments[0].comment.likes.length} likes
+                      {comment.comment.likes.length} likes
                     </Typography>
                   </ListedComment>
                 );
