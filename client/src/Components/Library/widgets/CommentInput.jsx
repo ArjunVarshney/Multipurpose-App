@@ -27,10 +27,8 @@ const CommentInput = ({ post, refresh }) => {
     if (!user._id) navigate("/signin");
     const comment = textBox.root.innerHTML;
     const post_id = post;
-    const user_id = user._id;
     const response = await API.makeComment({
       blog_id: post_id,
-      created_by: user_id,
       comment,
     });
     if (!response) return;
@@ -68,7 +66,7 @@ const CommentInput = ({ post, refresh }) => {
     boxShadow: `0 0 5px 0 ${secondaryBgColor}`,
     ["@media (max-width: 560px)"]: {
       borderRadius: "10px 10px 0 0",
-      marginBottom:"50px"
+      marginBottom: "50px",
     },
   });
 

@@ -45,6 +45,7 @@ export const SERVICE_URLS = {
   makeComment: {
     method: "POST",
     url: "blog/comment/post",
+    auth: true,
   },
   getComment: {
     method: "GET",
@@ -57,21 +58,26 @@ export const SERVICE_URLS = {
   likePost: {
     method: "POST",
     url: "blog/like/:id",
+    auth: true,
   },
   dislikePost: {
     method: "POST",
     url: "blog/dislike/:id",
+    auth: true,
   },
   likeComment: {
     method: "POST",
     url: "blog/comment/like/:id",
+    auth: true,
   },
   saveForLater: {
     method: "PATCH",
     url: "user/save/:id",
+    auth: true,
   },
-  updateUser:{
-    method:"PUT",
-    url:"user/update/:id",
-  }
+  updateUser: {
+    method: "PUT",
+    url: "user/update/:id",
+    auth: true,
+  },
 };

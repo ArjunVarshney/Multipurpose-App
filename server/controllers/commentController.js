@@ -11,8 +11,9 @@ export const getAllComments = async (req, res) => {
 export const postComment = async (req, res) => {
   try {
     const body = req.body;
+    const user_id = req.user_id;
     // save to comment database
-    const newComment = new Comment(body);
+    const newComment = new Comment({ ...body, created_by: user_id });
     const savedComment = await newComment.save();
 
     if (!savedComment) {
@@ -23,7 +24,7 @@ export const postComment = async (req, res) => {
     }
 
     // save the id to user database
-    const updatedUser = await User.findByIdAndUpdate(body.created_by, {
+    const updatedUser = await User.findByIdAndUpdate(user_id, {
       $push: { comments: savedComment._id },
     });
 
@@ -112,7 +113,7 @@ export const getBlogComments = async (req, res) => {
 export const likeComment = async (req, res) => {
   try {
     const comment_id = req.params["commentid"];
-    const user_id = req.body.user_id;
+    const user_id = req.user_id;
     if (!comment_id && !user_id) {
       res.status(400).json({
         success: false,

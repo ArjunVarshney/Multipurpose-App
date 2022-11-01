@@ -15,14 +15,24 @@ const API = {};
 
 for (const [key, value] of Object.entries(SERVICE_URLS)) {
   API[key] = async (body, url) => {
-    const response = await instance({
-      method: value.method,
-      url: url || value.url,
-      data: body,
-      headers: value.headers,
-      responseType: value.responseType,
-    });
-    return response;
+    try {
+      const response = await instance({
+        method: value.method,
+        url: url || value.url,
+        data: body,
+        headers: value.auth
+          ? {
+              Authorization: localStorage.getItem("token")
+                ? localStorage.getItem("token")
+                : "",
+            }
+          : null,
+        responseType: value.responseType,
+      });
+      return response;
+    } catch (error) {
+      console.log(error, value.headers, localStorage.getItem("token"));
+    }
   };
 }
 

@@ -6,6 +6,7 @@ import {
   likeComment,
   getBlogComments,
 } from "../controllers/commentController.js";
+import { authorize } from "../middleware/authorizeUser.js";
 
 const commentRouter = express.Router();
 
@@ -13,9 +14,9 @@ const commentRouter = express.Router();
 commentRouter.get("/", getAllComments);
 
 // crud with comments
-commentRouter.post("/post", postComment);
+commentRouter.post("/post", authorize, postComment);
 commentRouter.get("/blogcomment/:blogid", getBlogComments);
 commentRouter.get("/get/:id", getSingleComment);
-commentRouter.post("/like/:commentid", likeComment);
+commentRouter.post("/like/:commentid", authorize, likeComment);
 
 export default commentRouter;

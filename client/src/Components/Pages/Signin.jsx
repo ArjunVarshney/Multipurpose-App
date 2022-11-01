@@ -17,6 +17,8 @@ const Signin = () => {
       const data = await res.data;
       if (data.success) {
         setUser(data.data);
+        localStorage.setItem("token", response.credential);
+        sessionStorage.setItem("user", JSON.stringify(data.data));
         navigate(-1);
       }
     };

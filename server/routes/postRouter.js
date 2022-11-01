@@ -13,6 +13,7 @@ import {
   getPostById,
 } from "../controllers/postController.js";
 import { like, dislike } from "../controllers/likeController.js";
+import { authorize } from "../middleware/authorizeUser.js";
 
 const postRouter = express.Router();
 
@@ -21,13 +22,15 @@ postRouter.get("/", getAllPost);
 
 //crud operations
 postRouter.get("/getPage/:page", getPaginatedPost);
-postRouter.post("/create", createPost);
 postRouter.get("/trending", getTrendingPost);
 postRouter.get("/get/:url", getPost);
 postRouter.get("/getbyid/:id", getPostById);
 postRouter.get("/search", searchPost);
-postRouter.put("/update/:id", updatePost);
+
+// for admin only
+postRouter.post("/create", createPost);
 postRouter.delete("/delete/:id", deletePost);
+postRouter.put("/update/:id", updatePost);
 
 // for likes
 postRouter.post("/like/:postid", like);

@@ -1,4 +1,5 @@
 import { OAuth2Client } from "google-auth-library";
+import User from "../Models/UserModel.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -15,13 +16,14 @@ let verify = async (token) => {
   return user;
 };
 
-export const verify_google_user = async (req, res, next) => {
-  const token = req.body.token;
+export const authorize = async (req, res, next) => {
+  const token = req.headers.authorization;
   if (!token) {
     res.status(400).json({
       success: false,
       reason: "Token not found",
     });
+    return;
   }
   try {
     const result = await verify(token);
@@ -30,6 +32,7 @@ export const verify_google_user = async (req, res, next) => {
         success: false,
         reason: "The email is not found",
       });
+      return;
     }
     const payload = result.getPayload();
     const requiredData = {
@@ -37,12 +40,20 @@ export const verify_google_user = async (req, res, next) => {
       email: payload.email,
       image_url: payload.picture,
     };
-    req.userData = requiredData;
+    const user = await User.findOne({ email: payload.email });
+    if (!user) {
+      res.status(400).json({
+        success: false,
+        reason: "User not signed in",
+      });
+      return;
+    }
+    req.user_id = user._id;
     next();
   } catch (error) {
     res.status(400).json({
       success: false,
-      reason: error,
+      reason: "Some error occurred",
     });
   }
 };

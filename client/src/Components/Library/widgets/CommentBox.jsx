@@ -22,7 +22,7 @@ const CommentBox = ({ comment, refresh }) => {
 
   const updateCommentLikes = async () => {
     const response = await API.likeComment(
-      { user_id: user._id },
+      {},
       `blog/comment/like/${comment._id}`
     );
     if (response.data.success) {
