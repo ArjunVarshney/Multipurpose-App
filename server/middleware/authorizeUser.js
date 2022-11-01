@@ -27,6 +27,7 @@ export const authorize = async (req, res, next) => {
   }
   try {
     const result = await verify(token);
+    
     if (!result) {
       res.status(400).json({
         success: false,
@@ -35,11 +36,7 @@ export const authorize = async (req, res, next) => {
       return;
     }
     const payload = result.getPayload();
-    const requiredData = {
-      name: payload.name,
-      email: payload.email,
-      image_url: payload.picture,
-    };
+
     const user = await User.findOne({ email: payload.email });
     if (!user) {
       res.status(400).json({

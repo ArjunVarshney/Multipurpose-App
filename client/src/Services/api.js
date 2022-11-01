@@ -25,13 +25,14 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
               Authorization: localStorage.getItem("token")
                 ? localStorage.getItem("token")
                 : "",
+              "content-type": "application/json",
             }
           : null,
         responseType: value.responseType,
       });
       return response;
     } catch (error) {
-      console.log(error, value.headers, localStorage.getItem("token"));
+      console.log(error, value.auth, localStorage.getItem("token"));
     }
   };
 }

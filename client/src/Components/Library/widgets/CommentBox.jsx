@@ -14,6 +14,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ThumbUpRoundedIcon from "@mui/icons-material/ThumbUpRounded";
+import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 
 const CommentBox = ({ comment, refresh }) => {
   const { textWhite, secondaryBgColor, primaryTextColor, primaryThemeColor } =
@@ -21,12 +22,32 @@ const CommentBox = ({ comment, refresh }) => {
   const { user } = useContext(account);
 
   const updateCommentLikes = async () => {
-    const response = await API.likeComment(
-      {},
-      `blog/comment/like/${comment._id}`
-    );
-    if (response.data.success) {
-      refresh();
+    try {
+      const response = await API.likeComment(
+        {},
+        `blog/comment/like/${comment._id}`
+      );
+      if (response.data.success) {
+        refresh();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteComment = async () => {
+    try {
+      const response = await API.deleteComment(
+        {},
+        `blog/comment/delete/${comment._id}`
+      );
+      const data = await response.data;
+      if (data.success) {
+        console.log("comment deleted");
+        refresh();
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -98,6 +119,23 @@ const CommentBox = ({ comment, refresh }) => {
           gap: "5px",
         }}
       >
+        {user._id == comment.created_by && (
+          <Button
+            onClick={deleteComment}
+            style={{
+              display: "flex",
+              background: secondaryBgColor,
+              color: primaryTextColor,
+              width: "max-content",
+              minWidth: "unset",
+              borderRadius: "10px",
+              padding: "7px",
+              gap: "5px",
+            }}
+          >
+            <DeleteForeverRoundedIcon color="error" />
+          </Button>
+        )}
         <Button
           onClick={updateCommentLikes}
           style={{
@@ -105,6 +143,7 @@ const CommentBox = ({ comment, refresh }) => {
             background: secondaryBgColor,
             color: primaryTextColor,
             width: "max-content",
+            height: "38px",
             borderRadius: "10px",
             padding: "7px",
             gap: "5px",

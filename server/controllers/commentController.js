@@ -149,3 +149,45 @@ export const likeComment = async (req, res) => {
     });
   }
 };
+
+export const deleteComment = async (req, res) => {
+  const user_id = req.user_id;
+  const comment_id = req.params["commentid"];
+  if (!user_id || !comment_id) {
+    res.status(400).json({
+      success: false,
+      reason: "Complete Information needed",
+    });
+  }
+  try {
+    const comment = await Comment.findById(comment_id);
+    if (comment.created_by != user_id) {
+      res.status(400).json({
+        success: false,
+        reason: "No such comment found",
+      });
+    }
+    const updatedPost = await Post.findByIdAndUpdate(comment.blog_id, {
+      $pull: { comments: comment_id },
+    });
+    const updatedUser = await User.findByIdAndUpdate(user_id, {
+      $pull: { comments: comment_id },
+    });
+    const response = await Comment.findByIdAndDelete(comment_id);
+    if (!response || !updatedUser || !updatedPost) {
+      res.status(400).json({
+        success: false,
+        reason: "Some error ocurred",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      data: response,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      reason: "Some error occurred",
+    });
+  }
+};

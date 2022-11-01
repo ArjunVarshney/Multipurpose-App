@@ -55,6 +55,11 @@ export const SERVICE_URLS = {
     method: "GET",
     url: "blog/comment/blogcomment/:id",
   },
+  deleteComment: {
+    method: "DELETE",
+    url: "blog/comment/delete/:comment_id",
+    auth: true,
+  },
   likePost: {
     method: "POST",
     url: "blog/like/:id",
