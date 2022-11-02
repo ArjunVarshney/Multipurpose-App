@@ -14,6 +14,7 @@ import Search from "./Components/Pages/Search";
 import UserData from "./Components/Pages/UserData";
 import EditUser from "./Components/Pages/EditUser.jsx";
 import Player from "./Components/Library/widgets/Player";
+import Alert from "./Components/Library/widgets/Alert.jsx";
 
 //context
 import ColorContext from "./Context/ColorContext";
@@ -25,6 +26,7 @@ import Box from "@mui/material/Box";
 const App = () => {
   const { pathname } = useLocation();
   const { user, setUser } = useContext(account);
+  const [alert, setAlert] = useState({});
   const [closePlayer, setClosePlayer] = useState(true);
   const [currentBlog, setCurrentBlog] = useState({});
 
@@ -97,6 +99,7 @@ const App = () => {
   return (
     <ColorContext>
       <Navbar />
+      {alert.type && <Alert alert={alert} />}
       <Player
         close={closePlayer}
         setClose={setClosePlayer}
@@ -104,11 +107,23 @@ const App = () => {
       />
       <Box mt="70px"></Box>
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route exact path="/user/:id" element={<UserData />} />
-        <Route exact path="/user/edit/:id" element={<EditUser />} />
-        <Route exact path="/blog" element={<Blog />} />
-        <Route exact path="/blog/search" element={<Search />} />
+        <Route exact path="/" element={<Home showAlert={setAlert} />} />
+        <Route
+          exact
+          path="/user/:id"
+          element={<UserData showAlert={setAlert} />}
+        />
+        <Route
+          exact
+          path="/user/edit/:id"
+          element={<EditUser showAlert={setAlert} />}
+        />
+        <Route exact path="/blog" element={<Blog showAlert={setAlert} />} />
+        <Route
+          exact
+          path="/blog/search"
+          element={<Search showAlert={setAlert} />}
+        />
         <Route
           exact
           path="/blog/:title"

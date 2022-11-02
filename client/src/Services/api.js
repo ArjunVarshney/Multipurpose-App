@@ -32,7 +32,7 @@ for (const [key, value] of Object.entries(SERVICE_URLS)) {
       });
       return response;
     } catch (error) {
-      console.log(error, value.auth, localStorage.getItem("token"));
+      console.log(error);
     }
   };
 }

@@ -56,9 +56,9 @@ const Navbar = () => {
       <CustomToolbar>
         <LogoText />
         <Box style={{ display: "flex", alignItems: "center" }}>
-          <NotImportant>
+          {/* <NotImportant>
             <NavBtn text="About" variant="standard" link="/about" />
-          </NotImportant>
+          </NotImportant> */}
           {!user._id ? <SignInBtn /> : <User user={user._id} />}
         </Box>
       </CustomToolbar>
