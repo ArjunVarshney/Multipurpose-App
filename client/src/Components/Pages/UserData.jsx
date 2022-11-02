@@ -65,6 +65,7 @@ const UserData = () => {
 
   const getPost = async (id) => {
     try {
+      if (!id) return;
       const post = await API.getPostById("", `blog/getbyid/${id}`);
       const data = post.data;
       if (!post || !data) return;

@@ -33,8 +33,8 @@ postRouter.delete("/delete/:id", deletePost);
 postRouter.put("/update/:id", updatePost);
 
 // for likes
-postRouter.post("/like/:postid", like);
-postRouter.post("/dislike/:postid", dislike);
+postRouter.post("/like/:postid", authorize, like);
+postRouter.post("/dislike/:postid", authorize, dislike);
 
 // for tags
 postRouter.use("/tag", tagRouter);

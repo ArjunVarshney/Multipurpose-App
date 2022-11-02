@@ -12,6 +12,7 @@ export const postComment = async (req, res) => {
   try {
     const body = req.body;
     const user_id = req.user_id;
+
     // save to comment database
     const newComment = new Comment({ ...body, created_by: user_id });
     const savedComment = await newComment.save();
@@ -158,6 +159,7 @@ export const deleteComment = async (req, res) => {
       success: false,
       reason: "Complete Information needed",
     });
+    return;
   }
   try {
     const comment = await Comment.findById(comment_id);
@@ -166,6 +168,7 @@ export const deleteComment = async (req, res) => {
         success: false,
         reason: "No such comment found",
       });
+      return;
     }
     const updatedPost = await Post.findByIdAndUpdate(comment.blog_id, {
       $pull: { comments: comment_id },
@@ -179,6 +182,7 @@ export const deleteComment = async (req, res) => {
         success: false,
         reason: "Some error ocurred",
       });
+      return;
     }
     res.status(200).json({
       success: true,

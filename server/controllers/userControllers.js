@@ -62,9 +62,22 @@ export const getUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     const id = req.params["id"];
+    if (!id) {
+      res.status(400).json({
+        success: false,
+        reason: "User not found",
+      });
+    }
+    if (req.params["id"] != req.user_id) {
+      res.status(400).json({
+        success: false,
+        reason: "User editing is not same as the user itself",
+      });
+    }
     const updatedUser = await User.findByIdAndUpdate(id, req.body, {
       returnDocument: "after",
     });
+
     if (!updateUser) {
       res.status(400).json({
         success: false,
