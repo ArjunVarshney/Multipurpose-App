@@ -28,7 +28,12 @@ import CommentCount from "../Library/widgets/CommentCount";
 import CommentInput from "../Library/widgets/CommentInput";
 import CommentBox from "../Library/widgets/CommentBox";
 
-const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
+const Post = ({
+  setClosePlayer,
+  isPlayerClosed,
+  setCurrentBlog,
+  showAlert,
+}) => {
   const { primaryThemeColor, primaryTextColor, secondaryBgColor, textWhite } =
     useContext(color);
   const navigate = useNavigate();
@@ -48,7 +53,10 @@ const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
         console.log("post does not exists");
       }
     } catch (error) {
-      console.log(error.response.data);
+      showAlert({
+        type: "error",
+        msg: "Some error occurred. Please check your internet connection or try again later",
+      });
     }
   };
 
@@ -62,7 +70,10 @@ const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
         setCreator(user.data);
       }
     } catch (error) {
-      console.log(error);
+      showAlert({
+        type: "error",
+        msg: "Couls not get info of the creator of this post",
+      });
     }
   };
 
@@ -82,7 +93,10 @@ const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
         setComments(commentData);
       }
     } catch (error) {
-      console.log(error);
+      showAlert({
+        type: "error",
+        msg: "Could not get comments for this post",
+      });
     }
   };
 
@@ -110,10 +124,16 @@ const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
           console.log("some error occurred");
         }
       } else {
-        navigate("/signin");
+        showAlert({
+          type: "warning",
+          msg: "Sign in before you save this post",
+        });
       }
     } catch (error) {
-      console.log(error);
+      showAlert({
+        type: "error",
+        msg: "Some error occurred. Please check your internet connection or try again later",
+      });
     }
   };
 
@@ -152,24 +172,48 @@ const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
   };
 
   const updateLikes = async () => {
-    const response = await API.likePost(
-      { user_id: user._id },
-      `/blog/like/${post._id}`
-    );
-    const data = await response.data;
-    if (data.success) {
-      getData();
+    try {
+      const response = await API.likePost(
+        { user_id: user._id },
+        `/blog/like/${post._id}`
+      );
+      const data = await response.data;
+      if (data.success) {
+        getData();
+      } else {
+        showAlert({
+          type: "warning",
+          msg: "Signing before you like or dislike",
+        });
+      }
+    } catch (error) {
+      showAlert({
+        type: "error",
+        msg: "Some error occurred. Please check your internet connection or try again later",
+      });
     }
   };
 
   const updateDislikes = async () => {
-    const response = await API.dislikePost(
-      { user_id: user._id },
-      `/blog/dislike/${post._id}`
-    );
-    const data = await response.data;
-    if (data.success) {
-      getData();
+    try {
+      const response = await API.dislikePost(
+        { user_id: user._id },
+        `/blog/dislike/${post._id}`
+      );
+      const data = await response.data;
+      if (data.success) {
+        getData();
+      } else {
+        showAlert({
+          type: "warning",
+          msg: "Signing before you like or dislike",
+        });
+      }
+    } catch (error) {
+      showAlert({
+        type: "error",
+        msg: "Some error occurred. Please check your internet connection or try again later",
+      });
     }
   };
 
@@ -509,7 +553,11 @@ const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
 
         {/* For comments */}
         <Box style={{ width: "100%", marginBottom: "25px" }}>
-          <CommentInput post={post._id} refresh={getData} />
+          <CommentInput
+            post={post._id}
+            refresh={getData}
+            showAlert={showAlert}
+          />
         </Box>
 
         <Box style={{ width: "100%" }}>
@@ -520,6 +568,7 @@ const Post = ({ setClosePlayer, isPlayerClosed, setCurrentBlog }) => {
                   comment={comment}
                   refresh={getComments}
                   key={index}
+                  showAlert={showAlert}
                 />
               );
             })}

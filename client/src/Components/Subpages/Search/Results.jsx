@@ -17,7 +17,7 @@ import Heading from "../../Library/encapsulation/Heading";
 import PostCard from "../../Library/widgets/PostCard";
 import Go from "../../Library/encapsulation/Go";
 
-const Results = () => {
+const Results = ({ showAlert }) => {
   let [searchParams, setSearchParams] = useSearchParams();
   const [sort, setSort] = useState(0);
   const [blogs, setBlogs] = useState([]);
@@ -36,6 +36,11 @@ const Results = () => {
       const data = await response.data;
       if (data.success) {
         setBlogs(data.data);
+      } else {
+        showAlert({
+          type: "error",
+          msg: "Some error occurred. Please check your internet connection or try again later",
+        });
       }
     };
     getSearchedpost();

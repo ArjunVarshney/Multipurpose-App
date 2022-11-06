@@ -6,9 +6,10 @@ import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 import TaskAltRoundedIcon from "@mui/icons-material/TaskAltRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import { styled } from "@mui/material";
+import { useEffect } from "react";
 
 const Alert = ({ alert }) => {
-  const [closeAlert, setCloseAlert] = useState(false);
+  const [closeAlert, setCloseAlert] = useState(true);
 
   const options = {
     error: {
@@ -25,12 +26,22 @@ const Alert = ({ alert }) => {
     },
   };
 
+  let timer;
+
+  useEffect(() => {
+    setCloseAlert(false);
+    window.clearTimeout(timer);
+    timer = setTimeout(() => {
+      setCloseAlert(true);
+    }, 3000);
+  }, [alert]);
+
   const AlertBox = styled("div")({
     position: "fixed",
     top: "10px",
     right: "10px",
     background: options[alert.type].bgColor,
-    padding: "10px 15px 15px 15px",
+    padding: "15px 20px 20px 20px",
     borderRadius: "10px",
     boxSizing: "border-box",
     minWidth: "250px",
@@ -85,7 +96,14 @@ const Alert = ({ alert }) => {
         {alert.type == "success" && <TaskAltRoundedIcon />}
         {alert.type}
       </p>
-      <p style={{ marginBottom: "0", marginTop: "5px", maxWidth: "220px" }}>
+      <p
+        style={{
+          marginBottom: "0",
+          marginTop: "5px",
+          maxWidth: "220px",
+          fontSize: "14px",
+        }}
+      >
         {alert.msg}
       </p>
     </AlertBox>

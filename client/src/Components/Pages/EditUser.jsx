@@ -23,7 +23,7 @@ import SectionBox from "../Library/encapsulation/SectionBox";
 import ColBox from "../Library/encapsulation/ColBox";
 import Go from "../Library/encapsulation/Go";
 
-const EditUser = () => {
+const EditUser = ({ showAlert }) => {
   const {
     primaryTextColor,
     primaryThemeColor,
@@ -59,9 +59,17 @@ const EditUser = () => {
       if (!response || !data) return;
       if (data.success) {
         setUser(data.data);
+      } else {
+        showAlert({
+          type: "warning",
+          msg: `Some error occurred. ${data.reason}`,
+        });
       }
     } catch (error) {
-      console.log(error);
+      showAlert({
+        type: "error",
+        msg: "Some error occurred. Please check your internet connection or try again later",
+      });
     }
   };
 
@@ -94,7 +102,10 @@ const EditUser = () => {
         setSavedPost(saveArr);
       });
     } catch (error) {
-      console.log(error);
+      showAlert({
+        type: "error",
+        msg: "Some error occurred. Please check your internet connection or try again later",
+      });
       setSavedPost([]);
     }
   };

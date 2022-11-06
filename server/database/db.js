@@ -7,7 +7,7 @@ const makeConnection = async (username, password, uri, port) => {
     console.log("Connected to database successfully");
   } catch (err) {
     console.log(err, mongoURL);
-    setTimeout(() => Connect(username, password, uri, port), 5000);
+    setTimeout(() => makeConnection(username, password, uri, port), 5000);
   }
 };
 

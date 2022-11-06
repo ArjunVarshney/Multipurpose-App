@@ -16,7 +16,7 @@ import Button from "@mui/material/Button";
 import ThumbUpRoundedIcon from "@mui/icons-material/ThumbUpRounded";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 
-const CommentBox = ({ comment, refresh }) => {
+const CommentBox = ({ comment, refresh, showAlert }) => {
   const { textWhite, secondaryBgColor, primaryTextColor, primaryThemeColor } =
     useContext(color);
   const { user } = useContext(account);
@@ -31,7 +31,10 @@ const CommentBox = ({ comment, refresh }) => {
         refresh();
       }
     } catch (error) {
-      console.log(error);
+      showAlert({
+        type: "error",
+        msg: "Some error occurred. Please check your internet connection or try again later",
+      });
     }
   };
 
@@ -43,11 +46,17 @@ const CommentBox = ({ comment, refresh }) => {
       );
       const data = await response.data;
       if (data.success) {
-        console.log("comment deleted");
+        showAlert({
+          type: "success",
+          msg: "Your comment was deleted successfully",
+        });
         refresh();
       }
     } catch (error) {
-      console.log(error);
+      showAlert({
+        type: "error",
+        msg: "Some error occurred. Please check your internet connection or try again later",
+      });
     }
   };
 

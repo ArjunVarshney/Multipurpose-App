@@ -60,6 +60,10 @@ const App = () => {
         if (data.success) {
           setUser(data.data);
           sessionStorage.setItem("user", JSON.stringify(data.data));
+          // setAlert({
+          //   type: "success",
+          //   msg: `Logged in as ${data.data.username}`,
+          // });
           return true;
         } else {
           localStorage.setItem("token", "");
@@ -132,6 +136,7 @@ const App = () => {
               setClosePlayer={setClosePlayer}
               isPlayerClosed={closePlayer}
               setCurrentBlog={setCurrentBlog}
+              showAlert={setAlert}
             />
           }
         />

@@ -16,7 +16,7 @@ import PopularTags from "../../Library/widgets/PopularTags";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 
-const Trending = () => {
+const Trending = ({ showAlert }) => {
   const [trending, setTrending] = useState([]);
 
   const getData = async () => {
@@ -29,7 +29,11 @@ const Trending = () => {
         getData();
       }
     } catch (error) {
-      console.log(error.response.data);
+      console.log(error);
+      showAlert({
+        type: "error",
+        msg: "Could not find trending posts",
+      });
     }
   };
 

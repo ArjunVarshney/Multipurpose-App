@@ -22,7 +22,7 @@ import ColBox from "../Library/encapsulation/ColBox";
 import Go from "../Library/encapsulation/Go";
 import User from "../Library/widgets/User";
 
-const UserData = () => {
+const UserData = ({ showAlert }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { primaryTextColor, secondaryBgColor, textWhite, mainBgColor } =
@@ -51,7 +51,10 @@ const UserData = () => {
         setUserInfo(data.data);
       }
     } catch (error) {
-      console.log(error);
+      showAlert({
+        type: "error",
+        msg: "Some error occurred. Please check your internet connection or try again later",
+      });
     }
   };
 
@@ -109,8 +112,11 @@ const UserData = () => {
         setLikedPost(likeArr);
       });
     } catch (error) {
-      console.log(error);
       setLikedPost([]);
+      showAlert({
+        type: "error",
+        msg: "Some error occurred. Please check your internet connection or try again later",
+      });
     }
   };
 
@@ -127,7 +133,10 @@ const UserData = () => {
         setSavedPost(saveArr);
       });
     } catch (error) {
-      console.log(error);
+      showAlert({
+        type: "error",
+        msg: "Some error occurred. Please check your internet connection or try again later",
+      });
       setSavedPost([]);
     }
   };
@@ -150,7 +159,10 @@ const UserData = () => {
         setComments(commentArr);
       });
     } catch (error) {
-      console.log(error);
+      showAlert({
+        type: "error",
+        msg: "Some error occurred. Please check your internet connection or try again later",
+      });
       setComments([]);
     }
   };

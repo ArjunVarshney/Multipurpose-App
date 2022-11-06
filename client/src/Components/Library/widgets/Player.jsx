@@ -54,6 +54,8 @@ const Player = ({ close, setClose, currentBlog }) => {
     const data = await response.data;
     if (data.success) {
       setUsername(data.data.username);
+    } else {
+      setUsername("not found");
     }
   };
 

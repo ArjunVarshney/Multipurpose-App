@@ -15,8 +15,7 @@ import RelatedTags from "../Subpages/Search/RelatedTags";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/material";
 
-const Search = () => {
-
+const Search = ({ showAlert }) => {
   const RowBox = styled(Box)({
     display: "flex",
     flexDirection: "row",
@@ -31,7 +30,7 @@ const Search = () => {
         <SearchBox />
         <PopularTags />
         <RowBox>
-          <Results />
+          <Results showAlert={showAlert} />
           <RelatedTags />
         </RowBox>
       </ColBox>

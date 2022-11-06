@@ -13,28 +13,54 @@ import { account } from "../../../Context/UserContext";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import { styled } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
-const CommentInput = ({ post, refresh }) => {
+const CommentInput = ({ post, refresh, showAlert }) => {
   const { primaryThemeColor, textWhite, mainBgColor, secondaryBgColor } =
     useContext(color);
   const { user } = useContext(account);
   let textBox = {};
-  const navigate = useNavigate();
 
   const saveComment = async (e) => {
     e.preventDefault();
-    if (!user._id) navigate("/signin");
-    const comment = textBox.root.innerHTML;
-    const post_id = post;
-    const response = await API.makeComment({
-      blog_id: post_id,
-      comment,
-    });
-    if (!response) return;
-    const data = await response.data;
-    if (data.success) {
-      refresh();
+    if (!user._id) {
+      showAlert({
+        type: "warning",
+        msg: "Signin before you make any comment",
+      });
+      return;
+    }
+    try {
+      const comment = textBox.root.innerHTML;
+      const post_id = post;
+      const dummy = document.createElement("div");
+      dummy.innerHTML = comment;
+      const comment_text = dummy.innerText;
+      if (comment_text.trim() == "" || !comment_text) {
+        showAlert({
+          type: "warning",
+          msg: "Please write something before you make comment",
+        });
+        return;
+      }
+      const response = await API.makeComment({
+        blog_id: post_id,
+        comment,
+      });
+      if (!response) return;
+      const data = await response.data;
+      if (data.success) {
+        refresh();
+      } else {
+        showAlert({
+          type: "error",
+          msg: "Some error occurred. Please check your internet connection or try again later",
+        });
+      }
+    } catch (error) {
+      showAlert({
+        type: "error",
+        msg: "Some error occurred. Please check your internet connection or try again later",
+      });
     }
   };
 
