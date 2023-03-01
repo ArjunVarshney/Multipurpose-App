@@ -23,7 +23,7 @@ export const categories = [
     title: "Exercise",
     description:
       "We have listed the details and tutorials of almost all the popular exercises to get you covered, our collection include Calisthenics as well as bodybuilding exercisises",
-    link: "/exercise",
+    link: "/blog",
   },
   {
     image: NutritionBanner,
@@ -31,7 +31,7 @@ export const categories = [
     title: "Nutrition",
     description:
       "We have listed the details of almost all the food items. we have listed some tips to get you covered. You can always add the stuff to your eating list to calculate your calories.",
-    link: "/nutrition",
+    link: "/blog",
   },
   {
     image: SportsBanner,
@@ -39,7 +39,7 @@ export const categories = [
     title: "Sports",
     description:
       "Sports is a great way to do cardio and improve mind body coordination. we have listed the details of the almost all the sports which you  would find to get you started",
-    link: "/sports",
+    link: "/blog",
   },
   {
     image: ToolsBanner,
@@ -47,7 +47,7 @@ export const categories = [
     title: "Tools",
     description:
       "We have different text tools for you to format your text effeciently. These also include pdf tools. All for free.",
-    link: "/tools",
+    link: "/blog",
   },
   {
     image: GamesBanner,
@@ -55,7 +55,7 @@ export const categories = [
     title: "Online Games",
     description:
       "This website containes online games for when you are bored want some time to pass by.",
-    link: "/games",
+    link: "/blog",
   },
   {
     image: CodingBanner,
@@ -63,13 +63,13 @@ export const categories = [
     title: "Coding",
     description:
       "Everybody should learn coding, as it helps us in devloping our technical skills and learn how the system works. Coding may be beneficial for getting away with manual work and automating it.",
-    link: "/coding",
+    link: "/blog",
   },
   {
     image: QnaBanner,
     imgAlt: "QnA Banner",
     title: "QnA",
     description: "You can ask any question you want to the public.",
-    link: "/qna",
+    link: "/blog",
   },
 ];
